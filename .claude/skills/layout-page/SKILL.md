@@ -49,6 +49,8 @@ description: 신규 정적 HTML 페이지 작성 시 sample.html 기준 구조, 
 
 - 새 페이지는 사용자가 전달한 Figma 링크의 대상 node를 먼저 확인한 뒤 구현한다.
 - 링크에 node-id가 없거나 화면 범위가 불명확하면, 임의로 다른 화면을 기준 삼지 않고 확인을 요청한다.
+- Figma MCP가 연결되어 있으면 `figma-to-page` 스킬을 따른다. `get_design_context`의 결과(React·
+  Tailwind 참고 코드)를 그대로 쓰지 않고 이 프로젝트의 실제 컴포넌트·토큰으로 옮겨 적는다.
 - Figma의 여백, 정렬, 텍스트 크기, 색상, 상태를 확인하되 기존 컴포넌트 가이드(`src/guide/pages/components`)에 맞는 패턴이 있으면 새 마크업보다 그 패턴을 우선 사용한다.
 - 디자인에 없는 기능이나 상태를 추측하여 추가하지 않는다.
 

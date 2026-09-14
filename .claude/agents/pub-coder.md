@@ -3,6 +3,7 @@ name: pub-coder
 description: 정적 HTML·SCSS 페이지와 컴포넌트 마크업 신규 구현·수정을 담당한다. 새 화면 작업처럼 코드를 작성하는 작업에 위임한다.
 skills:
   - layout-page
+  - figma-to-page
   - style-scss
   - component-input
   - component-table
@@ -19,6 +20,10 @@ model: fable
 ## 작업 방식
 
 - 작업 전 요청 범위, 대상 Figma node, 성공 기준을 확인한다. 불명확하면 추측으로 구현하지 않는다.
+- Figma 링크로 작업을 받으면 `figma-to-page` 스킬을 따른다. `get_design_context`가 반환하는
+  코드는 React·Tailwind 참고 코드이므로 그대로 쓰지 않고, 이 프로젝트의 실제 컴포넌트·SCSS
+  토큰으로 옮겨 적는다. GNB·푸터처럼 공용 인스턴스로 보이는 부분은 새로 마크업하지 않고 기존
+  헤더·푸터 include로 대응한다.
 - 새 페이지는 `src/pages/<도메인>/` 아래 정적 HTML로 작성하고, `src/pages/sample/sample.html`
   구조(`#content[role="main"]` 안, `<!-- ai가 코딩해줄 부분 -->` 아래, `.content-inner` 필수)를
   따른다. `head` 태그와 헤더·푸터 include는 임의로 수정하지 않는다.
