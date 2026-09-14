@@ -13,7 +13,6 @@ const etUI = {};
  * @property {Object} layer - 레이어/다이얼로그 설정
  * @property {Object} lenis - 스무스 스크롤 설정
  * @property {Object} locale - 다국어 설정
- * @property {Object} lottie - Lottie 애니메이션 설정
  */
 etUI.config = {
   media: {
@@ -48,9 +47,6 @@ etUI.config = {
   },
   locale: {
     default: 'ko',
-  },
-  lottie: {
-    basePath: location.pathname.startsWith('/p/') ? '/p/assets/images/lottie' : '/assets/images/lottie',
   },
 };
 etUI.config.initDefault();

@@ -62,7 +62,6 @@ const javascriptLib = async (isDev) => {
           'SplitText.min.js',
           'Observer.min.js',
           'ScrollTrigger.min.js',
-          'lottie.min.js',
           'swiper-bundle.min.js',
         ])
       )

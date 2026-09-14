@@ -1,5 +1,7 @@
 /**
  * Skel
+ * 새 UI 컴포넌트를 만들 때 참고하는 보일러플레이트 템플릿이다. 실제 화면에서 초기화해 쓰는
+ * 컴포넌트가 아니므로 `.component-skel` 같은 실제 클래스나 마크업 가이드는 없다.
  * // init, setup, update, destroy
  * // setupTemplate, setupSelector, setupElement, setupActions,
  *      setEvent, render, customFn, callable
