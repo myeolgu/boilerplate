@@ -43,7 +43,7 @@
 
 ## 컴포넌트 사용 원칙
 
-- 모든 UI 요소는 새로 만들기 전에 `src/guide/pages/components`의 컴포넌트 가이드와 관련 스킬을 먼저 확인하고, 있으면 직접 마크업 대신 그 컴포넌트를 사용한다. 예: 버튼은 `component-button`, 입력 필드는 `component-input`, 폼 레이아웃은 `component-form`, 체크박스는 `component-checkbox`, 라디오는 `component-radio`, 셀렉트는 `component-select`, 탭은 `component-tabs`, 아코디언은 `component-accordion`, 표는 `component-table`, 페이지네이션은 `component-pagination`, 아이콘은 `component-icon`.
+- 모든 UI 요소는 새로 만들기 전에 `src/guide/pages/components`의 컴포넌트 가이드와 관련 스킬을 먼저 확인하고, 있으면 직접 마크업 대신 그 컴포넌트를 사용한다. 예: 버튼은 `component-button`, 입력 필드는 `component-input`, 폼 레이아웃은 `component-form`, 체크박스는 `component-checkbox`, 라디오는 `component-radio`, 셀렉트는 `component-select`, 탭은 `component-tabs`, 아코디언은 `component-accordion`, 단독 접기/펼치기 패널은 `component-collapse`, 표는 `component-table`, 페이지네이션은 `component-pagination`, 아이콘은 `component-icon`.
 - 모달은 `component-modal`, 스와이퍼는 `component-swiper`, 글자 수 카운트가 있는 텍스트영역은 `component-textarea`, 날짜 선택은 `component-picker`를 따른다. 이 넷은 `initUI()`가 자동 초기화하는 실제 JS 컴포넌트(`src/assets/scripts/ui/components`)와 연결되어 있으므로 클래스와 `data-props-*` 속성을 임의로 바꾸지 않는다.
 - 확인·경고 팝업("alert"으로 요청받아도)은 `component-dialog`를 따른다. 마크업을 직접 쓰지 않고 `etUI.dialog.alert`/`.confirm`/`.previewImage` 호출로 연다. 하단 알림은 `component-toast`(`etUI.dialog.toastBasic` 등)를 기본으로 쓴다. `component-snackbar`는 공용 JS가 없는 레거시 패턴이므로 새 화면에는 쓰지 않는다.
 - `component-carousel`은 스타일과 공용 JS 초기화가 아직 없는 프로토타입 단계다. 필요하면 먼저 `component-swiper`로 대체 가능한지 검토하고, 스킬의 확인 절차를 따른다.

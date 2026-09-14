@@ -92,11 +92,47 @@ description: 폼(component-form) 마크업 구조, form-element/form-group 조�
 </div>
 ```
 
+## 특수 입력(주민등록번호 등 분할 입력)
+
+```html
+<div class="form-group">
+  <div class="component-input">
+    <div class="input-field"><input type="text" placeholder="앞 6자리"></div>
+  </div>
+  <div class="bar"></div>
+  <div class="resident-number">
+    <div class="component-input resident-input">
+      <div class="input-field"><input type="text" maxlength="1"></div>
+    </div>
+    <ul class="hidden-list">
+      <li class="hiddeb-num"><span class="hide-txt">hidden-number</span></li>
+    </ul>
+  </div>
+</div>
+```
+
 ## 클래스 구조
 
 - 기본 클래스: `.component-form`
 - `.form-element`(요소 컨테이너) > `.input-label`(`.label-txt`) + `.form-group`(입력 그룹 컨테이너)
-- 그룹 안: `.component-input`, `.component-select`, `.bar`(구분선), `.btn-confirm`(확인 버튼), `.type-time`(타이머 표시)
+- 그룹 안: `.component-input`, `.component-select`, `.bar`(구분선), `.btn-confirm`(확인 버튼),
+  `.type-time`(타이머 표시), `.resident-number`(`.resident-input`, `.hidden-list`)
+
+## 레거시: form-row 그리드 시스템
+
+`_form.scss`에는 위 `.form-element` 패턴("new form"으로 주석 표기됨)과 별개로 더 오래된
+`.form-row` 다단 그리드 시스템도 남아 있다. 실제 가이드 페이지에 살아있는 예시는 없어 정확한
+전체 마크업은 확인되지 않았지만, 클래스 존재는 실제 스타일 파일로 확인했다.
+
+- `.form-label`(`.label-txt`, `.label-util`) + `.form-sub-txt`
+- `.form-row`(`[class^="form-col"]`) 변형: `.two-col`, `.three-col`, `.four-col`, `.five-col`,
+  `.ratio-2-1`, `.ratio-3-3-1`, `.ratio-4-3-2-1`
+- 정렬: `.align-center`, `.align-right` / 정보: `.form-info`
+- 상태: `.form-disabled`, `.form-readonly`, `.form-valid`, `.form-invalid`, `.form-required`
+
+새 화면은 위 "기본 구조"의 `.form-element`/`.form-group` 패턴을 기본으로 쓴다. 기존
+`.form-row` 화면을 수정해야 하거나 다단 그리드가 명시적으로 필요하면, 정확한 마크업 조합을
+추측하지 말고 실제 사용 중인 화면(있다면)을 먼저 찾아 확인한다.
 
 ## 접근성
 

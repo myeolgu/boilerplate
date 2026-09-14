@@ -32,6 +32,26 @@ description: 버튼(.btn) 마크업 구조와 버튼 그룹(component-btns) 사�
 - 아이콘만 있는 버튼에는 스크린 리더용 `<span class="hide-txt">설명</span>`을 추가한다.
 - 아이콘에는 `aria-hidden="true"`를 추가해 스크린 리더가 중복으로 읽지 않게 한다.
 
+## 스타일 변형
+
+```html
+<!-- 강조(primary) -->
+<button type="button" class="btn btn-primary">
+  <span class="btn-txt">Primary</span>
+</button>
+
+<!-- 전체 너비 -->
+<button type="button" class="btn btn-full">
+  <span class="btn-txt">Full</span>
+</button>
+<a href="#" class="btn btn-primary btn-full">
+  <span class="btn-txt">Primary Full</span>
+</a>
+```
+
+- `.btn-primary`: 강조 스타일. `.btn-full`과 함께 쓸 수 있다.
+- `.btn-full`: 버튼을 부모 너비만큼 채운다.
+
 ## 링크 버튼
 
 링크 형태 버튼은 `<a>` 태그에 동일한 클래스 구조를 사용한다.
@@ -100,12 +120,24 @@ description: 버튼(.btn) 마크업 구조와 버튼 그룹(component-btns) 사�
 </div>
 ```
 
+### 3단 레이아웃 버튼 그룹
+
+```html
+<div class="component-btns">
+  <div class="btns-row three-col">
+    <button type="button" class="btn btn-full"><span class="btn-txt">1</span></button>
+    <button type="button" class="btn btn-full"><span class="btn-txt">2</span></button>
+    <button type="button" class="btn btn-full"><span class="btn-txt">3</span></button>
+  </div>
+</div>
+```
+
 ## 클래스 구조
 
-- 기본 클래스: `.btn`
+- 기본 클래스: `.btn` (변형: `.btn-primary`, `.btn-full`)
 - 텍스트 클래스: `.btn-txt`
 - 숨김 텍스트 클래스: `.hide-txt`
-- 그룹: `.component-btns` > `.btns-row`(`.align-left` | `.align-right` | `.two-col` + `.btns-col-1`/`.btns-col-2`)
+- 그룹: `.component-btns` > `.btns-row`(`.align-left` | `.align-right` | `.two-col` + `.btns-col-1`/`.btns-col-2` | `.three-col`)
 
 ## 참고
 

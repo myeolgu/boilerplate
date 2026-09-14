@@ -21,13 +21,11 @@ description: 셀렉트(component-select) 마크업 구조(기본 select, 커스�
 
 ## 커스텀 셀렉트
 
+`.component-select` 클래스를 `initUI()`가 자동 초기화한다(`Selectbox.js`,
+`fn: etUI.components.SelectBox`). 별도의 `data-component` 속성은 필요 없다.
+
 ```html
-<div
-  id="select-custom"
-  data-component="select-box"
-  class="component-select type-custom"
-  data-props-default="선택해주세요"
->
+<div class="component-select type-custom" data-props-default="선택해주세요">
   <button type="button" class="select-box">
     <span style="pointer-events: none"></span>
   </button>
@@ -38,9 +36,28 @@ description: 셀렉트(component-select) 마크업 구조(기본 select, 커스�
 </div>
 ```
 
+## 바텀시트형 셀렉트 (모바일)
+
+옵션이 많거나 모바일 화면에서는 `.bottom-sheet` + `data-props-type="bottomSheet"`를 추가한다.
+
+```html
+<div class="component-select bottom-sheet" data-props-default="선택" data-props-type="bottomSheet">
+  <button type="button" class="select-box"></button>
+  <div class="select-options">
+    <ul>
+      <li class="option" data-value="option1">option1</li>
+      <li class="option" data-value="option2">option2</li>
+    </ul>
+  </div>
+</div>
+```
+
+- 바텀시트형은 `.select-options`가 `ul` 없이 `div` 래퍼 하나를 더 감싸는 구조를 쓴다(기본
+  커스텀 셀렉트는 `.select-options`가 바로 `ul`이다).
+
 ## 클래스 구조
 
-- 기본 클래스: `.component-select` / 커스텀 타입: `.type-custom`
+- 기본 클래스: `.component-select` / 커스텀 타입: `.type-custom` / 바텀시트 타입: `.bottom-sheet`
 - `.select-list`: 기본 `select` 요소
 - `.select-box`: 커스텀 셀렉트의 트리거 버튼
 - `.select-options`: 커스텀 셀렉트의 옵션 목록
@@ -49,8 +66,8 @@ description: 셀렉트(component-select) 마크업 구조(기본 select, 커스�
 
 ## 데이터 속성 (커스텀 셀렉트)
 
-- `data-component="select-box"`: 컴포넌트 타입
 - `data-props-default`: 기본 표시 텍스트
+- `data-props-type="bottomSheet"`: 바텀시트 타입으로 전환
 - `data-value`: 옵션 값
 
 ## 접근성
