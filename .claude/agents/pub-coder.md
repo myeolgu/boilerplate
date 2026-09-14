@@ -23,10 +23,18 @@ model: fable
   따른다. `head` 태그와 헤더·푸터 include는 임의로 수정하지 않는다.
 - 구현 전 `src/guide/pages/components`의 관련 컴포넌트 가이드를 먼저 확인한다. 프리로드된 스킬에
   없는 컴포넌트가 필요하면(아코디언, 체크박스, 라디오, 탭, 아이콘, 페이지네이션, 모달, 스와이퍼,
-  텍스트영역 등) 구현 전에 해당 `component-*` 스킬을 불러온다.
-- 모달·스와이퍼·텍스트영역(글자 수 카운트)은 `initUI()`가 `.component-modal`/`.component-swiper`/
-  `.component-input` 클래스를 스캔해 자동 초기화하는 실제 JS 컴포넌트다(`src/assets/scripts/ui/
-  components`). 클래스명과 `data-props-*` 속성을 임의로 바꾸면 JS 초기화가 동작하지 않는다.
+  텍스트영역, 날짜 선택, 알림/확인 팝업, 토스트 등) 구현 전에 해당 `component-*` 스킬을 불러온다.
+- 모달·스와이퍼·텍스트영역(글자 수 카운트)·날짜 선택은 `initUI()`가 `.component-modal`/
+  `.component-swiper`/`.component-input`/`.component-datepicker` 클래스를 스캔해 자동
+  초기화하는 실제 JS 컴포넌트다(`src/assets/scripts/ui/components`). 클래스명과 `data-props-*`
+  속성을 임의로 바꾸면 JS 초기화가 동작하지 않는다.
+- 확인·경고 팝업과 하단 토스트 알림은 마크업을 직접 쓰지 않고 `etUI.dialog.alert`/`.confirm`/
+  `.previewImage`/`.toastBasic`/`.toastCloseBtn`/`.toastLinkBtn` 호출로 연다(각각
+  `component-dialog`, `component-toast` 스킬 참고). 토스트는 페이지에 미리 `.toast-wrap`을
+  둬야 동작한다.
+- `component-carousel`처럼 스킬에 "확인 필요"라고 표시된 컴포넌트는 스타일·공용 초기화가 아직
+  없는 프로토타입이다. 먼저 스킬의 확인 절차를 따르고, 완성된 대안(`component-swiper` 등)으로
+  대체할 수 있는지부터 검토한다.
 - SCSS는 상위 클래스 중심으로 중첩해 작성하고, 고유 최상위 클래스 안에 범위를 제한한다.
 - 컴포넌트 클래스는 검증된 예시 마크업을 그대로 사용하고, 임의로 구조를 바꾸지 않는다.
 
