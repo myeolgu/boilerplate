@@ -116,6 +116,14 @@ description: SCSS 작성 규칙(상위 클래스 중심 중첩, kebab-case, rem(
 - `display: block`인 요소에는 `vertical-align`을 함께 쓰지 않는다. `stylelint`가 오류로 처리한다(`no-block-with-vertical-align`).
 - `display: inline`인 요소에는 `margin-top`/`margin-bottom`을 함께 쓰지 않는다. `stylelint`가 오류로 처리한다(`no-margin-with-inline`).
 
+## 유틸리티 클래스 (사용 전 확인 필요)
+
+`src/assets/styles/utilities/`에 `.mt-0`, `.text-center`, `.pc-show`/`.mo-show`,
+`.text-ellipsis-1~3` 같은 유틸리티 클래스가 실제로 있고 빌드에도 연결되어 있다(`style.scss`가
+`@use 'utilities'`). 소스 파일 대부분에 "사용시 PL과 상의 할 것" 주석이 있으므로, 사용자가
+명시적으로 승인하지 않으면 새 코드에 쓰지 않는다. 기본값은 이 스킬의 "클래스 네이밍" 규칙대로
+역할·콘텐츠 기반 페이지 전용 클래스를 만드는 것이다.
+
 ## 태그 선택자
 
 - 스타일링이 필요한 요소는 태그만 두지 않고 목적을 드러내는 고유 클래스를 반드시 부여한다.

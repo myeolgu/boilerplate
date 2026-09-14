@@ -74,6 +74,7 @@
   - `display: block`인 요소에 `vertical-align`을 함께 쓰지 않는다.
   - `display: inline`인 요소에 `margin-top`/`margin-bottom`을 함께 쓰지 않는다.
   - `position`을 지정하지 않은(`static`) 요소에 `top`/`left`/`right`/`bottom`을 쓰지 않는다. 오프셋이 필요하면 먼저 `position: relative`(또는 `absolute`/`fixed`)를 지정한다.
+- `src/assets/styles/utilities/`에 `.mt-0`, `.text-center`, `.pc-show`/`.mo-show` 같은 유틸리티 클래스가 실제로 존재하고 빌드에도 연결되어 있다(`style.scss`가 `@use 'utilities'`). 하지만 해당 파일 대부분에 "사용시 PL과 상의 할 것"이라는 주석이 있다. 사용자가 명시적으로 승인하지 않으면 이 유틸리티 클래스를 새 코드에 쓰지 않는다. 기본값은 이 문서의 "역할·콘텐츠 기반 네이밍" 원칙대로 페이지 전용 클래스를 만드는 것이다.
 
 ## 아이콘·이미지 자산
 
