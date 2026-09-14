@@ -1,0 +1,34 @@
+{
+  "tabWidth": 2,
+  "useTabs": false,
+  "htmlWhitespaceSensitivity": "ignore",
+  "quoteProps": "preserve",
+  "singleAttributePerLine": false,
+  "endOfLine": "lf",
+  "printWidth": 440,
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "overrides": [
+    {
+      "files": "*.html",
+      "options": {
+        "singleQuote": false
+      }
+    },
+    {
+      "files": "gulp/**/*.js",
+      "options": {
+        "printWidth": 100
+      }
+    },
+    {
+      "files": "gulp/**/paths.js",
+      "options": {
+        "printWidth": 440
+      }
+    }
+  ]
+}

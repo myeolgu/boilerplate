@@ -1,0 +1,23 @@
+[
+  {
+    "ruleName": "plugin/no-block-with-vertical-align",
+    "message": "vertical-align should not be used with display: block",
+    "checkProp": "display",
+    "checkValue": "block",
+    "targetProp": "vertical-align"
+  },
+  {
+    "ruleName": "plugin/no-margin-with-inline",
+    "message": "margin-top and margin-bottom should not be used with display: inline",
+    "checkProp": "display",
+    "checkValue": "inline",
+    "targetProp": "margin-top|margin-bottom"
+  },
+  {
+    "ruleName": "plugin/no-positionless-offsets",
+    "message": "top, left, right, bottom should not be used without setting position",
+    "checkProp": "position",
+    "checkValue": "static",
+    "targetProp": "top|left|right|bottom"
+  }
+]

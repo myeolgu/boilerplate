@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="utf-8" />
+    <title>프로젝트타이틀</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta property="og:title" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:description" content="" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link href="pathStyles/style.css" type="text/css" rel="stylesheet" />
+    <script src="pathScripts/common.ui.plugin.js" data-init></script>
+    <script src="pathScripts/common.ui.js" data-init></script>
+    <script src="pathScripts/common.js"></script>
+    <!-- 약관 템플릿 js(추후 작업예정) -->
+    <!-- <script src="pathScripts/ui/templates/privacy_policy_template.js"></script> -->
+  </head>
+
+  <body>
+    <div id="wrap">
+      @@include('pathPagesInclude/_header.html', { "title": "test_title01", "title02": "test_title02" })
+
+      <main id="content">
+        <!-- s: 여기서부터 렌더링 영역 -->
+        <div class="content-wrap pageClassMain">
+          <h1>컨텐츠 제목</h1>
+          <!--
+						1. 이곳의 내용이 짧으면 푸터는 화면 하단에 붙고 이곳의 내용이 길어지면 푸터는 자연스럽게 밀려납니다.
+						2. spa 에서 다른 페이지로 이동할 때 이 영역의 내용이 바뀌어도 푸터가 딸려 올라오지 않습니다.
+						3. id="wrap" 영역이 react index.html의 id="app" 영역 하위에 들어가도 상관 없습니다.
+						4.
+					-->
+
+          <div class="ico-triangle-right-sample01"></div>
+        </div>
+        <!-- e: 여기서부터 렌더링 영역 -->
+      </main>
+
+      @@include('pathPagesInclude/_footer.html')
+    </div>
+
+    <!-- layer 영역 -->
+    <div id="layer-wrap"></div>
+
+    <!-- loading 영역-->
+    <div id="loading-wrap"></div>
+
+    <!-- 기타 필요한 영역 세팅 -->
+  </body>
+</html>

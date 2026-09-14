@@ -1,0 +1,212 @@
+@charset "UTF-8";
+/* 컬러 관리 도구 스타일 */
+#color-manager-ui {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  transition: box-shadow 0.3s ease;
+
+  &.dragging {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  input[type='text'],
+  button {
+    font-family: inherit;
+  }
+
+  pre {
+    background-color: #f5f5f5;
+    padding: 8px;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 5px 0 10px;
+    font-family: monospace;
+    font-size: 12px;
+    white-space: pre-wrap;
+  }
+
+  /* 탭 스타일 */
+  .component-tab {
+    .tab-content {
+      display: none;
+
+      &.show {
+        display: block;
+      }
+    }
+  }
+
+  .tab-head {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .tab-label {
+    flex: 1;
+    padding: 8px 0;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    transition: all 0.3s ease;
+
+    &[aria-selected='true'] {
+      color: #4051b8;
+      border-bottom: 2px solid #4051b8;
+    }
+  }
+}
+
+/* 헤더 스타일 */
+.color-manager-header {
+  user-select: none;
+
+  &:hover {
+    background-color: #e9e9e9 !important;
+  }
+}
+
+/* 관리 도구 버튼 스타일 */
+.btn-uid-color-manager {
+  position: fixed;
+  right: 20px;
+  bottom: 80px;
+  width: 50px;
+  height: 50px;
+  background-color: #4051b8;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  font-size: 24px; /* 이모티콘 크기 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  cursor: pointer;
+
+  span {
+    display: inline-block;
+    text-align: center;
+    line-height: 1;
+  }
+}
+
+/* 컬러 클래스 스타일 */
+.component_color {
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 배경 컬러 클래스 */
+[class*='bg-'] {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .hide-txt {
+    color: #ffffff;
+    font-size: 12px;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* 각 색상별 직접 지정 */
+.bg-8c2020 {
+  background-color: #8c2020;
+}
+
+.font-8c2020 {
+  background-color: #ffffff;
+
+  .hide-txt {
+    color: #8c2020;
+  }
+}
+
+.line-8c2020 {
+  background-color: #ffffff;
+  border: 5px solid #8c2020;
+}
+
+/* 폰트 컬러 클래스 */
+[class*='font-'] {
+  position: relative;
+  background-color: #ffffff;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* 기본 스타일만 유지, 개별 색상은 각 클래스에서 직접 지정 */
+
+  .hide-txt {
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 1;
+  }
+}
+
+/* 라인 컬러 클래스 */
+[class*='line-'] {
+  position: relative;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-width: 5px;
+  border-style: solid;
+  /* 기본 스타일만 유지, 개별 색상은 각 클래스에서 직접 지정 */
+
+  .hide-txt {
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 1;
+  }
+}
+
+/* 메시지 알림 스타일 */
+.color-manager-message {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: none;
+  max-width: 90%;
+  text-align: center;
+
+  &.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+
+  &.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+
+  &.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+  }
+
+  &.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+  }
+}

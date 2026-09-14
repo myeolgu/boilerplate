@@ -1,0 +1,200 @@
+@use '../abstracts' as *;
+
+.component-select {
+  position: relative;
+  width: 100%;
+
+  .select-list {
+    width: 100%;
+    @include rem(height, 50);
+    @include rem(padding, 0 15);
+    background-color: $bg-eeeeee;
+    @include rem(border, 1px solid $line-cccccc);
+    @include rem(border-radius, 4);
+    color: $font-333333;
+    @include f16;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    optgroup {
+      color: $font-333333;
+    }
+    option {
+      color: $font-333333;
+      &[value=''][disabled] {
+        display: none;
+      }
+    }
+    &:required:invalid {
+      color: $font-999999;
+    }
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    @include rem(right, 15);
+    @include rem(width, 16);
+    @include rem(height, 16);
+    background-image: url('data:image/svg+xml,%3Csvg%20width%3D%2724%27%20height%3D%2724%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%3E%3Cpath%20d%3D%27M4%208L12%2016L20%208%27%20stroke%3D%27black%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27square%27%20stroke-linejoin%3D%27round%27%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    @include rem(background-size, 16 auto);
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+  }
+
+  &.show {
+    &::after {
+      transform: translateY(-50%) rotate(-180deg);
+    }
+  }
+
+  /* S : Select-custom */
+  &.type-custom {
+    &::after {
+      display: none;
+    }
+
+    .select-box {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      @include rem(height, 50);
+      @include rem(padding, 0 15);
+      background-color: $bg-eeeeee;
+      @include rem(border, 1px solid $line-cccccc);
+      color: $font-999999;
+      @include f16;
+      cursor: pointer;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        @include rem(right, 15);
+        @include rem(width, 16);
+        @include rem(height, 16);
+        background-image: url('data:image/svg+xml,%3Csvg%20width%3D%2724%27%20height%3D%2724%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%3E%3Cpath%20d%3D%27M4%208L12%2016L20%208%27%20stroke%3D%27black%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27square%27%20stroke-linejoin%3D%27round%27%2F%3E%3C%2Fsvg%3E');
+        background-repeat: no-repeat;
+        @include rem(background-size, 16 auto);
+        transform: translateY(-50%);
+        transition: transform 0.3s ease;
+      }
+    }
+
+    .select-options {
+      position: absolute;
+      display: none;
+      width: 100%;
+      background-color: $bg-eeeeee;
+      @include rem(border, 1px solid $line-cccccc);
+    }
+
+    .option {
+      @include rem(padding, 10 15);
+      width: 100%;
+      // height: 100%;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    &.show {
+      .select-box {
+        &::after {
+          transform: translateY(-50%) rotate(-180deg);
+        }
+      }
+      .select-options {
+        display: block;
+      }
+    }
+  }
+  /* E : Select-custom */
+
+  /* S : Select-bottomSheet */
+  &.bottom-sheet {
+    .select-dimm {
+      display: none;
+      @include mobile {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 99;
+        background: #000000;
+        opacity: 0.6;
+      }
+    }
+    .select-box {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 5rem;
+      padding: 0rem 1.5rem;
+      background-color: #eeeeee;
+      border: 1px solid #cccccc;
+      color: #999999;
+      font-size: 1.6rem;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+    .select-options {
+      display: flex;
+      flex-direction: column;
+      @include mobile {
+        width: 100%;
+        position: fixed;
+        top: auto;
+        left: 0;
+        bottom: 0;
+        border: 0 none;
+        box-shadow: none;
+        padding-bottom: 1.6rem;
+        border-radius: 1.6rem 1.6rem 0rem 0rem;
+        box-shadow: none;
+        z-index: 9999;
+      }
+      .select-header {
+        display: none;
+        @include mobile {
+          position: relative;
+          padding: 2.4rem 2rem 0.8rem;
+          font-size: 1.8rem;
+          color: #000000;
+          display: block;
+        }
+        .select-close {
+          position: absolute;
+          @include rem(top, 24);
+          @include rem(right, 16);
+          @include rem(width, 24);
+          @include rem(height, 24);
+          // 임시
+          background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.9'%3E%3Cpath d='M4.19922 4.20312L19.7992 19.8031' stroke='%23262626' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M4.19922 19.8031L19.7992 4.20312' stroke='%23262626' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E%0A");
+          background-position: 50%;
+          background-size: 100% auto;
+        }
+      }
+      width: 100%;
+
+      .select-scroll {
+        max-height: 20rem;
+        overflow-y: auto;
+      }
+      position: absolute;
+      background-color: #eeeeee;
+      border: 1px solid #cccccc;
+      .option {
+        padding: 1rem 1.5rem;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+        &.current {
+          background-color: chocolate;
+        }
+      }
+    }
+  }
+  /* E : Select-bottomSheet */
+}

@@ -1,0 +1,81 @@
+# 프로젝트 작업 지침
+
+이 규칙은 사용자의 명시적인 재정의가 없는 한 이 프로젝트의 모든 작업에 적용한다. 비자명한 작업은 속도보다 신중함을 우선하고, 단순한 작업은 필요한 범위 안에서 판단해 처리한다.
+
+이 프로젝트(`uxg-lgwf-front`)는 Gulp 기반 정적 HTML·SCSS 퍼블리싱 보일러플레이트다. React/TSX가 아니라 `@@include` 파셜을 사용하는 정적 HTML 페이지와 SCSS로 화면을 만든다.
+
+## 작업 원칙
+
+- 작업 전 요청 범위, 성공 기준, 가정을 확인한다. 불확실하거나 여러 해석이 가능한 내용은 추측으로 구현하지 말고 필요한 사항을 사용자에게 확인한다.
+- 문제 해결에 필요한 최소 코드만 작성한다. 요청되지 않은 기능, 미래를 위한 추상화, 인접 코드의 임의 리팩터링을 추가하지 않는다.
+- 변경은 외과적으로 수행한다. 반드시 필요한 파일만 수정하고 기존 코드의 스타일과 관행을 따른다.
+- 코드를 추가하거나 변경하기 전 관련 컴포넌트 가이드(`src/guide/pages/components`)와 공통 SCSS 파셜을 먼저 확인한다.
+- 충돌하는 구현 관행이 있으면 더 최신이고 프로젝트에서 검증된 방식을 하나 선택하고, 판단 근거를 알린다. 두 방식을 임의로 섞지 않는다.
+- 완료라고 말하기 전 변경 범위에 맞는 검증을 수행한다. 검증하지 못한 항목이나 남은 불확실성은 완료로 표현하지 않는다.
+- 중요한 구현 단계에서는 무엇을 변경했고 무엇을 검증했는지 간단히 공유한다.
+
+## 커밋 메시지
+
+- 사용자가 "커밋 내용"을 요청하면 `commit` 스킬을 불러와 그 지침에 따라 안내한다.
+
+## 페이지 작성 범위
+
+- 새 페이지는 `src/pages/<도메인>/` 아래 정적 HTML 파일로 작성한다.
+- 모든 페이지는 `src/pages/sample/sample.html`의 구조를 기준으로 작성한다.
+  - `head` 태그는 임의로 수정하지 않는다.
+  - `@@include('pathPagesInclude/_header.html', ...)`, `@@include('pathPagesInclude/_footer.html')`로 공통 헤더·푸터를 포함하고 직접 마크업하지 않는다.
+  - `<div id="content" role="main">` 안에서만 코딩하며, 그 안의 `<!-- ai가 코딩해줄 부분 -->` 주석 바로 아래에 코딩한다.
+  - `#content` 안의 페이지 전용 클래스(`<div class="해당 페이지-wrap">`)의 자식에는 항상 `<div class="content-inner">`를 사용한다.
+- 새 페이지마다 목적을 드러내는 고유한 kebab-case 최상위 클래스 하나를 둔다(예: `notice-wrap`, `signup-page`). 기존 페이지의 최상위 클래스와 같은 이름을 재사용하지 않는다.
+- Figma 기반 작업은 사용자가 전달한 대상 node를 먼저 확인한다. node-id 또는 화면 범위가 불명확하면 임의로 다른 화면을 기준으로 구현하지 않는다.
+- Figma의 여백·정렬·타이포그래피·색상·상태를 따르되, 기존 컴포넌트 가이드에 맞는 패턴이 있으면 새 마크업보다 그 패턴을 우선 사용한다.
+- 변환 전 코드의 스타일 구조는 깨지지 않게 수정한다.
+
+## 시맨틱 마크업과 접근성
+
+- 의미에 맞는 시맨틱 태그(`header`, `nav`, `main`, `section`, `article`, `aside`, `footer`, `figure`/`figcaption`, `time`)를 사용한다. 의미 없이 `div`로만 구조를 만들지 않는다.
+- `h1`~`h6`은 계층적으로 사용하고 한 페이지에 `h1`은 하나만 둔다. 스타일링 목적으로 헤딩 태그를 쓰지 않는다.
+- `<a href="">`의 `href`는 기획서에 URL이 있으면 그 값을, 없으면 빈 값으로 둔다. `href="javascript:void(0)"`는 사용하지 않는다.
+- 아이콘은 `<i class="ico-xxx" aria-hidden="true"></i>` 형태로 마크업한다. 아이콘만으로 의미를 전달하면 `aria-label`(또는 `role="img"` + `aria-label`)을 추가하고, 텍스트와 함께 쓰면 아이콘에 `aria-hidden="true"`만 둔다.
+- 아이콘 전용 버튼에는 시각적으로 숨긴 `<span class="hide-txt">설명</span>`을 추가해 스크린 리더에 목적을 전달한다.
+- HTML 주석은 `<!-- 주석 -->`, 수정 표시는 `<!-- 20240228 수정 -->` ~ `<!-- // 20240228 수정 -->` 형태로 시작·끝을 표시한다.
+
+## 컴포넌트 사용 원칙
+
+- 모든 UI 요소는 새로 만들기 전에 `src/guide/pages/components`의 컴포넌트 가이드와 관련 스킬을 먼저 확인하고, 있으면 직접 마크업 대신 그 컴포넌트를 사용한다. 예: 버튼은 `component-button`, 입력 필드는 `component-input`, 폼 레이아웃은 `component-form`, 체크박스는 `component-checkbox`, 라디오는 `component-radio`, 셀렉트는 `component-select`, 탭은 `component-tabs`, 아코디언은 `component-accordion`, 표는 `component-table`, 페이지네이션은 `component-pagination`, 아이콘은 `component-icon`.
+- `component-modal`, `component-tooltip`, `component-calendar`, `component-swiper`, `component-textarea`는 아직 실제 가이드 페이지 기준으로 확정되지 않았다. 해당 컴포넌트가 필요하면 스킬에 적힌 확인 절차대로 `src/guide/pages/components`의 실제 HTML을 먼저 확인한다.
+- 같은 기능의 UI는 항상 같은 컴포넌트로 구현해 일관된 사용자 경험을 유지한다.
+- 컴포넌트를 확장할 때는 기존 구조와 클래스를 유지하면서 필요한 부분만 수정한다.
+- 설계 단계의 특별한 UX 요청이나 개발 제약이 없다면, 각 컴포넌트 가이드의 검증된 마크업을 그대로 복사해 사용하는 것을 기본으로 한다.
+- 컴포넌트 사용 시 컴포넌트 예시의 HTML 구조를 따르고, 전달받은 디자인과 일치하도록 구현한다.
+
+## SCSS 작성
+
+- 모든 SCSS는 상위(페이지 또는 컴포넌트) 클래스를 중심으로 그 안에 중첩해 작성한다. 개별 요소 스타일을 최상위에 독립적으로 정의하지 않는다.
+- 중첩은 2~3단계를 넘지 않도록 하고, 컴파일된 CSS도 5단계 이상 중첩되지 않는지 `dist/assets/styles/style.css`에서 확인한다. 깊은 중첩 대신 클래스 기반 선택자를 사용한다.
+- 클래스명은 kebab-case를 사용한다. `mainContainer`, `main_container`, `main__container` 형태는 사용하지 않는다.
+- 직접 mixin을 정의하지 않고 `_mixins.scss`에 정의된 mixin만 사용한다.
+- 2px 이상의 수치가 있는 속성에는 모두 `@include rem(속성, 값)`을 사용한다. `calc()` 계산식이 포함된 값에는 mixin을 적용하지 않는다.
+  - `margin: 20px;` x
+  - `@include rem(margin, 20);` o
+- 배경색·폰트색·테두리색은 `_variables.scss`에 정의된 변수(`$bg-XXXXXX`, `$font-XXXXXX`, `$line-XXXXXX`)가 있으면 그 변수를 사용하고, 정의된 변수가 없으면 직접 hex 값을 지정한다. 임의로 새 색상 변수를 만들지 않는다.
+- Hex 색상은 항상 6자리로 쓴다. 축약형은 사용하지 않는다.
+  - `#666` x
+  - `#666666` o
+- `gap` 속성은 사용하지 않는다. 요소 간 간격은 `margin`으로 조정한다.
+- 상태·토글 클래스는 `is-`, `has-` 접두어를 사용하고 기본 클래스에 중첩해 결합한다(`&.is-active`, `&.is-open`).
+- 스타일링이 필요한 요소는 태그만 두지 않고 목적을 드러내는 고유 클래스를 부여한다. 스타일은 태그 선택자가 아니라 클래스 선택자로 작성한다.
+
+## 아이콘·이미지 자산
+
+- 관리자 전용 자산 폴더 구분 없이 `src/assets/images/icons/`에 아이콘 SVG를 둔다.
+- 아이콘 클래스와 파일명은 `ico-` 접두어의 kebab-case를 사용한다. 예: `ico-close.svg`, `ico-search.svg`.
+- 새 아이콘을 추가하기 전에 같은 glyph가 이미 있는지 먼저 확인하고, 있으면 재사용한다.
+- 상세 규칙은 `icon-asset-naming` 스킬을 따른다.
+
+## 검증
+
+- HTML을 변경한 뒤에는 `npm run checkhtml`을 실행한다.
+- SCSS를 변경한 뒤에는 `npm run checkstyle`과 `npm run prettier`를 실행한다.
+- 컴포넌트 가이드 페이지(`src/guide/pages/components/*.html`)가 있는 요소는 그 예시와 마크업 구조가 일치하는지 비교해 확인한다.
+- 검증하지 못한 항목이나 남은 불확실성은 완료로 표현하지 않는다.
