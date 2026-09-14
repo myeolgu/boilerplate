@@ -7,6 +7,13 @@ description: 신규 정적 HTML 페이지 작성 시 sample.html 기준 구조, 
 
 이 프로젝트의 페이지는 React 컴포넌트가 아니라 `@@include` 파셜을 사용하는 정적 HTML 파일이다.
 
+## 코딩리스트 갱신 (작업 시작 전)
+
+- 페이지 코딩을 시작하기 전에 `src/guide/cl.csv`(코딩리스트)에 해당 페이지 행을 먼저 추가하거나 기존 행의 진행상태를 갱신한다.
+- 컬럼 순서: `no,카테고리명,Depth 1,Depth 2,Depth 3,Depth 4,Depth 5,화면경로,담당자,진행상태,완료일,비고`.
+- `src/guide/cl.html`이 보여주는 실제 코딩리스트는 구글시트(`codinglist.js`의 `mySpreadsheet`)가 원본이고 `cl.csv`는 로컬 폴백이다. 구글시트는 직접 수정할 수 없으니 `cl.csv`만 갱신하고, 구글시트 갱신 여부는 사용자에게 확인한다.
+- `화면경로`는 `gulp/config/paths.js`의 `pathPages<도메인>` 별칭을 쓴다. 새 도메인 폴더를 처음 쓰는 것이면 `projectReplacePaths`에 `pathPages<도메인>` 항목을 먼저 추가한다(코딩리스트 미리보기가 이 별칭을 `paths-config.json`으로 변환해서 링크를 연다).
+
 ## 기준 템플릿
 
 새 페이지는 `src/pages/sample/sample.html`의 구조를 기준으로 작성한다.

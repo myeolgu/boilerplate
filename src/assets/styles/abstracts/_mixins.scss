@@ -127,6 +127,21 @@
   @include font-style($fontWeight, $lineHeight);
 }
 
+@mixin f20($fontWeight: null, $lineHeight: 1.5) {
+  @include rem(font-size, 20);
+  @include font-style($fontWeight, $lineHeight);
+}
+
+@mixin f40($fontWeight: null, $lineHeight: 1.5) {
+  @include rem(font-size, 40);
+  @include font-style($fontWeight, $lineHeight);
+}
+
+@mixin f56($fontWeight: null, $lineHeight: 1.5) {
+  @include rem(font-size, 56);
+  @include font-style($fontWeight, $lineHeight);
+}
+
 // ******************** code comments ********************
 // disabled 속성
 // ******************** code comments ********************
@@ -349,7 +364,11 @@ $rem-px-only: false !default;
     $test-list: list.append($test-list, $item, space);
   }
 
-  @return if($test-list == $list, space, comma);
+  @if $test-list == $list {
+    @return space;
+  } @else {
+    @return comma;
+  }
 }
 
 @mixin rem-baseline($zoom: 100%) {
@@ -388,7 +407,11 @@ $rem-px-only: false !default;
     // }
   }
 
-  @return if(list.length($result) == 1, list.nth($result, 1), $result);
+  @if list.length($result) == 1 {
+    @return list.nth($result, 1);
+  } @else {
+    @return $result;
+  }
 }
 
 @function rem($values...) {
@@ -536,12 +559,10 @@ $baseFont: $global-font-size;
 //   String
 //   str(input);            anything not null
 //
-//   Number, int and uint
+//   Number
 //   num(input);            px, pt, pc, in, mm, cm, em, rem, ex, ch,
 //                          vw, vh, vmin, vmax, deg, rad, grad, turn,
 //                          dpi, dpcm, dppx, s, ms, hz, khz, number
-//   int(input);            as number
-//   uint(input);           as number
 //
 //   ratio                  number to fraction
 //
@@ -663,14 +684,6 @@ $unit-base-font-size: $global-font-size;
   }
   @return math.div($input, ($input * 0+1));
 }
-@function int($input) {
-  $num: num($input);
-  @return if($num<0, math.ceil($num), math.floor($num));
-}
-@function uint($input) {
-  @return math.abs(int($input));
-}
-
 // Aliases
 @function string($input) {
   @return str($input);
@@ -719,7 +732,8 @@ $unit-base-font-size: $global-font-size;
       pct: 0%,
       percent: 0%,
       num: 0,
-      number: 0, // percent or number,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+      number: 0,
+      // percent or number,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
     ),
     $unit
   );
@@ -750,10 +764,12 @@ $unit-base-font-size: $global-font-size;
     $units: (
       dppx: 0dppx,
       dpcm: 0dpcm,
-      dpi: 0dpi,
+      dpi: 0dpi
     );
     $input-unit: map.get($units, math.unit($input));
-    $input: if(1dppx < 95dpi, num($input-unit + (num($input) + $to-unit)), $input);
+    @if 1dppx < 95dpi {
+      $input: num($input-unit + (num($input) + $to-unit));
+    }
   }
 
   // Convert

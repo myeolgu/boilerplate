@@ -20,6 +20,9 @@
 
 ## 페이지 작성 범위
 
+- 새 페이지 코딩을 시작하기 전에 코딩리스트(`src/guide/cl.csv`)에 해당 페이지 행을 먼저 추가하거나 기존 행을 갱신한다. 컬럼은 `no,카테고리명,Depth 1,Depth 2,Depth 3,Depth 4,Depth 5,화면경로,담당자,진행상태,완료일,비고` 순서를 그대로 따른다.
+  - 실제 코딩리스트 화면(`src/guide/cl.html`)은 구글시트(`codinglist.js`의 `mySpreadsheet`)를 우선 데이터 소스로 쓰고, `cl.csv`는 그 로컬 폴백이다. 구글시트는 AI가 직접 수정할 수 없으므로 `cl.csv`만 갱신하고, 구글시트 쪽도 갱신이 필요한지는 사용자에게 확인한다.
+  - `화면경로` 값은 실제 파일 경로가 아니라 `gulp/config/paths.js`의 `pathPages<도메인>` 별칭(예: `pathPagesMain/main.html`)을 그대로 쓴다. 새 도메인 폴더(`src/pages/<도메인>/`)를 처음 만들 때는 `gulp/config/paths.js`의 `projectReplacePaths`에 `pathPages<도메인>: getBuildPath(...)` 항목을 함께 추가해야 코딩리스트 미리보기 링크가 정상적으로 열린다(추가 위치는 파일의 "// 필요한 경로를 추가 합니다." 주석 바로 위).
 - 새 페이지는 `src/pages/<도메인>/` 아래 정적 HTML 파일로 작성한다.
 - 모든 페이지는 `src/pages/sample/sample.html`의 구조를 기준으로 작성한다.
   - `head` 태그는 임의로 수정하지 않는다.
@@ -56,7 +59,10 @@
 
 ## SCSS 작성
 
+- 새 페이지의 SCSS는 `src/assets/styles/pages/_<도메인>.scss`로, 그 페이지가 속한 도메인 폴더(`src/pages/<도메인>/`) 단위로 파일 하나를 관리한다(예: `src/pages/notice/`에 목록·상세 페이지가 있으면 `_notice.scss` 하나에 `.notice-list-wrap`, `.notice-view-wrap`을 각각 최상위 선택자로 나란히 둔다. 서로 중첩하지 않는다). 도메인에 페이지가 하나뿐이면(`main`, `sample`처럼) 그 파일이 곧 페이지 하나짜리 파일이 된다. 파일 상단에 `@use '../abstracts' as *;`를 두고, `style.scss`의 페이지 목록에 `@use 'pages/<도메인>';`을 추가해 직접 등록한다.
+  - `pages/_index.scss`는 `main`/`sample`/`codinglist`/`component_guide`를 `@forward`하지만 `style.scss`를 포함해 어디에서도 `@use`되지 않는 미사용 파일이다. 새 페이지를 이 인덱스에 추가하지 않는다.
 - 모든 SCSS는 상위(페이지 또는 컴포넌트) 클래스를 중심으로 그 안에 중첩해 작성한다. 개별 요소 스타일을 최상위에 독립적으로 정의하지 않는다.
+- `content-inner`, `page-tit`, `page-tit-group`처럼 여러 페이지가 공유하는 골격 클래스도, 특정 페이지에서만 다르게 보여야 하면 그 페이지의 최상위 wrap 클래스 안에 중첩해서 재정의한다(`.notice-list-wrap .content-inner { ... }`). 클래스명이 공통이라는 이유로 전역 파일(`_base.scss` 등)을 고치거나 손대지 않고 넘어가지 않는다. 여러 페이지에 공통으로 필요한 변경이라고 확신할 때만 전역 파일 수정을 검토하고, 그 경우에도 영향 범위가 넓으니 먼저 사용자에게 확인한다.
 - 중첩은 2~3단계를 넘지 않도록 하고, 컴파일된 CSS도 5단계 이상 중첩되지 않는지 `dist/assets/styles/style.css`에서 확인한다. 깊은 중첩 대신 클래스 기반 선택자를 사용한다.
 - 클래스명은 kebab-case를 사용한다. `mainContainer`, `main_container`, `main__container` 형태는 사용하지 않는다.
 - 하위 클래스는 역할이나 콘텐츠로 이름 짓는다. 위치·순서·색상 같은 시각적 특징으로 이름 짓지 않는다.
@@ -66,14 +72,17 @@
 - 2px 이상의 수치가 있는 속성에는 모두 `@include rem(속성, 값)`을 사용한다. `calc()` 계산식이 포함된 값에는 mixin을 적용하지 않는다.
   - `margin: 20px;` x
   - `@include rem(margin, 20);` o
-- 배경색·폰트색·테두리색은 `_variables.scss`에 정의된 변수(`$bg-XXXXXX`, `$font-XXXXXX`, `$line-XXXXXX`)가 있으면 그 변수를 사용하고, 정의된 변수가 없으면 직접 hex 값을 지정한다. 임의로 새 색상 변수를 만들지 않는다.
+- 여백·크기(margin, padding, width, height, max-width 등) 값도 Figma가 1순위다. "이 정도면 비슷하겠지"로 눈대중 넣지 않고, Figma MCP의 `get_metadata`(x/y/width/height)나 `get_design_context`의 인셋·크기 값을 직접 읽어 그 수치 그대로 `rem()`에 넣는다. 정확한 수치를 구하지 못했으면 완료로 보고하지 않고 불확실하다고 밝힌다.
+- 배경색·폰트색·테두리색은 `_variables.scss`에 정의된 변수(`$bg-XXXXXX`, `$font-XXXXXX`, `$line-XXXXXX`) 중 디자인 값과 정확히 일치하는 게 있으면 그 변수를 사용한다. 정확히 일치하는 변수가 없으면, 가장 비슷한 기존 변수로 근사하지 말고 **`_variables.scss`에 새 변수를 그 값 그대로 추가한 뒤** 그 변수를 쓴다(예: 디자인이 `#3c3c3b`인데 `$font-333333`으로 대충 맞추지 않고, `$font-3c3c3b: #3c3c3b;`를 추가한다). 용도에 따라 접두어를 맞춘다: 글자색 → `$font-XXXXXX`, 배경 → `$bg-XXXXXX`, 테두리/구분선 → `$line-XXXXXX`. 페이지 SCSS에 원본 hex를 직접 박아 넣지 않는다.
+- 디자인에 명시된 색을 컴포넌트/베이스의 플레이스홀더 기본값(`component-table`의 `th` 배경 `lightgray`, 테두리 `gray`, `_base.scss`의 기본 글자색 `#000000` 등)에 그냥 맡겨두지 않는다. 다르면 페이지 SCSS에서 명시적으로 재정의한다.
 - Hex 색상은 항상 6자리로 쓴다. 축약형은 사용하지 않는다.
   - `#666` x
   - `#666666` o
 - `gap` 속성은 사용하지 않는다. 요소 간 간격은 `margin`으로 조정한다.
 - 상태·토글 클래스는 `is-`, `has-` 접두어를 사용하고 기본 클래스에 중첩해 결합한다(`&.is-active`, `&.is-open`).
 - 스타일링이 필요한 요소는 태그만 두지 않고 목적을 드러내는 고유 클래스를 부여한다. 스타일은 태그 선택자가 아니라 클래스 선택자로 작성한다.
-- 폰트 스타일(글꼴, 크기, 두께 등)은 기본값을 그대로 사용한다. 커스텀 폰트 스타일은 별도 작업으로 지정하며, 이번 작업 범위에서 임의로 커스텀하지 않는다.
+- Figma 디자인이 항상 1순위다. 폰트 크기·두께도 Figma 지정값과 동일하게 맞춘다("기본값 유지"로 임의로 생략하지 않는다). `_mixins.scss`에 해당 크기의 믹스인(`f12`~`f18` 등)이 없으면 같은 패턴으로 추가한다(`f20`, `f40`, `f56`처럼). 굵기는 별도 변수 없이 믹스인의 `$fontWeight` 인자에 숫자를 직접 넘긴다(`@include f18(700, 1.5);`) — 믹스인 자체의 사용 예시가 이미 이 방식이다. `font-size`를 믹스인 없이 직접 하드코딩하지 않는다.
+  - 예외: 글꼴(font-family) 자체가 프로젝트에 없는 경우(웹폰트 파일 미보유, 라이선스 미확인 등)는 크기·두께만 정확히 맞추고 글꼴은 프로젝트 기본값을 쓴다. 이 경우 어떤 글꼴이 빠졌는지 사용자에게 알린다.
 - `stylelint`가 다음 조합을 오류로 처리하므로 지킨다(`npm run checkstyle`로 검증).
   - `display: block`인 요소에 `vertical-align`을 함께 쓰지 않는다.
   - `display: inline`인 요소에 `margin-top`/`margin-bottom`을 함께 쓰지 않는다.
@@ -93,4 +102,6 @@
 - 컴포넌트 가이드 페이지(`src/guide/pages/components/*.html`)가 있는 요소는 그 예시와 마크업 구조가 일치하는지 비교해 확인한다.
 - `npm run dev`(gulp) 첫 실행 직후에는 `etUI.components`가 비어 있어 모든 인터랙션 컴포넌트가 초기화 실패할 수 있다(`src/assets/scripts/ui/{components,hooks,utils,templates}/index.cjs` 생성과 JS 번들 합치기 사이의 레이스 컨디션). 콘솔에 `Cannot read properties of undefined (reading 'Input')` 같은 에러가 보이면 dev 서버를 껐다 다시 켠다.
 - 실제 동작(클릭, 열림/닫힘 등) 확인이 필요하면 Playwright(MCP가 연결되어 있으면)로 dev 서버를 띄운 페이지를 열어 검증한다. 코드만 읽고 동작을 추측하지 않는다. Playwright가 만드는 `.playwright-mcp/`(스크린샷·스냅샷·콘솔 로그)는 검증에 다 쓰고 나면 삭제한다. git에는 잡히지 않지만(`.gitignore`) 로컬에 쌓아둘 필요가 없다.
+- Figma 기반으로 구현한 화면은 코드 컨벤션 검수(`reviewer`)와 별개로, 완성된 화면을 Figma와 스크린샷으로 시각 비교해야 하면 `design-qa` 에이전트를 호출한다. `reviewer`는 lint·컨벤션만 보고 시각적 일치 여부는 보지 않으므로, `reviewer`가 "문제 없음"이라고 해도 그건 코드 컨벤션 기준일 뿐 Figma와의 시각적 일치를 보장하지 않는다.
+- `design-qa`(또는 다른 검수)에서 "다른 원인 때문에 파생된 문제라 제외"라고 정리한 항목은 영구 제외가 아니라 그 원인이 해결될 때까지만 제외한 것이다. 원인이 되는 이슈(예: 공통 골격 `content-inner` 미비)를 고친 뒤에는, 그 이유로 제외했던 파생 항목들(예: 정렬 오차)을 반드시 다시 확인한다. 원인을 고쳤다고 파생 항목이 저절로 고쳐지는 게 아니므로, 제외 목록을 만든 사람이 직접 그 목록을 다시 열어봐야 한다.
 - 검증하지 못한 항목이나 남은 불확실성은 완료로 표현하지 않는다.

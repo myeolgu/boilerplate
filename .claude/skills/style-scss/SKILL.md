@@ -7,14 +7,24 @@ description: SCSS 작성 규칙(상위 클래스 중심 중첩, kebab-case, rem(
 
 이 프로젝트는 Gulp + `gulp-sass`로 컴파일하는 일반 SCSS 프로젝트다. CSS Modules나 React 컴포넌트 prop을 통한 스타일 위임 개념은 없다.
 
+## 페이지 SCSS 파일 구성
+
+- 새 페이지의 SCSS는 `src/assets/styles/pages/_<도메인>.scss`로, 그 페이지가 속한 도메인 폴더(`src/pages/<도메인>/`) 단위로 파일 하나를 관리한다. 같은 도메인 폴더에 페이지가 여러 개면(예: `src/pages/notice/`의 목록·상세) 그 페이지들의 최상위 wrap 클래스를 전부 한 파일 안에 나란히 둔다(`.notice-list-wrap { ... }`, `.notice-view-wrap { ... }`처럼 각각 독립된 최상위 선택자로, 서로 중첩하지 않는다). 페이지가 하나뿐인 도메인은 그 파일이 곧 페이지 하나짜리 파일이 된다. 파일 상단에 `@use '../abstracts' as *;`를 둔다.
+- `style.scss`의 페이지 목록에 `@use 'pages/<도메인>';`을 직접 추가해 빌드에 연결한다.
+- `pages/_index.scss`는 `main`/`sample`/`codinglist`/`component_guide`를 `@forward`하지만 `style.scss`를 포함해 어디에서도 `@use`되지 않는 미사용 파일이다. 새 페이지를 여기 추가하지 않는다.
+
 ## 상위 클래스 중심 구조
 
 - 모든 SCSS는 상위(페이지 또는 컴포넌트) 클래스를 중심으로 그 안에 중첩해 작성한다. 개별 요소 스타일을 최상위에 독립적으로 정의하지 않는다.
 
 ```scss
 /* 사용하지 않음 */
-.notice-header { @include rem(padding, 20); }
-.notice-content { @include rem(margin-top, 10); }
+.notice-header {
+  @include rem(padding, 20);
+}
+.notice-content {
+  @include rem(margin-top, 10);
+}
 
 /* 사용 */
 .notice-page {
@@ -32,6 +42,22 @@ description: SCSS 작성 규칙(상위 클래스 중심 중첩, kebab-case, rem(
 
 - 컴포넌트 내부 요소도 반드시 컴포넌트 최상위 선택자 안에 중첩한다.
 - 전역 선택자나 다른 페이지에 영향을 줄 수 있는 단독 클래스 선택자는 만들지 않는다.
+- **공통 골격 클래스도 페이지별로 재정의할 수 있다.** `content-inner`, `page-tit`, `page-tit-group`처럼 `sample.html` 템플릿이 제공하는 클래스가 특정 페이지에서 디자인과 다르게 보이면, 전역 파일(`_base.scss` 등)을 고치는 게 아니라 그 페이지의 최상위 wrap 클래스 안에 중첩해서 재정의한다.
+
+```scss
+/* base.scss 등 전역 파일을 고치지 않고 */
+.notice-list-wrap {
+  .content-inner {
+    @include rem(max-width, 1200);
+    margin: 0 auto;
+  }
+  .page-tit {
+    color: $font-3c3c3b;
+  }
+}
+```
+
+  클래스명이 여러 페이지에 공통이라는 이유만으로 손대지 않고 넘어가지 않는다. 정말 모든 페이지에 공통으로 필요한 변경이면 전역 파일 수정을 검토할 수 있지만, 영향 범위가 넓으므로 먼저 사용자에게 확인한다.
 
 ## 중첩 깊이
 
@@ -44,18 +70,28 @@ description: SCSS 작성 규칙(상위 클래스 중심 중첩, kebab-case, rem(
 .component-table {
   thead {
     tr {
-      th { }
-      td { .name { } }
+      th {
+      }
+      td {
+        .name {
+        }
+      }
     }
   }
 }
 
 /* 클래스로 완화 */
 .component-table {
-  th { }
-  td { .name { } }
-  thead { }
-  tbody tr:nth-child(even) { }
+  th {
+  }
+  td {
+    .name {
+    }
+  }
+  thead {
+  }
+  tbody tr:nth-child(even) {
+  }
 }
 ```
 
@@ -97,16 +133,31 @@ description: SCSS 작성 규칙(상위 클래스 중심 중첩, kebab-case, rem(
 - `calc()` 계산식이 포함된 값에는 mixin을 적용하지 않고 그대로 쓴다: `top: calc(50% - 9px);`
 - 1px 테두리·구분선은 `1px`로 그대로 쓴다.
 
+## 여백·크기 — Figma가 1순위
+
+- `margin`, `padding`, `width`, `height`, `max-width` 등 여백·크기 값도 Figma가 1순위다. "이 정도면 비슷하겠지"로 눈대중 넣지 않는다.
+- Figma MCP의 `get_metadata`(x/y/width/height)나 `get_design_context` 응답의 인셋·크기 값을 직접 읽어 그 수치 그대로 `rem()`에 넣는다.
+- 정확한 수치를 구하지 못했으면(예: 절대좌표 기반 레이아웃이라 셀 패딩처럼 직접 대응하는 값이 없는 경우) 임의로 지어내지 않고, 어떻게 근사했는지 밝히고 불확실하다고 표시한다.
+
 ## 색상·폰트
 
-- 배경색·폰트색·테두리색은 `_variables.scss`에 정의된 변수가 있으면 그 변수를 쓰고, 없으면 직접 hex 값을 지정한다. 임의로 새 색상 변수를 만들지 않는다.
+- 배경색·폰트색·테두리색은 `_variables.scss`에 정의된 변수 중 **디자인 값과 정확히 일치하는 것**이 있으면 그 변수를 쓴다.
   - background-color → `$bg-XXXXXX`
   - color → `$font-XXXXXX`
   - border → `$line-XXXXXX`
+- **정확히 일치하는 변수가 없으면 가장 비슷한 기존 변수로 근사하지 않는다.** `$font-333333`(#333333)과 디자인의 `#3c3c3b`는 다른 색이다 — 이런 경우 기존 변수를 억지로 끌어쓰지 않고, **`_variables.scss`에 그 hex 그대로 새 변수를 추가**한 뒤(`$font-3c3c3b: #3c3c3b;`, 용도에 맞는 접두어로) 그 변수를 쓴다. 페이지 SCSS에 원본 hex를 직접 쓰지 않는다.
+  - `color: $font-333333;`(디자인 값 `#3c3c3b`일 때) x / `color: #3c3c3b;`(변수 미생성) x / `color: $font-3c3c3b;`(`_variables.scss`에 추가 후) o
+- **Figma 등 디자인에 명시된 색을 프로젝트 기본값에 그냥 맡겨두지 않는다.** `component-table`의 `th` 배경(`lightgray`)·테두리(`gray`)나 `_base.scss`의 기본 글자색(`#000000`)처럼 컴포넌트/베이스에 박혀 있는 플레이스홀더 색은, 디자인이 다른 색을 요구하면 반드시 페이지 SCSS에서 명시적으로 재정의한다. "색을 안 건드렸으니 알아서 맞겠지"로 넘기지 않는다.
 - Hex 색상은 항상 6자리로 쓴다.
   - `#666` x / `#666666` o
   - `#fff` x / `#ffffff` o
-- 폰트 스타일(글꼴, 크기, 두께 등)은 기본값을 그대로 사용한다. 커스텀 폰트 스타일은 이번 작업 범위에서 임의로 지정하지 않는다. 별도 커스텀 작업으로 처리한다.
+## 폰트 크기·두께 — Figma가 1순위
+
+- Figma 디자인이 항상 1순위다. 폰트 크기·두께도 Figma 지정값과 동일하게 맞춘다. "기본값 유지"를 이유로 생략하지 않는다.
+- `_mixins.scss`에 이미 `f12`/`f14`/`f16`/`f18` 같은 폰트 크기 믹스인이 있다. 필요한 크기가 없으면 같은 패턴으로 새 믹스인을 추가한다(`f20`, `f40`, `f56`처럼). `font-size`를 믹스인 없이 직접 쓰지 않는다.
+- 굵기는 별도 변수를 만들지 않고 믹스인의 `$fontWeight` 인자에 숫자를 직접 넘긴다(`@include f18(700, 1.5);`) — `_mixins.scss` 상단 사용 예시 자체가 이미 이 방식이다(`@include f12(500);`). `_variables.scss`의 "폰트 굵기 참고용" 섹션은 참고용 주석일 뿐 변수를 채우는 자리가 아니다.
+- line-height도 Figma 값을 그대로 믹스인의 두 번째 인자로 넘긴다(`@include f18(400, 1.5);`).
+- 예외: 글꼴(font-family) 자체가 프로젝트 폰트 스택(`$global-font-family`)에 없으면(웹폰트 파일 미보유 등) 크기·두께만 정확히 맞추고 글꼴은 프로젝트 기본값을 쓴다. 이때는 어떤 글꼴이 빠졌는지 사용자에게 알린다 — 조용히 넘어가지 않는다.
 
 ## 레이아웃
 
