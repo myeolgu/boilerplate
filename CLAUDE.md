@@ -76,10 +76,9 @@
 
 ## 아이콘·이미지 자산
 
-- 관리자 전용 자산 폴더 구분 없이 `src/assets/images/icons/`에 아이콘 SVG를 둔다.
-- 아이콘 클래스와 파일명은 `ico-` 접두어의 kebab-case를 사용한다. 예: `ico-close.svg`, `ico-search.svg`.
-- 새 아이콘을 추가하기 전에 같은 glyph가 이미 있는지 먼저 확인하고, 있으면 재사용한다.
-- 상세 규칙은 `icon-asset-naming` 스킬을 따른다.
+- 아이콘은 SVG 파일이 아니라 `src/assets/styles/abstracts/_svg.scss`의 인라인 `data-URI` 믹스인(`@mixin ico-이름($color)`)으로 그린다. `.ico-이름` 클래스는 `src/assets/styles/components/_ico.scss`가 이 믹스인을 감싼 것이다.
+- 새 아이콘이 필요하면 SVG 파일을 추가하는 게 아니라 같은 패턴의 믹스인을 `_svg.scss`에 추가한다. 새 아이콘을 추가하기 전에 같은 glyph의 믹스인이 이미 있는지 먼저 확인하고, 있으면 재사용한다.
+- 상세 규칙은 `icon-asset-naming`, 마크업·색상 변경 방법은 `component-icon` 스킬을 따른다.
 
 ## 검증
 

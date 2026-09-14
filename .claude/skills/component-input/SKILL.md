@@ -65,9 +65,40 @@ description: 입력 필드(component-input) 마크업 구조, 버튼/아이콘 �
 </div>
 ```
 
+## 파일 첨부
+
+`input-field`가 아니라 `input-file-field`를 쓰고, `label`로 감싸 파일 선택 영역 전체를 클릭
+가능하게 한다.
+
+```html
+<div class="component-input">
+  <label class="input-file-field">
+    <input type="file" aria-label="파일 첨부">
+    <span class="input-file-txt">선택된 파일 없음</span>
+    <span class="input-file-btn">찾아보기</span>
+  </label>
+</div>
+```
+
+- 공통 버튼 클래스는 `.input-field-btn`이 아니라 `.input-file-btn`이다.
+- 선택한 파일명 표시는 `.input-file-txt`에 JS로 채운다.
+
+## 고정 텍스트가 붙는 입력 필드
+
+접두/접미 텍스트(단위, 도메인 등)가 필요하면 `.input-field-txt`를 입력 앞뒤에 둔다.
+
+```html
+<div class="input-field">
+  <span class="input-field-txt">https://</span>
+  <input type="text" placeholder="도메인">
+</div>
+```
+
 ## 상태
 
 - 비활성화: `.component-input.input-disabled` + `input`에 `disabled`
+- 읽기 전용: `.component-input.input-readonly` + `input`에 `readonly`
+- 필수: `.component-input.input-required` (`.ico-required-mark`에 강조 색이 적용된다)
 - 유효: `.component-input.input-valid`
 - 유효하지 않음: `.component-input.input-invalid`
 
@@ -86,7 +117,11 @@ description: 입력 필드(component-input) 마크업 구조, 버튼/아이콘 �
 ## 클래스 구조
 
 - 기본 클래스: `.component-input`
-- `.input-label`(`.label-txt`, `.label-util`, `.input-sub-txt`) / `.input-field`(`.input-field-btn`, `.input-field-ico`) / `.input-info`
+- `.input-label`(`.label-txt`, `.label-util`, `.input-sub-txt`)
+- `.input-field`(`.input-field-btn`, `.input-field-ico`, `.input-field-txt`) — 텍스트류 input
+- `.input-file-field`(`.input-file-btn`, `.input-file-txt`) — `type="file"` 전용
+- `.input-textarea-field` — `textarea` 전용(`component-textarea` 스킬 참고)
+- `.input-info`
 
 ## 접근성
 

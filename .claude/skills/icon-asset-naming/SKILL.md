@@ -1,31 +1,53 @@
 ---
 name: icon-asset-naming
-description: 아이콘 자산의 파일명 규칙(ico- kebab-case, 폴더 구조)과 SVG 추가 전 기존 자산 재사용 확인 절차를 안내한다. 새 아이콘을 추가하기 전에 사용한다.
+description: 이 프로젝트의 아이콘은 SVG 파일이 아니라 _svg.scss의 인라인 data-URI 믹스인이다. 새 아이콘을 추가하기 전에 기존 믹스인 재사용 여부와 새 믹스인 작성 절차를 안내한다.
 ---
 
-# 아이콘(ICO) 지침
+# 아이콘 지침
 
-## 파일 관리
+## 새 아이콘 추가 전 확인
 
-- 아이콘 자산은 `src/assets/images/icons/`에 둔다.
-- 아이콘 클래스와 파일명은 `ico-` 접두어의 kebab-case로 짓는다. 예: `ico-close.svg`, `ico-search.svg`, `ico-arrow-down.svg`.
-- 인라인 `data:image/svg+xml`은 사용하지 않고, 재사용 가능한 SVG 파일로 분리한다.
+새 아이콘이 필요하면 SVG 파일부터 만들지 않는다. 먼저 `src/assets/styles/abstracts/_svg.scss`와
+`src/assets/styles/components/_ico.scss`에서 같은 glyph의 믹스인·클래스가 이미 있는지 확인한다.
+있으면 재사용한다. 색만 다르면 새 아이콘을 추가하지 않고 기존 믹스인을 색 인자만 바꿔 호출한다
+(`component-icon` 스킬의 "색상 바꾸기" 참고).
 
-## SVG 추가 전 검수
+## 새 아이콘을 추가할 때 (기본 방법: 인라인 SVG 믹스인)
 
-- 사용자가 SVG 코드를 제공해도 즉시 새 파일을 만들지 않는다.
-- 먼저 `src/assets/images/icons/`에서 파일명과 용도가 비슷한 SVG를 검색하고, 기존 아이콘이 요구한 모양과 용도에 맞는지 확인한다.
-- 기존 아이콘을 재사용할 수 있으면 새 SVG를 추가하지 않고 그 아이콘을 사용한다.
-- 재사용할 수 없을 때만 제공된 SVG를 위 규칙의 `ico-` kebab-case 파일명으로 추가한다.
-- 추가 여부와 재사용 여부를 작업 결과에 함께 알린다.
+1. SVG를 24×24 기준으로 준비하고, 색상이 들어가는 속성(`stroke`/`fill`)을 `#{$color}`로
+   치환한 문자열을 만든다.
+2. `_svg.scss`에 같은 패턴으로 새 믹스인을 추가한다.
 
-## Figma에서 내보낼 때
+   ```scss
+   @mixin ico-새이름($color: $default-icon-color) {
+     $ico-새이름: "data:image/svg+xml,...stroke='#{$color}'...";
+     background-image: url($ico-새이름);
+   }
+   ```
 
-- Figma 레이어명이 아니라 이 규칙대로 이름을 정해서 내보낸다. `Vector`, `Group 2085`, `Frame 1` 같은 이름을 그대로 쓰지 않는다.
-- 같은 glyph의 상태 변형은 한 파일로 묶지 말고 상태 접미어로 나눈다. 예: `ico-power-off.svg`, `ico-power-on.svg`.
-- 내보내기 전에 같은 glyph가 이미 있는지 먼저 찾는다. 있으면 새로 만들지 않고 그것을 쓴다.
+3. 화면에서 `.ico-*` 클래스로 바로 쓸 아이콘이면 `_ico.scss`에 클래스를 추가한다.
+
+   ```scss
+   .ico-새이름 {
+     @include ico-새이름;
+   }
+   ```
+
+   특정 컴포넌트(체크박스 체크 표시, 페이지네이션 이동 버튼 등)에서만 쓰는 아이콘이면 `.ico-*`
+   클래스를 만들지 않고 해당 컴포넌트 SCSS에서 바로 `@include ico-새이름;`로 쓴다.
+4. 믹스인 이름은 `ico-` 접두어의 kebab-case로 짓는다. 예: `ico-close`, `ico-arrow-down`,
+   `ico-nav-first`.
+
+## 파일 기반 아이콘 (예외, 확인 필요)
+
+`_svg.scss`에는 인라인으로 만들기 어려운 아이콘을 위한 `@include ico-bg($filename)` 믹스인도
+있다(`background-image: url('../images/icon/#{$filename}')`). 다만 저장소 어디에도 이 경로에
+실제 파일이 없고 실제로 쓰인 사례도 없다. 사진처럼 인라인 SVG로 만들기 어려운 아이콘이 필요하면
+이 방식을 쓸지, 파일명 규칙을 어떻게 할지 먼저 사용자에게 확인한다. 추측으로 새 폴더 구조나
+네이밍 규칙을 만들지 않는다.
 
 ## 마크업
 
-- 아이콘은 `<i class="ico-{이름} ico-normal" aria-hidden="true"></i>` 형태로 마크업한다. 자세한 사용법과 접근성 규칙은 `component-icon` 스킬을 따른다.
-- 직접 `<img>` 태그나 data URI를 사용하지 않는다.
+- 아이콘은 `<i class="ico-{이름} ico-normal" aria-hidden="true"></i>` 형태로 마크업한다. 자세한
+  사용법과 접근성 규칙은 `component-icon` 스킬을 따른다.
+- 직접 `<img>` 태그나 `<svg>` 인라인 마크업을 사용하지 않는다.
