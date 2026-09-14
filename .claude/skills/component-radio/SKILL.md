@@ -51,4 +51,6 @@ description: 라디오 버튼 마크업 구조, 상태, 접근성 규칙을 안�
 
 ## 참고
 
-`.windsurfrules`는 클래스 구조 설명에서 기본 클래스를 `.component-radio`라고 적었지만, 실제 예시 코드는 전부 `.component-input`으로 감싼다(체크박스와 같은 래퍼를 공유). 마크업은 검증된 예시 코드(`.component-input`)를 따르고, `.component-radio`라는 클래스는 만들지 않는다. 실제 프로젝트에서 어느 쪽이 맞는지 확인이 필요하면 사용자에게 확인한다.
+실제 프로젝트(`src/assets/styles/components/_radio.scss`)를 확인한 결과 기본 클래스는
+`.component-input`이 맞다. 체크박스와 같은 래퍼를 `Input.js`가 함께 처리한다(`component-checkbox`
+스킬 참고). `.component-radio`라는 클래스는 만들지 않는다.
