@@ -35,6 +35,7 @@ src/**/*.map
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+/.playwright-mcp/
 /src/assets/js/ui/components/index.cjs
 /src/assets/js/ui/hooks/index.cjs
 /src/assets/js/ui/utils/index.cjs
