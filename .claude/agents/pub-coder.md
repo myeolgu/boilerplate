@@ -22,11 +22,11 @@ model: fable
   구조(`#content[role="main"]` 안, `<!-- ai가 코딩해줄 부분 -->` 아래, `.content-inner` 필수)를
   따른다. `head` 태그와 헤더·푸터 include는 임의로 수정하지 않는다.
 - 구현 전 `src/guide/pages/components`의 관련 컴포넌트 가이드를 먼저 확인한다. 프리로드된 스킬에
-  없는 컴포넌트가 필요하면(아코디언, 체크박스, 라디오, 탭, 아이콘, 페이지네이션, 툴팁, 모달,
-  날짜 선택, 스와이퍼 등) 구현 전에 해당 `component-*` 스킬을 불러온다.
-- `component-modal`, `component-tooltip`, `component-calendar`, `component-swiper`,
-  `component-textarea` 스킬은 아직 실제 가이드 페이지 기준으로 검증되지 않았다. 이 컴포넌트가
-  필요하면 스킬의 확인 절차대로 해당 `src/guide/pages/components/*.html`을 먼저 읽고 구현한다.
+  없는 컴포넌트가 필요하면(아코디언, 체크박스, 라디오, 탭, 아이콘, 페이지네이션, 모달, 스와이퍼,
+  텍스트영역 등) 구현 전에 해당 `component-*` 스킬을 불러온다.
+- 모달·스와이퍼·텍스트영역(글자 수 카운트)은 `initUI()`가 `.component-modal`/`.component-swiper`/
+  `.component-input` 클래스를 스캔해 자동 초기화하는 실제 JS 컴포넌트다(`src/assets/scripts/ui/
+  components`). 클래스명과 `data-props-*` 속성을 임의로 바꾸면 JS 초기화가 동작하지 않는다.
 - SCSS는 상위 클래스 중심으로 중첩해 작성하고, 고유 최상위 클래스 안에 범위를 제한한다.
 - 컴포넌트 클래스는 검증된 예시 마크업을 그대로 사용하고, 임의로 구조를 바꾸지 않는다.
 

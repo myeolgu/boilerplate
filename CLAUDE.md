@@ -44,7 +44,7 @@
 ## 컴포넌트 사용 원칙
 
 - 모든 UI 요소는 새로 만들기 전에 `src/guide/pages/components`의 컴포넌트 가이드와 관련 스킬을 먼저 확인하고, 있으면 직접 마크업 대신 그 컴포넌트를 사용한다. 예: 버튼은 `component-button`, 입력 필드는 `component-input`, 폼 레이아웃은 `component-form`, 체크박스는 `component-checkbox`, 라디오는 `component-radio`, 셀렉트는 `component-select`, 탭은 `component-tabs`, 아코디언은 `component-accordion`, 표는 `component-table`, 페이지네이션은 `component-pagination`, 아이콘은 `component-icon`.
-- `component-modal`, `component-tooltip`, `component-calendar`, `component-swiper`, `component-textarea`는 아직 실제 가이드 페이지 기준으로 확정되지 않았다. 해당 컴포넌트가 필요하면 스킬에 적힌 확인 절차대로 `src/guide/pages/components`의 실제 HTML을 먼저 확인한다.
+- 모달은 `component-modal`, 스와이퍼는 `component-swiper`, 글자 수 카운트가 있는 텍스트영역은 `component-textarea`를 따른다. 이 셋은 `initUI()`가 자동 초기화하는 실제 JS 컴포넌트(`src/assets/scripts/ui/components`)와 연결되어 있으므로 클래스와 `data-props-*` 속성을 임의로 바꾸지 않는다.
 - 같은 기능의 UI는 항상 같은 컴포넌트로 구현해 일관된 사용자 경험을 유지한다.
 - 컴포넌트를 확장할 때는 기존 구조와 클래스를 유지하면서 필요한 부분만 수정한다.
 - 설계 단계의 특별한 UX 요청이나 개발 제약이 없다면, 각 컴포넌트 가이드의 검증된 마크업을 그대로 복사해 사용하는 것을 기본으로 한다.
