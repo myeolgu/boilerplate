@@ -106,11 +106,15 @@ description: SCSS 작성 규칙(상위 클래스 중심 중첩, kebab-case, rem(
 - Hex 색상은 항상 6자리로 쓴다.
   - `#666` x / `#666666` o
   - `#fff` x / `#ffffff` o
+- 폰트 스타일(글꼴, 크기, 두께 등)은 기본값을 그대로 사용한다. 커스텀 폰트 스타일은 이번 작업 범위에서 임의로 지정하지 않는다. 별도 커스텀 작업으로 처리한다.
 
 ## 레이아웃
 
 - `gap` 속성은 사용하지 않는다. 요소 간 간격은 `margin`으로 조정한다.
 - `position: absolute`는 겹침 배치가 필요한 경우에만 사용하고, 기준 컨테이너에는 `position: relative`를 명시한다.
+- `position`을 지정하지 않은(`static`) 요소에는 `top`/`left`/`right`/`bottom`을 쓰지 않는다. `stylelint`가 이 조합을 오류로 처리한다(`no-positionless-offsets`).
+- `display: block`인 요소에는 `vertical-align`을 함께 쓰지 않는다. `stylelint`가 오류로 처리한다(`no-block-with-vertical-align`).
+- `display: inline`인 요소에는 `margin-top`/`margin-bottom`을 함께 쓰지 않는다. `stylelint`가 오류로 처리한다(`no-margin-with-inline`).
 
 ## 태그 선택자
 

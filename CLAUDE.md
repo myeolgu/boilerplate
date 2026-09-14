@@ -39,6 +39,7 @@
 - 아이콘은 `<i class="ico-xxx" aria-hidden="true"></i>` 형태로 마크업한다. 아이콘만으로 의미를 전달하면 `aria-label`(또는 `role="img"` + `aria-label`)을 추가하고, 텍스트와 함께 쓰면 아이콘에 `aria-hidden="true"`만 둔다.
 - 아이콘 전용 버튼에는 시각적으로 숨긴 `<span class="hide-txt">설명</span>`을 추가해 스크린 리더에 목적을 전달한다.
 - HTML 주석은 `<!-- 주석 -->`, 수정 표시는 `<!-- 20240228 수정 -->` ~ `<!-- // 20240228 수정 -->` 형태로 시작·끝을 표시한다.
+- `br`, `img`, `input`, `hr` 같은 void 요소는 자체 닫힘으로 작성한다(`<br />`, `<input />`). 닫지 않은 형태(`<br>`)는 `npm run checkhtml`에서 오류로 처리된다.
 
 ## 컴포넌트 사용 원칙
 
@@ -65,6 +66,11 @@
 - `gap` 속성은 사용하지 않는다. 요소 간 간격은 `margin`으로 조정한다.
 - 상태·토글 클래스는 `is-`, `has-` 접두어를 사용하고 기본 클래스에 중첩해 결합한다(`&.is-active`, `&.is-open`).
 - 스타일링이 필요한 요소는 태그만 두지 않고 목적을 드러내는 고유 클래스를 부여한다. 스타일은 태그 선택자가 아니라 클래스 선택자로 작성한다.
+- 폰트 스타일(글꼴, 크기, 두께 등)은 기본값을 그대로 사용한다. 커스텀 폰트 스타일은 별도 작업으로 지정하며, 이번 작업 범위에서 임의로 커스텀하지 않는다.
+- `stylelint`가 다음 조합을 오류로 처리하므로 지킨다(`npm run checkstyle`로 검증).
+  - `display: block`인 요소에 `vertical-align`을 함께 쓰지 않는다.
+  - `display: inline`인 요소에 `margin-top`/`margin-bottom`을 함께 쓰지 않는다.
+  - `position`을 지정하지 않은(`static`) 요소에 `top`/`left`/`right`/`bottom`을 쓰지 않는다. 오프셋이 필요하면 먼저 `position: relative`(또는 `absolute`/`fixed`)를 지정한다.
 
 ## 아이콘·이미지 자산
 

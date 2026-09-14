@@ -38,6 +38,7 @@ description: 신규 정적 HTML 페이지 작성 시 sample.html 기준 구조, 
 - `<div id="content" role="main">` 안에서만 마크업하고, 그 안의 `<!-- ai가 코딩해줄 부분 -->` 주석 바로 아래에 코딩한다.
 - 헤더·푸터는 `@@include('pathPagesInclude/_header.html', ...)` / `@@include('pathPagesInclude/_footer.html')`로 포함하고 직접 마크업하지 않는다.
 - `#content` 안의 페이지 전용 클래스 자식에는 항상 `<div class="content-inner">`를 사용한다.
+- `br`, `img`, `input`, `hr` 같은 void 요소는 자체 닫힘으로 작성한다(`<br />`). 닫지 않은 형태(`<br>`)는 `npm run checkhtml`에서 오류로 처리된다.
 
 ## 페이지 최상위 클래스
 

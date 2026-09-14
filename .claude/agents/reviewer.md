@@ -31,6 +31,14 @@ model: sonnet
 - **태그 선택자**: 스타일링이 필요한 요소마다 목적을 드러내는 고유 클래스가 부여되어 있는지,
   `button`, `a`, `strong` 같은 태그 선택자로 스타일이 지정된 곳이 없는지 확인한다. 예외 없음.
 - **선언 포맷**: SCSS 선언 블록이 한 줄로 축약되지 않고 줄바꿈되어 있는지 확인한다.
+- **폰트 커스텀 금지**: 이번 작업 범위에서 폰트 스타일(글꼴, 크기, 두께 등)을 기본값과 다르게
+  임의로 지정하지 않았는지 확인한다.
+- **stylelint 강제 조합** (실제 `.stylelintrc` 커스텀 규칙, 위반 시 `npm run checkstyle` 실패):
+  - `display: block`에 `vertical-align`을 함께 쓰지 않았는지
+  - `display: inline`에 `margin-top`/`margin-bottom`을 함께 쓰지 않았는지
+  - `position`을 지정하지 않은(`static`) 요소에 `top`/`left`/`right`/`bottom`을 쓰지 않았는지
+- **void 요소 자체 닫힘**: `br`, `img`, `input`, `hr` 등이 `<br />`처럼 자체 닫힘으로 작성됐는지
+  확인한다(`npm run checkhtml`의 `void-style` 규칙).
 
 ## 검수 기준 — 접근성
 
