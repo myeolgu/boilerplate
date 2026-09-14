@@ -34,6 +34,8 @@ model: fable
 
 - 변경한 HTML에는 `npm run checkhtml`을, SCSS에는 `npm run checkstyle`과 `npm run prettier`를
   실행한다.
+- `@@include` 경로나 파셜을 추가·수정했으면 `npm run build`(또는 `npm run dev`)로 실제 컴파일이
+  되는지 확인한다. gulp가 실패하면 완료로 보고하지 않는다.
 - 컴포넌트 가이드 페이지가 있는 요소는 그 예시와 마크업 구조가 일치하는지 비교해 확인한다.
 - 검증하지 못한 항목은 완료로 표현하지 않고 남은 불확실성을 알린다.
 - 무엇을 변경했고 무엇을 검증했는지 결과에 간단히 요약한다.
