@@ -5,6 +5,7 @@ tools: Read, Grep, Glob, Bash
 disallowedTools: Write, Edit, NotebookEdit
 skills:
   - style-scss
+  - component-input
   - component-form
   - icon-asset-naming
 model: sonnet
@@ -51,10 +52,12 @@ lint 설정에 없다. 이 항목들은 자동 검증되지 않으므로 전부 
   꺼져 있어 린터가 안 잡음).
 - **테이블 접근성**: `th`에 적절한 `scope`가 지정됐는지 확인한다(`wcag/h63` 꺼져 있어 린터가 안
   잡음).
-- **라벨 연결**: `input`/`select`/`textarea`에 `for`/`id`가 연결됐는지, 그룹 입력에 `fieldset`/
-  `legend`가 쓰였는지 확인한다.
+- **라벨 연결**: `input`/`select`/`textarea`(체크박스·라디오 포함, 전부 `.component-input`
+  변형)에 `for`/`id`가 연결됐는지, 그룹 입력에 `fieldset`/`legend`가 쓰였는지 확인한다.
 - **아이콘 접근성**: 장식용 아이콘에 `aria-hidden="true"`, 의미 있는 아이콘에 `aria-label`(필요시
   `role="img"`)이 있는지, 아이콘 전용 버튼에 `.hide-txt`가 있는지 확인한다.
+- **아이콘 구현 방식**: 새 아이콘을 `<img>`나 별도 SVG 파일 참조로 추가하지 않았는지, 기존
+  `.ico-*` 클래스나 `_svg.scss` 믹스인을 재사용했는지 확인한다(`icon-asset-naming` 스킬 참고).
 - **시맨틱 태그**: 의미 없는 `div` 남용 대신 시맨틱 태그를 썼는지, `h1`~`h6`이 계층적이고 페이지당
   `h1`이 하나인지 확인한다.
 - **컴포넌트 마크업 일치**: 사용한 컴포넌트가 `src/guide/pages/components/*.html` 예시와 구조가
