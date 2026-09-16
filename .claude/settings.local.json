@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/review-on-keyword.sh",
+            "timeout": 300,
+            "statusMessage": "검수 실행 중(checkstyle/checkhtml)..."
+          }
+        ]
+      }
+    ]
+  }
+}
