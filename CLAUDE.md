@@ -39,6 +39,7 @@
 
 - 의미에 맞는 시맨틱 태그(`header`, `nav`, `main`, `section`, `article`, `aside`, `footer`, `figure`/`figcaption`, `time`)를 사용한다. 의미 없이 `div`로만 구조를 만들지 않는다.
 - `h1`~`h6`은 계층적으로 사용하고 한 페이지에 `h1`은 하나만 둔다. 스타일링 목적으로 헤딩 태그를 쓰지 않는다.
+  - `h1`은 공통 헤더(`_header.html`)의 로고가 이미 쓰고 있다. 따라서 `#content` 안 페이지 콘텐츠는 `h1`을 다시 쓰지 않고 `h2`부터 시작한다(`sample.html`의 `page-tit`이 `h2`인 것도 이 때문). 하위 헤딩도 이 기준으로 한 단계씩 내려서 계층을 맞춘다(`page-tit` h2 → 섹션 제목 h3 → 그 아래 h4 …).
 - `<a href="">`의 `href`는 기획서에 URL이 있으면 그 값을, 없으면 빈 값으로 둔다. `href="javascript:void(0)"`는 사용하지 않는다.
 - 아이콘은 `<i class="ico-xxx" aria-hidden="true"></i>` 형태로 마크업한다. 아이콘만으로 의미를 전달하면 `aria-label`(또는 `role="img"` + `aria-label`)을 추가하고, 텍스트와 함께 쓰면 아이콘에 `aria-hidden="true"`만 둔다.
 - 아이콘 전용 버튼에는 시각적으로 숨긴 `<span class="hide-txt">설명</span>`을 추가해 스크린 리더에 목적을 전달한다.
