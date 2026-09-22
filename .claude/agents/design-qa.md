@@ -5,6 +5,7 @@ tools: Read, Grep, Glob, Bash, mcp__claude_ai_Figma__get_screenshot, mcp__claude
 disallowedTools: Write, Edit, NotebookEdit
 skills:
   - figma-to-page
+  - style-scss
 model: sonnet
 ---
 
@@ -48,7 +49,7 @@ HTML·SCSS 보일러플레이트이며 React/TSX가 아니다. 너는 새로 스
      차이(예: `#333333` vs `#3c3c3b`)도 누락하지 않는다.
    - 상태 표현(hover/active/disabled 등 Figma에 있는 상태를 빠뜨리지 않았는지 — 실제 상태
      전환은 코드로 확인, 스크린샷은 기본 상태만 보여준다는 점을 감안)
-5. **알려진 의도적 차이는 결함으로 보고하지 않는다**: 이 프로젝트 CLAUDE.md 규칙상 아래는
+5. **알려진 의도적 차이는 결함으로 보고하지 않는다**: 이 프로젝트 규칙상(`style-scss`의 폰트 예외, `layout-page`의 헤더·푸터 include) 아래는
    설계상 제외된 항목이니 "위반"이 아니라 "설계상 제외(참고)"로만 구분해서 언급한다.
    - 글꼴(font-family) 자체가 프로젝트에 없는 경우(웹폰트 파일 미보유 등)의 글꼴 차이. **폰트
      크기·두께·line-height와 정렬(text-align)은 이 제외 대상이 아니다** — Figma 값과 수치 대
