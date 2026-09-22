@@ -41,9 +41,8 @@ model: fable
   `.previewImage`/`.toastBasic`/`.toastCloseBtn`/`.toastLinkBtn` 호출로 연다(각각
   `component-dialog`, `component-toast` 스킬 참고). 이 둘은 `initUI()` 자동 스캔 대상이 아니라
   JS 호출로만 생성된다. 토스트는 페이지에 미리 `.toast-wrap`을 둬야 동작한다.
-- `component-carousel`처럼 스킬에 "확인 필요"라고 표시된 컴포넌트는 스타일·공용 초기화가 아직
-  없는 프로토타입이다. 먼저 스킬의 확인 절차를 따르고, 완성된 대안(`component-swiper` 등)으로
-  대체할 수 있는지부터 검토한다.
+- 캐러셀·슬라이더는 `component-swiper`로 구현한다. 별도 carousel 컴포넌트는 없으므로 새로 만들지
+  않는다.
 - 아이콘은 SVG 파일을 추가하는 게 아니라 `_svg.scss`의 인라인 데이터 URI 믹스인을 쓴다. 새
   아이콘이 필요하면 `icon-asset-naming` 스킬의 절차(기존 믹스인 재사용 → 없으면 같은 패턴으로
   새 믹스인 추가)를 따르고, `src/assets/images/`에 아이콘 SVG 파일을 만들지 않는다.

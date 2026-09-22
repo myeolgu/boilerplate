@@ -52,7 +52,7 @@
 - 모달은 `component-modal`, 스와이퍼는 `component-swiper`, 글자 수 카운트가 있는 텍스트영역은 `component-textarea`, 날짜 선택은 `component-picker`, 툴팁은 `component-tooltip`을 따른다.
 - 위 컴포넌트(체크박스·라디오·셀렉트·탭·아코디언·접기펼치기·모달·스와이퍼·텍스트영역·날짜 선택 등 인터랙션이 있는 것들)는 전부 `initUI()`가 해당 `.component-*` 클래스를 스캔해 자동 초기화하는 실제 JS 컴포넌트(`src/assets/scripts/ui/components`)와 연결되어 있으므로 클래스와 `data-props-*` 속성을 임의로 바꾸지 않는다.
 - 확인·경고 팝업("alert"으로 요청받아도)은 `component-dialog`를 따른다. 마크업을 직접 쓰지 않고 `etUI.dialog.alert`/`.confirm`/`.previewImage` 호출로 연다. 하단 알림은 `component-toast`(`etUI.dialog.toastBasic` 등)를 기본으로 쓴다. `component-snackbar`는 공용 JS가 없는 레거시 패턴이므로 새 화면에는 쓰지 않는다.
-- `component-carousel`은 스타일과 공용 JS 초기화가 아직 없는 프로토타입 단계다. 필요하면 먼저 `component-swiper`로 대체 가능한지 검토하고, 스킬의 확인 절차를 따른다.
+- 캐러셀·슬라이더는 `component-swiper`로 구현한다. 별도 carousel 컴포넌트는 없으므로 새로 만들지 않는다.
 - 같은 기능의 UI는 항상 같은 컴포넌트로 구현해 일관된 사용자 경험을 유지한다.
 - 컴포넌트를 확장할 때는 기존 구조와 클래스를 유지하면서 필요한 부분만 수정한다.
 - 설계 단계의 특별한 UX 요청이나 개발 제약이 없다면, 각 컴포넌트 가이드의 검증된 마크업을 그대로 복사해 사용하는 것을 기본으로 한다.
