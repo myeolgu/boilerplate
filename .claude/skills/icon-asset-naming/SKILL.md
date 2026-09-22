@@ -45,6 +45,7 @@ description: 이 프로젝트의 아이콘은 SVG 파일이 아니라 _svg.scss�
 
    특정 컴포넌트(체크박스 체크 표시, 페이지네이션 이동 버튼 등)에서만 쓰는 아이콘이면 `.ico-*`
    클래스를 만들지 않고 해당 컴포넌트 SCSS에서 바로 `@include ico-새이름;`로 쓴다.
+
 5. 믹스인 이름은 `ico-` 접두어의 kebab-case로 짓는다. 예: `ico-close`, `ico-arrow-down`,
    `ico-nav-first`.
 
@@ -64,6 +65,9 @@ description: 이 프로젝트의 아이콘은 SVG 파일이 아니라 _svg.scss�
 
 ## 마크업
 
-- 아이콘은 `<i class="ico-{이름} ico-normal" aria-hidden="true"></i>` 형태로 마크업한다(`ico-*`
-  클래스를 `class` 맨 앞에 둔다). 자세한 사용법과 접근성 규칙은 `component-icon` 스킬을 따른다.
+- 새로 마크업하는 화면·컴포넌트는 `<i class="ico ico-{이름}" data-size="24" aria-hidden="true"></i>`
+  형태(신규 컨벤션)로 쓴다. `button`/`input`/`pagination` 등 아직 옮기지 않은 기존 컴포넌트를
+  그대로 복사해 쓸 때만 레거시 형태(`<i class="ico-{이름} ico-normal" ...></i>`)를 따른다. 두 형태를
+  같은 아이콘에 섞어 쓰지 않는다. 자세한 사용법·크기 값 목록·접근성 규칙은 `component-icon`
+  스킬을 따른다.
 - 직접 `<img>` 태그나 `<svg>` 인라인 마크업을 사용하지 않는다.

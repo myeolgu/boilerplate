@@ -255,3 +255,13 @@ body.ios-bounce-fix {
   background-repeat: no-repeat;
   background-position: center center;
 }
+
+/* 아이콘 공통 속성 - 신규 컨벤션(.ico 베이스 + ico-{이름} + data-size) */
+// component-icon 스킬 참고. [class^='ico-']는 class 값이 "ico-"로 시작할 때만 걸리므로
+// "ico ico-{이름}"처럼 ico가 앞에 오는 신규 마크업에는 안 걸려 별도로 정의한다.
+.ico {
+  display: inline-block;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-position: center center;
+}

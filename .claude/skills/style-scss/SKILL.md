@@ -57,7 +57,7 @@ description: SCSS 작성 규칙(상위 클래스 중심 중첩, kebab-case, rem(
 }
 ```
 
-  클래스명이 여러 페이지에 공통이라는 이유만으로 전역 파일을 고치거나, 손대지 않고 넘어가지 않는다. 여러 페이지에 공통으로 필요한 변경이라고 확신할 때만 전역 파일 수정을 검토할 수 있고, 그 경우에도 영향 범위가 넓으므로 먼저 사용자에게 확인한다.
+클래스명이 여러 페이지에 공통이라는 이유만으로 전역 파일을 고치거나, 손대지 않고 넘어가지 않는다. 여러 페이지에 공통으로 필요한 변경이라고 확신할 때만 전역 파일 수정을 검토할 수 있고, 그 경우에도 영향 범위가 넓으므로 먼저 사용자에게 확인한다.
 
 ## 중첩 깊이
 
@@ -134,6 +134,7 @@ description: SCSS 작성 규칙(상위 클래스 중심 중첩, kebab-case, rem(
 ```
 
 - `calc()` 계산식이 포함된 값에는 mixin을 적용하지 않고 그대로 쓴다: `top: calc(50% - 9px);`
+- **단위 함정**: `rem()` 믹스인은 px 값을 10으로 나눠 rem으로 바꾼다(`$rem-baseline` = `$global-font-size` = 10px, 즉 1rem = 10px). `calc()` 안에서는 믹스인을 못 쓰므로 직접 환산해야 한다 — 20px은 `2rem`, 40px은 `4rem`이다. 같은 요소의 `margin`을 `rem()`으로 줬다면 `calc()` 안에서도 px가 아니라 rem으로 맞춘다(500px 이하에서는 html 폰트 크기가 유동이라 px와 rem이 어긋난다). 환산한 값 옆에 `// 20px × 2 = 40px = 4rem`처럼 계산 근거를 주석으로 남긴다.
 - 1px 테두리·구분선은 `rem()` 없이 `1px`로 그대로 쓴다(`rem()`을 쓰면 `0.1rem`이 되고, 500px 이하에서는 html 폰트 크기가 유동이라 1px이 유지되지 않는다 — `_reset.scss`).
 
 ## 여백·크기 — Figma가 1순위
@@ -166,6 +167,28 @@ description: SCSS 작성 규칙(상위 클래스 중심 중첩, kebab-case, rem(
 ## 레이아웃
 
 - `gap` 속성은 사용하지 않는다. 요소 간 간격은 `margin`으로 조정한다.
+- 같은 크기 아이템이 반복되는 N열 그리드(카드 목록 등)는 아래 패턴을 쓴다(클래스명은 예시). 3열·간격 20px 카드 목록에서 1920·1440·1280 폭 모두 3열 정렬과 가로 스크롤 없음을 실측으로 확인한 패턴이다. 아이템마다 `-col-N` 클래스를 붙여야 하는 `flex-grid` 믹스인은 버튼·폼처럼 칸 수가 고정된 경우용이라, 개수가 바뀌는 반복 목록에는 쓰지 않는다.
+
+  ```scss
+  .card-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    .card-item {
+      // 폭 = (100% - 간격 × (N - 1)) / N. 간격 20px × 2 = 40px = 4rem
+      width: calc((100% - 4rem) / 3);
+      @include rem(margin-bottom, 20);
+
+      &:not(:nth-child(3n)) {
+        @include rem(margin-right, 20);
+      }
+    }
+  }
+  ```
+
+  - N을 바꿀 때는 `calc()`의 나눗수, 빼는 간격 합(간격 × (N-1)), `:nth-child(Nn)` 세 곳을 함께 바꾼다. 하나라도 틀리면 한 줄에 N개가 안 들어가 N-1열로 줄바꿈된다.
+  - 확인은 눈으로 하지 않고 Playwright `browser_evaluate`로 카드들의 `getBoundingClientRect().top`을 묶어 행마다 N개인지, `left`가 행마다 같은지 잰다.
+
 - `position: absolute`는 겹침 배치가 필요한 경우에만 사용하고, 기준 컨테이너에는 `position: relative`를 명시한다.
 - `position`을 지정하지 않은(`static`) 요소에는 `top`/`left`/`right`/`bottom`을 쓰지 않는다. `stylelint`의 `no-positionless-offsets`는 같은 블록에 `position: static`을 **명시했을 때만** 걸리고, `position`을 아예 안 쓴 경우는 잡지 못하므로 직접 확인한다.
 - `display: block`인 요소에는 `vertical-align`을 함께 쓰지 않는다(`no-block-with-vertical-align`).

@@ -3,6 +3,16 @@
 .ico-normal {
   @include icon-size;
 }
+
+// 아이콘 크기 - data-size 속성 (신규 컨벤션). _mixins.scss의 폰트 크기 스케일(f12~f56)을 기준으로
+// 잡은 값 집합이다. data-size="24" → width/height 2.4rem. 정적 SCSS라 아래 목록에 없는 값은
+// 동작하지 않으므로, 새 크기가 필요하면 이 목록에 추가한다.
+$ico-sizes: 12, 14, 16, 18, 20, 24, 40, 56;
+@each $ico-size in $ico-sizes {
+  .ico[data-size='#{$ico-size}'] {
+    @include icon-size($ico-size, $ico-size);
+  }
+}
 .ico-close {
   @include ico-x;
 }

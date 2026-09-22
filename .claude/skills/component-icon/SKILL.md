@@ -1,6 +1,6 @@
 ---
 name: component-icon
-description: 아이콘은 SVG 파일이 아니라 _svg.scss의 인라인 data-URI 믹스인으로 그린다. <i class="ico-xxx"> 마크업과 색상 파라미터 사용법, 접근성 규칙을 안내한다.
+description: 아이콘은 SVG 파일이 아니라 _svg.scss의 인라인 data-URI 믹스인으로 그린다. <i class="ico ico-xxx" data-size="24"> 마크업과 색상 파라미터 사용법, 접근성 규칙을 안내한다.
 ---
 
 # Icon
@@ -12,17 +12,38 @@ description: 아이콘은 SVG 파일이 아니라 _svg.scss의 인라인 data-UR
 클래스명과 믹스인명이 항상 같지는 않다. `.ico-close`·`.ico-clear` → `ico-x`,
 `.ico-go-back` → `ico-back`이고, 나머지는 같은 이름이다(`_ico.scss` 기준).
 
-## 마크업
+## 마크업 (신규 컨벤션)
 
 ```html
+<i class="ico ico-close" data-size="24" aria-hidden="true"></i>
+```
+
+- `.ico`: 공통 속성(`display: inline-block`, `background-repeat: no-repeat`, 가운데 정렬)을 주는
+  고정 베이스 클래스. `class` 속성 **맨 앞**에 둔다.
+- `.ico-{이름}`: 아이콘 모양(예: `ico-close`, `ico-search`, `ico-arrow-down`)
+- `data-size`: 크기(px). `_ico.scss`의 `$ico-sizes`(`12,14,16,18,20,24,40,56` — `_mixins.scss`의
+  폰트 크기 스케일 f12~f56을 기준으로 잡은 값 집합)에 있는 값만 쓸 수 있다. `data-size="24"`는
+  `width`/`height`를 `icon-size` 믹스인으로 24px→2.4rem 변환해 적용한다. 목록에 없는 크기가
+  필요하면 임의로 인라인 스타일을 쓰지 말고 `$ico-sizes`에 값을 추가한 뒤(전역 파일 수정이므로
+  사용자 확인 후) 쓴다.
+
+## 레거시 마크업(기존 컴포넌트, 아직 이 컨벤션으로 옮기지 않음)
+
+`button`/`input`/`pagination` 등 기존 컴포넌트 가이드(`src/guide/pages/components/*.html`)와
+그 SCSS는 아직 옛 방식을 쓴다. 이런 기존 마크업을 그대로 복사해 쓸 때는 옛 방식을 따르고, 임의로
+`.ico`/`data-size`로 바꿔치기하지 않는다(그 컴포넌트의 SCSS가 `.ico-normal` 크기 클래스를
+전제하므로 섞으면 깨진다). 새로 마크업하는 화면·컴포넌트에는 위 "마크업(신규 컨벤션)"을 쓴다.
+
+```html
+<!-- 레거시: 기존 button/input/pagination 등이 아직 이 형태 -->
 <i class="ico-close ico-normal" aria-hidden="true"></i>
 ```
 
-- `.ico-{이름}`: 아이콘 모양(예: `ico-close`, `ico-search`, `ico-arrow-down`)
-- `.ico-normal`: 크기(24×24, `icon-size` 믹스인)
-- `ico-*` 클래스를 `class` 속성 **맨 앞**에 둔다. 공통 속성(`display: inline-block`,
-  `background-repeat: no-repeat`, 가운데 정렬)은 `_base.scss`의 `[class^='ico-']` 선택자로
-  붙는데, 이 선택자는 `class` 값이 `ico-`로 시작할 때만 적용된다.
+- `.ico-{이름}`: 아이콘 모양
+- `.ico-normal`: 크기(24×24 고정, `icon-size` 믹스인. `data-size`처럼 값을 바꿀 수 없다)
+- `ico-*` 클래스를 `class` 속성 **맨 앞**에 둔다. 공통 속성은 `_base.scss`의 `[class^='ico-']`
+  선택자로 붙는데, 이 선택자는 `class` 값이 `ico-`로 **시작**할 때만 적용된다(`.ico`가 앞에 오는
+  신규 컨벤션에는 이 선택자가 걸리지 않아 `_base.scss`에 `.ico` 전용 규칙을 별도로 두었다).
 
 ## 색상 바꾸기 (SCSS에서)
 
@@ -61,8 +82,9 @@ description: 아이콘은 SVG 파일이 아니라 _svg.scss의 인라인 data-UR
   `component-input` 스킬을 따른다.)
 
 ```html
+<!-- 신규 컨벤션으로 새로 마크업할 때 -->
 <button type="button" class="btn">
-  <i class="ico-search ico-normal" aria-hidden="true"></i>
+  <i class="ico ico-search" data-size="24" aria-hidden="true"></i>
   <span class="hide-txt">검색</span>
 </button>
 ```

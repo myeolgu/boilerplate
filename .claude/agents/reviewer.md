@@ -31,8 +31,9 @@ HTML·SCSS 보일러플레이트이며 React/TSX가 아니다.
   경고로 낸다. 저장소 전체에 기존 경고가 많으므로 변경한 파일에서 나온 것만 본다.
 - **`checkhtml`**: 빌드된 `dist/**/*.html`을 W3C 온라인 검사기(`w3c-html-validator`)로 검사한다
   (`continueOnFail: true`, warning 이하 무시). 인터넷 연결이 필요하고, 요청 과다(429)면 결과가 없다.
-  HTML5 기준이라 void 요소 비-자체닫힘(`<br>`)은 잡지 않는다. `.htmlvalidate.json`(html-validate)은
-  어떤 npm 스크립트에서도 쓰이지 않는다.
+  HTML5 기준이라 void 요소 비-자체닫힘(`<br>`)은 잡지 않는다. 429로 결과가 없으면 루트 `CLAUDE.md`
+  "검증"대로 `npx html-validate dist/<경로>/<파일>.html`(설정 `.htmlvalidate.json`, npm 스크립트엔
+  연결돼 있지 않음)로 대신 검사하고, 둘 다 못 했으면 "미검증"으로 보고한다.
 
 lint 명령이 이미 잡아준 문제는 아래 수동 항목으로 다시 설명하지 않는다.
 
@@ -58,7 +59,7 @@ scope)을 꺼두었고, `.stylelintrc`의 `plugin/no-invalid-class-prefix`/`no-i
   루트 `CLAUDE.md` "컴포넌트 사용 원칙"에 있다.
 - **린터가 꺼 둔 접근성 항목**: 라벨과 연결된 `id`의 페이지 내 중복(`no-dup-id` 꺼짐), 표 `th`의
   `scope`(`wcag/h63` 꺼짐, 기준은 `component-table`), 입력의 `for`/`id` 연결과 그룹 입력의
-  `fieldset`/`legend`(기준은 `style-scss` "마크업 접근성", `component-input`)
+  `fieldset`/`legend`(기준은 `markup-html` "폼 접근성", `component-input`)
 - **Figma 수치 비교**: 이 에이전트에는 Figma 도구가 없다. 폰트·여백 수치가 Figma와 같은지는 호출한
   쪽이 Figma 값을 프롬프트로 줬을 때만 대조하고, 없으면 "Figma 값 미제공으로 미확인"이라고 적는다.
 
