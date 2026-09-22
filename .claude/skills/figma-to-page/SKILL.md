@@ -46,16 +46,19 @@ https://www.figma.com/design/{fileKey}/{파일명}?node-id={id}&t={추적용해�
 - **컴포넌트 문서/디자인 주석**: Figma 쪽 힌트가 있으면 참고하되, 최종 마크업 구조는 이 프로젝트
   실제 가이드(`src/guide/pages/components/*.html`)를 기준으로 한다.
 - **디자인 토큰(색상)**: React/Tailwind 참고 코드의 CSS 변수나 hex 값을 그대로 쓰지 않는다.
-  `src/assets/styles/abstracts/_variables.scss`에 이미 `$bg-`/`$font-`/`$line-` 변수로 있는
-  색이면 그 변수를 쓰고, 없으면 `style-scss` 스킬대로 6자리 hex를 직접 쓴다. 새 변수를 임의로
-  만들지 않는다.
+  `src/assets/styles/abstracts/_variables.scss`에 디자인 값과 정확히 일치하는 `$bg-`/`$font-`/
+  `$line-` 변수가 있으면 그 변수를 쓰고, 없으면 `_variables.scss`에 그 hex 그대로 새 변수를
+  추가한 뒤(용도에 맞는 접두어로, 예: `$font-3c3c3b: #3c3c3b;`) 그 변수를 쓴다. 비슷한 기존
+  변수로 근사하거나 페이지 SCSS에 hex를 직접 쓰지 않는다(`style-scss` 스킬 참고).
 - **아이콘**: Figma가 내보낸 아이콘 에셋을 그대로 이미지 파일로 쓰지 않는다. 먼저
   `component-icon`/`icon-asset-naming` 스킬대로 같은 glyph의 `.ico-*` 클래스나 `_svg.scss`
   믹스인이 이미 있는지 확인하고, 있으면 재사용한다. 정말 새 아이콘이면 그 스킬의 절차(새 믹스인
   추가)를 따르고, 사진처럼 인라인 SVG로 만들기 어려운 에셋만 예외로 다룬다.
 - **간격·타이포그래피**: Figma 수치를 그대로 쓰되 `style-scss` 스킬대로 `@include rem()`을
-  적용한다. Figma의 폰트 크기·두께는 CLAUDE.md의 "폰트 스타일은 기본값 유지" 규칙과 충돌하면
-  이 프로젝트 규칙을 우선하고, 그 판단 근거를 알린다.
+  적용한다. 폰트 크기·두께·line-height도 Figma 값 그대로 `_mixins.scss`의 `f*` 믹스인으로
+  맞춘다(`@include f18(700, 1.5);`, 필요한 크기의 믹스인이 없으면 같은 패턴으로 추가).
+  예외는 font-family 자체가 프로젝트에 없을 때뿐이며, 이때는 크기·두께만 맞추고 어떤 글꼴이
+  빠졌는지 사용자에게 알린다.
 - **레이아웃 구조**: 페이지 뼈대는 Figma가 아니라 `layout-page` 스킬(`sample.html` 기준 구조,
   `#content[role="main"]`, `.content-inner`)을 따른다. Figma는 그 안의 콘텐츠 디자인만 반영한다.
 - **GNB/헤더·푸터 인스턴스**: `get_metadata`의 최상위 프레임에 `##top_GNB`, `footer`처럼 공용
