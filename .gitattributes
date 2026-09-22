@@ -1,0 +1,6 @@
+# 폰트 등 바이너리 파일이 텍스트로 변환되어 손상되지 않도록 지정
+*.woff2 binary
+*.woff binary
+*.ttf binary
+*.otf binary
+*.eot binary
