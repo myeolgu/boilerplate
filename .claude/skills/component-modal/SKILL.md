@@ -12,7 +12,7 @@ JS 컴포넌트다. 구현: `src/assets/scripts/ui/components/Modal.js`,
 ## 기본 구조
 
 ```html
-<button class="btn-modal01">Modal</button>
+<button type="button" class="btn-modal01">Modal</button>
 
 <div class="layer-wrap">
   <div class="component-modal modal01" data-props-dimm-click="true">
@@ -25,7 +25,7 @@ JS 컴포넌트다. 구현: `src/assets/scripts/ui/components/Modal.js`,
         <div class="modal-content">
           <p class="modal-info">본문 내용</p>
         </div>
-        <button class="modal-close btn"></button>
+        <button type="button" class="modal-close btn"><span class="hide-txt">닫기</span></button>
       </div>
     </div>
   </div>
@@ -81,5 +81,5 @@ JS 컴포넌트다. 구현: `src/assets/scripts/ui/components/Modal.js`,
 
 ## 관련
 
-- 확인/경고성 팝업은 모달이 아니라 `.component-dialog`(`Dialog.js`, `_dialog.scss`) 컴포넌트를
+- 확인/경고성 팝업은 모달이 아니라 `.component-dialog`(`Dialog.js`, 스타일은 `_alert.scss`. `_dialog.scss`는 빈 파일이다) 컴포넌트를
   쓴다. 필요하면 `src/guide/pages/components/dialog.html`을 확인한다(이 스킬 범위 밖).

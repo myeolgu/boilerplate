@@ -38,7 +38,7 @@ description: 캐러셀(component-carousel) 관련 실제 코드는 스타일이 
 
 ## 작업 전 확인 절차
 
-1. 실제로 caroucel이 필요하면 먼저 `component-swiper`로 요구사항을 충족할 수 있는지 확인한다.
+1. 실제로 carousel이 필요하면 먼저 `component-swiper`로 요구사항을 충족할 수 있는지 확인한다.
    일반적인 이미지 슬라이더는 이미 완성된 `component-swiper`를 쓰는 편이 안전하다.
 2. `thumbs-top left-fixed` 같은 변형 클래스나 `data-props-autoplay-button`/
    `data-props-slideTo-button`의 정확한 동작은 스타일이 없어 눈으로 확인할 수 없다. 실제로 필요한

@@ -44,7 +44,7 @@ description: 버튼(.btn) 마크업 구조와 버튼 그룹(component-btns) 사�
 <button type="button" class="btn btn-full">
   <span class="btn-txt">Full</span>
 </button>
-<a href="#" class="btn btn-primary btn-full">
+<a href="" class="btn btn-primary btn-full">
   <span class="btn-txt">Primary Full</span>
 </a>
 ```
@@ -141,4 +141,4 @@ description: 버튼(.btn) 마크업 구조와 버튼 그룹(component-btns) 사�
 
 ## 참고
 
-`.windsurfrules`의 "컴포넌트 사용 원칙"은 모든 컴포넌트가 `component-` 접두 클래스를 쓴다고 설명하지만, 버튼 예시 코드 전체는 `component-` 접두어 없이 `.btn`을 그대로 쓴다. 실제 검증된 예시 코드(`.btn`)를 기준으로 삼는다.
+버튼 자체는 다른 컴포넌트와 달리 `component-` 접두어 없이 `.btn`을 쓴다(`component-`가 붙는 건 버튼 그룹 `.component-btns`뿐이다). 가이드 페이지(`src/guide/pages/components/button.html`)의 검증된 예시가 이 방식이고, CLAUDE.md "컴포넌트 사용 원칙"대로 가이드의 검증된 마크업을 그대로 쓰므로 `.component-btn` 같은 클래스를 새로 만들지 않는다.

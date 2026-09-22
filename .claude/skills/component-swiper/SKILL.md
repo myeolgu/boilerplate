@@ -22,10 +22,10 @@ description: 스와이퍼(component-swiper) 마크업 구조와 data-props-* 옵
   <div class="swiper-container">
     <div class="swiper-wrapper">
       <div class="swiper-slide">
-        <button><img src="" alt="" />slide 1</button>
+        <button type="button"><img src="" alt="" />slide 1</button>
       </div>
       <div class="swiper-slide">
-        <button><img src="" alt="" />slide 2</button>
+        <button type="button"><img src="" alt="" />slide 2</button>
       </div>
     </div>
   </div>

@@ -11,13 +11,13 @@ description: 페이지네이션(component-pagination) 마크업 구조와 미니
 
 ```html
 <nav class="component-pagination" aria-label="페이지네이션">
-  <a href="#" class="pagination-item first"><span class="hide-txt">첫 페이지로 이동</span></a>
-  <a href="#" class="pagination-item prev"><span class="hide-txt">이전 페이지로 이동</span></a>
+  <a href="" class="pagination-item first"><span class="hide-txt">첫 페이지로 이동</span></a>
+  <a href="" class="pagination-item prev"><span class="hide-txt">이전 페이지로 이동</span></a>
   <span class="pagination-item" aria-current="page">1</span>
-  <a href="#" class="pagination-item">2</a>
-  <a href="#" class="pagination-item">3</a>
-  <a href="#" class="pagination-item next"><span class="hide-txt">다음 페이지로 이동</span></a>
-  <a href="#" class="pagination-item last"><span class="hide-txt">마지막 페이지로 이동</span></a>
+  <a href="" class="pagination-item">2</a>
+  <a href="" class="pagination-item">3</a>
+  <a href="" class="pagination-item next"><span class="hide-txt">다음 페이지로 이동</span></a>
+  <a href="" class="pagination-item last"><span class="hide-txt">마지막 페이지로 이동</span></a>
 </nav>
 ```
 
@@ -27,13 +27,13 @@ description: 페이지네이션(component-pagination) 마크업 구조와 미니
 
 ```html
 <nav class="component-pagination-mini" aria-label="페이지네이션">
-  <a href="#" class="pagination-item prev"><span class="hide-txt">이전 페이지로 이동</span></a>
+  <a href="" class="pagination-item prev"><span class="hide-txt">이전 페이지로 이동</span></a>
   <span class="pagination-item-group">
     <span class="pagination-item" aria-current="page">1</span>
     <span class="pagination-item" aria-hidden="true">/</span>
     <span class="pagination-item">100</span>
   </span>
-  <a href="#" class="pagination-item next"><span class="hide-txt">다음 페이지로 이동</span></a>
+  <a href="" class="pagination-item next"><span class="hide-txt">다음 페이지로 이동</span></a>
 </nav>
 ```
 

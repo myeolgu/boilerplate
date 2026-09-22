@@ -21,7 +21,7 @@ description: 폼(component-form) 마크업 구조, form-element/form-group 조�
     <div class="form-group">
       <div class="component-input">
         <div class="input-field">
-          <input type="text" id="input_id" placeholder="입력 안내 텍스트">
+          <input type="text" id="input_id" placeholder="입력 안내 텍스트" />
         </div>
       </div>
     </div>
@@ -45,7 +45,7 @@ description: 폼(component-form) 마크업 구조, form-element/form-group 조�
     </div>
     <div class="component-input">
       <div class="input-field">
-        <input type="text" id="temp_input_0001" placeholder="'-' 제외하고 숫자만 입력해주세요">
+        <input type="text" id="temp_input_0001" placeholder="'-' 제외하고 숫자만 입력해주세요" />
       </div>
     </div>
   </div>
@@ -65,11 +65,11 @@ description: 폼(component-form) 마크업 구조, form-element/form-group 조�
   <div class="form-group">
     <div class="component-input">
       <div class="input-field">
-        <input type="text" id="temp_input_0002">
+        <input type="text" id="temp_input_0002" />
         <span class="type-time">01:22</span>
       </div>
     </div>
-    <button class="btn-confirm">
+    <button type="button" class="btn-confirm">
       <span class="btn-txt">재전송</span>
     </button>
   </div>
@@ -83,11 +83,11 @@ description: 폼(component-form) 마크업 구조, form-element/form-group 조�
 ```html
 <div class="form-group">
   <div class="component-input">
-    <div class="input-field"><input type="text" placeholder="휴대폰 번호를 입력해주세요."></div>
+    <div class="input-field"><input type="text" placeholder="휴대폰 번호를 입력해주세요." /></div>
   </div>
   <div class="bar"></div>
   <div class="component-input">
-    <div class="input-field"><input type="text" placeholder="휴대폰 번호를 입력해주세요."></div>
+    <div class="input-field"><input type="text" placeholder="휴대폰 번호를 입력해주세요." /></div>
   </div>
 </div>
 ```
@@ -97,12 +97,12 @@ description: 폼(component-form) 마크업 구조, form-element/form-group 조�
 ```html
 <div class="form-group">
   <div class="component-input">
-    <div class="input-field"><input type="text" placeholder="앞 6자리"></div>
+    <div class="input-field"><input type="text" placeholder="앞 6자리" /></div>
   </div>
   <div class="bar"></div>
   <div class="resident-number">
     <div class="component-input resident-input">
-      <div class="input-field"><input type="text" maxlength="1"></div>
+      <div class="input-field"><input type="text" maxlength="1" /></div>
     </div>
     <ul class="hidden-list">
       <li class="hiddeb-num"><span class="hide-txt">hidden-number</span></li>

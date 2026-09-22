@@ -15,7 +15,7 @@ description: 체크박스는 component-input 클래스를 쓴다(Input.js 동작
 ```html
 <div class="component-input">
   <label class="checkbox-inner">
-    <input type="checkbox" id="checkbox_id" name="checkbox_group_name">
+    <input type="checkbox" id="checkbox_id" name="checkbox_group_name" />
   </label>
 </div>
 ```
@@ -25,7 +25,7 @@ description: 체크박스는 component-input 클래스를 쓴다(Input.js 동작
 ```html
 <div class="component-input">
   <label class="checkbox-inner">
-    <input type="checkbox" id="temp_checkbox_0201" name="temp_checkbox_0200">
+    <input type="checkbox" id="temp_checkbox_0201" name="temp_checkbox_0200" />
     <span class="checkbox-item">
       <span class="checkbox-txt">Checkbox default</span>
     </span>
@@ -41,7 +41,7 @@ description: 체크박스는 component-input 클래스를 쓴다(Input.js 동작
 ```html
 <div class="component-input">
   <label class="switch-inner">
-    <input type="checkbox" id="switch_id">
+    <input type="checkbox" id="switch_id" />
     <span class="switch-item">
       <span class="switch-handle"></span>
       <span class="switch-txts">
@@ -76,7 +76,7 @@ description: 체크박스는 component-input 클래스를 쓴다(Input.js 동작
     <div class="agree-item">
       <div class="component-input">
         <label class="checkbox-inner">
-          <input type="checkbox" id="agree_all">
+          <input type="checkbox" id="agree_all" />
           <span class="checkbox-item"><span class="checkbox-txt">전체 동의</span></span>
         </label>
       </div>
@@ -84,7 +84,7 @@ description: 체크박스는 component-input 클래스를 쓴다(Input.js 동작
         <div class="sub-agree-item">
           <div class="component-input">
             <label class="checkbox-inner">
-              <input type="checkbox" id="agree_1">
+              <input type="checkbox" id="agree_1" />
               <span class="checkbox-item"><span class="checkbox-txt">이용약관 동의</span></span>
             </label>
           </div>
@@ -99,6 +99,5 @@ description: 체크박스는 component-input 클래스를 쓴다(Input.js 동작
 
 - 각 체크박스에 고유한 `id`를 부여한다.
 - 같은 그룹의 체크박스는 동일한 `name`을 공유한다.
-- `label`로 감싸 클릭 영역을 넓히고, 텍스트가 있으면 `.checkbox-txt`/`.switch-label`로 시각적
-  라벨을 제공한다.
+- `label`로 감싸 클릭 영역을 넓히고, 텍스트가 있으면 `.checkbox-txt`/`.switch-label`로 시각적 라벨을 제공한다.
 - 포커스 상태는 `:focus-visible`로 표시된다(스타일에 이미 정의되어 있다).

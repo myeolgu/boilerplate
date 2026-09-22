@@ -62,7 +62,16 @@ description: 셀렉트(component-select) 마크업 구조(기본 select, 커스�
 - `.select-box`: 커스텀 셀렉트의 트리거 버튼
 - `.select-options`: 커스텀 셀렉트의 옵션 목록
 - `.option`: 개별 옵션
-- 상태: 열림 `.is-open`(옵션 목록), 선택됨 `.is-selected`(옵션), 비활성화 `.disabled`(커스텀 셀렉트 전체)
+- 상태(`is-` 접두어가 아니다. JS·SCSS가 실제로 쓰는 이름을 그대로 쓴다):
+  - 열림: 옵션 목록은 GSAP이 인라인 `display: block`/`none`으로 열고 닫는다
+    (`useTransition.js:31-46`). `_selectbox.scss:47,101`에 `.component-select.show` 규칙이 있지만
+    JS는 이 클래스를 붙이지 않고, 닫힐 때 `.show`를 제거하고 `.hide`를 붙이기만 한다
+    (`useTransition.js:44-45`). 열림 상태를 마크업에 미리 `.show`로 쓰지 않는다.
+  - 선택됨: `.option.current` + `aria-selected="true"`. JS가 선택 시 전환한다
+    (`Selectbox.js:297-298`, `310-313`). `.current` 스타일은 바텀시트형에만 정의되어 있다
+    (`_selectbox.scss:193`).
+  - 비활성화: `.component-select.select-disabled`. JS가 이 클래스가 있으면 열지 않는다
+    (`Selectbox.js:219`). 전용 스타일은 `_selectbox.scss`에 없다.
 
 ## 데이터 속성 (커스텀 셀렉트)
 
@@ -73,4 +82,6 @@ description: 셀렉트(component-select) 마크업 구조(기본 select, 커스�
 ## 접근성
 
 - 기본 셀렉트는 네이티브 `select`를 사용해 키보드·스크린 리더 지원을 기본으로 받는다. 필수 입력이면 `required`를 추가한다.
-- 커스텀 셀렉트는 `button` 요소로 트리거를 만들고, 화살표 키로 옵션을 탐색할 수 있어야 하며 `aria-expanded`, `aria-activedescendant` 등으로 상태를 전달해야 한다.
+- 커스텀 셀렉트는 `button` 요소로 트리거를 만든다. ARIA 속성은 `Selectbox.js`가 자동으로 넣으므로 마크업에 직접 쓰지 않는다.
+  - 초기화 시: 트리거에 `role="combobox"`, `aria-labelledby`, `aria-controls`, 목록에 `role="listbox"`, `aria-labelledby`, `tabindex="-1"`(`Selectbox.js:140-148`), 각 옵션에 `id`, `role="option"`, `aria-selected="false"`(`Selectbox.js:157-159`)
+  - 열고 닫을 때: 트리거의 `aria-expanded`, `aria-activedescendant`(`Selectbox.js:277-281`)

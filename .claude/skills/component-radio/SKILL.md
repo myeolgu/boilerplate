@@ -12,7 +12,7 @@ description: 라디오 버튼 마크업 구조, 상태, 접근성 규칙을 안�
 ```html
 <div class="component-input">
   <label class="radio-inner">
-    <input type="radio" id="radio_id" name="radio_group_name">
+    <input type="radio" id="radio_id" name="radio_group_name" />
   </label>
 </div>
 ```
@@ -22,7 +22,7 @@ description: 라디오 버튼 마크업 구조, 상태, 접근성 규칙을 안�
 ```html
 <div class="component-input">
   <label class="radio-inner">
-    <input type="radio" id="temp_radio_0201" name="temp_radio_0200">
+    <input type="radio" id="temp_radio_0201" name="temp_radio_0200" />
     <span class="radio-item">
       <span class="radio-txt">Radio default</span>
     </span>

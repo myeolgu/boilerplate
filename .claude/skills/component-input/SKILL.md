@@ -20,7 +20,7 @@ description: 입력 필드(component-input) 마크업 구조, 버튼/아이콘 �
     <div class="input-sub-txt">서브 텍스트</div>
   </label>
   <div class="input-field">
-    <input type="text" id="temp_input_0001" placeholder="input text">
+    <input type="text" id="temp_input_0001" placeholder="input text" />
   </div>
   <div class="input-info">유틸리티 Info 영역</div>
 </div>
@@ -33,7 +33,7 @@ description: 입력 필드(component-input) 마크업 구조, 버튼/아이콘 �
 
 ```html
 <div class="input-field">
-  <input type="text" id="temp_input_btn_0001" placeholder="버튼">
+  <input type="text" id="temp_input_btn_0001" placeholder="버튼" />
   <button type="button" class="input-field-btn search">
     <span class="hide-txt">검색</span>
     <i class="ico-search ico-normal" aria-hidden="true"></i>
@@ -61,7 +61,7 @@ description: 입력 필드(component-input) 마크업 구조, 버튼/아이콘 �
 ```html
 <div class="input-field">
   <i class="input-field-ico ico-search ico-normal" aria-hidden="true"></i>
-  <input type="text" id="temp_input_ico_0001" placeholder="아이콘">
+  <input type="text" id="temp_input_ico_0001" placeholder="아이콘" />
 </div>
 ```
 
@@ -73,7 +73,7 @@ description: 입력 필드(component-input) 마크업 구조, 버튼/아이콘 �
 ```html
 <div class="component-input">
   <label class="input-file-field">
-    <input type="file" aria-label="파일 첨부">
+    <input type="file" aria-label="파일 첨부" />
     <span class="input-file-txt">선택된 파일 없음</span>
     <span class="input-file-btn">찾아보기</span>
   </label>
@@ -90,7 +90,7 @@ description: 입력 필드(component-input) 마크업 구조, 버튼/아이콘 �
 ```html
 <div class="input-field">
   <span class="input-field-txt">https://</span>
-  <input type="text" placeholder="도메인">
+  <input type="text" placeholder="도메인" />
 </div>
 ```
 
@@ -108,7 +108,7 @@ description: 입력 필드(component-input) 마크업 구조, 버튼/아이콘 �
     <span class="label-txt">Label</span>
   </label>
   <div class="input-field">
-    <input type="text" id="temp_input_valid_0001">
+    <input type="text" id="temp_input_valid_0001" />
   </div>
   <div class="input-info">유효성 검사 메시지</div>
 </div>
