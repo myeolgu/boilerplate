@@ -1,0 +1,472 @@
+@use '../abstracts' as *;
+
+/* admin-memo.html - 관리자 메모 */
+.admin-memo-wrap {
+  @include rem(padding, 24 0 40);
+  background-color: $bg-f4f3f9;
+
+  .content-inner {
+    @include rem(max-width, 1520);
+    @include rem(padding, 0 20);
+    margin: 0 auto;
+  }
+
+  // 흰 패널 (조회 조건 + 목록)
+  .memo-panel {
+    @include rem(padding, 32 32 60);
+    @include rem(border-radius, 20);
+    background-color: $bg-ffffff;
+  }
+
+  .list-section {
+    @include rem(margin-top, 40);
+  }
+
+  // 섹션 제목
+  .section-tit {
+    @include rem(margin-bottom, 24);
+    @include f24(700, 1.48);
+    color: $font-000000;
+
+    .tit-count {
+      color: $font-7b53ea;
+    }
+  }
+
+  // 조회 폼 - 행 (2열 / 1열)
+  .search-row {
+    display: flex;
+
+    & + .search-row {
+      @include rem(margin-top, 24);
+    }
+
+    .form-element {
+      flex: 1;
+      min-width: 0;
+
+      & + .form-element {
+        margin-top: 0;
+        @include rem(margin-left, 32);
+      }
+    }
+  }
+
+  // 조회 폼 - 라벨 (label / legend 공통. legend는 _reset.scss에서 숨김 처리되어 있어 되돌린다)
+  .form-element {
+    .input-label {
+      display: block;
+      width: auto;
+      height: auto;
+      text-indent: 0;
+      @include f16(600, 1.48);
+      color: $font-000000;
+
+      .label-txt {
+        @include f16(600, 1.48);
+      }
+
+      & + .form-group {
+        @include rem(margin-top, 12);
+      }
+    }
+
+    // 셀렉트
+    .component-select {
+      flex: 1;
+      width: auto;
+      min-width: 0;
+
+      & + .component-select,
+      & + .component-input,
+      & + .component-rangepicker {
+        @include rem(margin-left, 12);
+      }
+
+      &.select-period {
+        flex: none;
+        @include rem(width, 260);
+      }
+
+      &.select-category {
+        flex: none;
+        @include rem(width, 198);
+      }
+
+      .select-list {
+        @include rem(height, 56);
+        @include rem(padding, 0 20);
+        border: 1px solid $line-e4e7ed;
+        @include rem(border-radius, 12);
+        background-color: $bg-ffffff;
+        color: $font-555555;
+        @include f16(500, 1.48);
+
+        // 플레이스홀더 옵션(동 선택 / 호수 선택)도 Figma와 같은 글자색
+        &:required:invalid {
+          color: $font-555555;
+        }
+      }
+
+      &::after {
+        @include rem(right, 20);
+        @include rem(width, 24);
+        @include rem(height, 24);
+        @include ico-arrow-down('%23555555');
+        @include rem(background-size, 24 auto);
+      }
+    }
+
+    // 입력 (placeholder는 _form.scss의 4클래스 규칙보다 우선해야 해서 .search-input 결합)
+    .component-input.search-input {
+      flex: 1;
+      min-width: 0;
+
+      input::placeholder {
+        @include f16(400, 1.48);
+        color: $font-666666;
+      }
+    }
+
+    // 카테고리 그룹은 열 폭보다 20 짧게 (Figma 672)
+    .category-group {
+      @include rem(margin-right, 20);
+    }
+  }
+
+  .component-input {
+    .input-field {
+      @include rem(height, 56);
+      @include rem(padding, 0 20);
+      border: 1px solid $line-e4e7ed;
+      @include rem(border-radius, 12);
+      background-color: $bg-ffffff;
+
+      input {
+        padding: 0;
+        @include f16(500, 1.48);
+      }
+    }
+
+    // 달력 아이콘 버튼은 이 페이지에서 숨김 (Figma에 없음)
+    .datepicker-state {
+      display: none;
+    }
+  }
+
+  // 기간 검색 - 시작일 / 종료일
+  .component-rangepicker {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+
+    .component-datepicker {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .range-dash {
+      @include rem(margin, 0 12);
+      @include f16(500, 1.48);
+      color: $font-000000;
+    }
+  }
+
+  // 초기화 / 검색 버튼
+  .component-btns {
+    @include rem(margin-top, 24);
+
+    .btn {
+      justify-content: center;
+      @include rem(width, 226);
+      @include rem(height, 56);
+      padding: 0;
+      border: 0;
+      @include rem(border-radius, 12);
+
+      .btn-txt {
+        @include f18(600, 1.48);
+      }
+
+      // 기본 .btn의 파란 hover/focus 색을 이 페이지 색으로 되돌린다
+      &.btn-reset {
+        background-color: $bg-e4e7ed;
+
+        .btn-txt {
+          color: $font-333333;
+        }
+
+        &:hover,
+        &:focus {
+          background-color: $bg-e4e7ed;
+
+          .btn-txt {
+            color: $font-333333;
+          }
+        }
+      }
+
+      &.btn-primary {
+        background-color: $bg-7b53ea;
+
+        .btn-txt {
+          color: $font-ffffff;
+        }
+
+        &:hover,
+        &:focus {
+          background-color: $bg-7b53ea;
+
+          .btn-txt {
+            color: $font-ffffff;
+          }
+        }
+      }
+
+      & + .btn {
+        @include rem(margin-left, 12);
+      }
+    }
+  }
+
+  // 메모 카드 목록 - 3열 그리드
+  .memo-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .memo-item {
+    // 폭 = (100% - 간격 × (3 - 1)) / 3. 간격 20px × 2 = 40px = 4rem
+    width: calc((100% - 4rem) / 3);
+    @include rem(margin-bottom, 20);
+
+    &:not(:nth-child(3n)) {
+      @include rem(margin-right, 20);
+    }
+  }
+
+  // 메모 카드
+  .memo-card {
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      @include rem(padding, 16 20);
+      @include rem(border-radius, 20 20 0 0);
+      background-color: $bg-f5f6f8;
+    }
+
+    &.is-pinned {
+      .card-head {
+        background-color: $bg-f4ebff;
+      }
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column; // 메모 margin-bottom과 구분선 margin-top이 상쇄되지 않게
+      @include rem(padding, 20);
+      border: 1px solid $line-e4e7ed;
+      border-top: 0;
+      @include rem(border-radius, 0 0 20 20);
+      background-color: $bg-ffffff;
+    }
+  }
+
+  // 카드 헤더 - 칩 + 이름
+  .card-target {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .card-chip {
+    display: inline-flex;
+    align-items: center;
+    flex: none;
+    @include rem(height, 32);
+    @include rem(padding, 0 12);
+    border: 1px solid $line-7b53ea-30;
+    @include rem(border-radius, 50);
+    background-color: $bg-ffffff;
+    @include f14(600, 1.48);
+    color: $font-7b53ea;
+
+    & + .card-name {
+      @include rem(margin-left, 8);
+    }
+  }
+
+  .card-name {
+    min-width: 0;
+    @include f16(600, 1.48);
+    color: $font-000000;
+    @include ellipsis(1);
+  }
+
+  // 카드 헤더 - 핀 + 더보기
+  .card-util {
+    display: flex;
+    align-items: center;
+    flex: none;
+  }
+
+  .card-pin {
+    display: inline-flex;
+
+    .ico-pin {
+      @include ico-pin('%237b53ea');
+    }
+
+    & + .card-more {
+      @include rem(margin-left, 8);
+    }
+  }
+
+  .card-more {
+    display: inline-flex;
+  }
+
+  // 카드 본문 - 메모
+  .card-memo {
+    // Figma 메모 영역 높이 100 = 4줄(23.68 × 4 = 94.72) + 5.28.
+    // 박스를 4줄 높이로 두고 나머지는 margin으로 채워, 넘치는 5번째 줄이 박스 하단에 비치지 않게 한다
+    @include rem(height, 94.72);
+    @include rem(margin-bottom, 5.28);
+    @include ellipsis(4);
+
+    .memo-text {
+      @include f16(500, 1.48);
+      color: $font-000000;
+    }
+
+    .memo-mention {
+      @include f16(600, 1.48);
+      color: $font-7b53ea;
+      text-decoration: underline;
+    }
+
+    .memo-cc {
+      font-weight: 600;
+      color: $font-4999a0;
+      text-decoration: underline;
+
+      .memo-mention {
+        color: $font-4999a0;
+      }
+    }
+  }
+
+  // 카드 본문 - 구분선
+  .card-divider {
+    width: auto;
+    height: 0;
+    @include rem(margin, 20 0 0);
+    border: 0;
+    border-top: 1px dashed $line-000000-08;
+  }
+
+  // 카드 본문 - 작성 정보
+  .card-info {
+    // Figma 구분선은 높이 0(선 두께가 자리 차지 안 함). 구현 선 1px만큼 빼서 구분선 기준 간격 20을 맞춘다
+    @include rem(margin-top, 19);
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      & + .info-row {
+        @include rem(margin-top, 8);
+      }
+    }
+
+    .info-tit {
+      @include f16(400, 1.48);
+      color: $font-333333;
+    }
+
+    .info-desc {
+      @include f16(400, 1.48);
+      color: $font-555555;
+      text-align: right;
+    }
+  }
+
+  .info-link {
+    display: inline-flex;
+    align-items: center;
+    @include f16(600, 1.48);
+    color: $font-333333;
+
+    .ico-new-window {
+      @include rem(margin-left, 4);
+      @include ico-new-window('%23333333');
+    }
+  }
+
+  // 페이지네이션
+  .component-pagination {
+    // 카드 margin-bottom 20 + 4 = 24 (목록 → 페이지네이션 간격)
+    @include rem(margin-top, 4);
+
+    .pagination-item {
+      @include rem(min-width, 28);
+      @include rem(min-height, 28);
+      padding: 0;
+      border-radius: 50%;
+      background-color: transparent;
+      @include f14(400, 1.48);
+      color: $font-000000;
+
+      &[aria-current='page'] {
+        background-color: $bg-261a46;
+        color: $font-ffffff;
+        font-weight: 600;
+      }
+
+      &.is-disabled {
+        pointer-events: none;
+      }
+    }
+
+    .first,
+    .prev,
+    .next,
+    .last {
+      @include rem(background-size, 16 16);
+    }
+
+    .first {
+      @include ico-nav-first('%23333333');
+
+      &.is-disabled {
+        @include ico-nav-first('%23bebcc2');
+      }
+    }
+
+    .prev {
+      @include rem(margin-left, 4);
+      @include ico-nav-prev('%23333333');
+
+      &.is-disabled {
+        @include ico-nav-prev('%23bebcc2');
+      }
+
+      & + .pagination-item {
+        @include rem(margin-left, 16);
+      }
+    }
+
+    .next {
+      @include rem(margin-left, 16);
+      @include ico-nav-next('%23333333');
+    }
+
+    .last {
+      @include rem(margin-left, 4);
+      @include ico-nav-last('%23333333');
+    }
+  }
+}
