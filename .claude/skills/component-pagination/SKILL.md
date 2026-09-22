@@ -46,4 +46,5 @@ description: 페이지네이션(component-pagination) 마크업 구조와 미니
 
 - 현재 페이지에는 `aria-current="page"`를 지정해 스크린 리더가 인식하게 한다.
 - 이동 버튼(첫/이전/다음/마지막)은 `<span class="hide-txt">설명</span>`으로 목적을 알린다.
-- 포커스 상태는 `:focus-visible { outline: -webkit-focus-ring-color auto 1px; }`로 표시한다.
+- 이동이 불필요한 경우(첫 페이지의 이전 버튼 등) 해당 이동 `a`를 없애거나 `tabindex="-1"`로 비활성화한다.
+- 포커스 표시는 브라우저 기본 outline에 맡긴다. `_pagination.scss`에는 별도 `:focus-visible` 스타일이 없으므로, 디자인이 포커스 스타일을 따로 요구할 때만 페이지 SCSS에서 정의하고 outline을 제거하지 않는다.

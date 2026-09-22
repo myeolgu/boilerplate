@@ -51,6 +51,7 @@ description: 버튼(.btn) 마크업 구조와 버튼 그룹(component-btns) 사�
 
 - `.btn-primary`: 강조 스타일. `.btn-full`과 함께 쓸 수 있다.
 - `.btn-full`: 버튼을 부모 너비만큼 채운다.
+- 두 클래스는 `_btn.scss`에 정의돼 있어 동작한다. 다만 가이드(`button.html`)의 "Button Full" 섹션은 통째로 주석 처리돼 있어 가이드 화면에는 보이지 않는다.
 
 ## 링크 버튼
 
@@ -72,15 +73,37 @@ description: 버튼(.btn) 마크업 구조와 버튼 그룹(component-btns) 사�
   <i class="ico-search ico-normal" aria-hidden="true"></i>
   <span class="btn-txt">커스텀버튼</span>
 </div>
+
+<script>
+  function handleClick() {
+    // 클릭 동작
+  }
+
+  function handleKeyDown(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault(); // Enter/Space 입력 시 페이지 스크롤 방지
+      handleClick();
+    }
+  }
+
+  function handleKeyUp(event) {
+    if (event.key === ' ') {
+      event.preventDefault(); // Space 입력 시 페이지 스크롤 방지
+    }
+  }
+</script>
 ```
 
 - `role="button"`으로 역할을 명시한다.
 - `tabindex="0"`으로 키보드 포커스를 받게 한다.
 - keydown에서 Enter/Space를 처리해 스크롤이 발생하지 않도록 `preventDefault()`한다.
+- 인라인 핸들러가 호출하는 함수(`handleClick` 등)는 반드시 함께 정의한다. 없으면 ReferenceError가 난다.
 
 ## 버튼 그룹
 
 여러 버튼을 묶을 때는 `.component-btns`/`.btns-row`를 사용한다.
+
+- 버튼 그룹 선택 기준: 모달 내부 하단 버튼은 `.btn-group`(`component-modal`), 폼 제출 버튼은 `button.btn-confirm`(`component-form`), 그 외는 `.component-btns`를 쓴다.
 
 ```html
 <!-- 가운데 정렬(기본값) -->
@@ -125,19 +148,27 @@ description: 버튼(.btn) 마크업 구조와 버튼 그룹(component-btns) 사�
 ```html
 <div class="component-btns">
   <div class="btns-row three-col">
-    <button type="button" class="btn btn-full"><span class="btn-txt">1</span></button>
-    <button type="button" class="btn btn-full"><span class="btn-txt">2</span></button>
-    <button type="button" class="btn btn-full"><span class="btn-txt">3</span></button>
+    <div class="btns-col-1">
+      <button type="button" class="btn btn-full"><span class="btn-txt">1</span></button>
+    </div>
+    <div class="btns-col-2">
+      <button type="button" class="btn btn-full"><span class="btn-txt">2</span></button>
+    </div>
+    <div class="btns-col-3">
+      <button type="button" class="btn btn-full"><span class="btn-txt">3</span></button>
+    </div>
   </div>
 </div>
 ```
+
+- 각 버튼은 반드시 `.btns-col-1`/`.btns-col-2`/`.btns-col-3`으로 감싼다. `flex-grid` 믹스인이 `> [class*='-col-N']` 자식에만 폭을 주고 `flex-wrap: wrap`이 걸려 있어, 버튼을 `.three-col` 바로 아래에 두면 `.btn-full`이 세 줄로 쌓인다.
 
 ## 클래스 구조
 
 - 기본 클래스: `.btn` (변형: `.btn-primary`, `.btn-full`)
 - 텍스트 클래스: `.btn-txt`
 - 숨김 텍스트 클래스: `.hide-txt`
-- 그룹: `.component-btns` > `.btns-row`(`.align-left` | `.align-right` | `.two-col` + `.btns-col-1`/`.btns-col-2` | `.three-col`)
+- 그룹: `.component-btns` > `.btns-row`(`.align-left` | `.align-right` | `.two-col` + `.btns-col-1`/`.btns-col-2` | `.three-col` + `.btns-col-1`/`.btns-col-2`/`.btns-col-3`)
 
 ## 참고
 

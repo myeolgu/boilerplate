@@ -30,9 +30,14 @@ description: 텍스트영역(component-input의 textarea 변형) 마크업 구�
 
 ## 데이터 속성
 
-- `data-props-count`: 현재 표시할 초기 글자 수(보통 `0`으로 시작)
-- `data-props-count-limit`: 최대 글자 수
-- `data-props-clear="true"`: 지우기 동작 활성화
+- `data-props-count`: 최대 글자 수. `Input.js`가 이 값을 `.textarea-count-total`에 넣고 입력 길이와
+  비교한다(`Input.js:136-141`, `170-184`). 이 값이 없거나 `0`이면 카운트 기능 전체가 꺼진다.
+- `data-props-count-limit`: 값이 있으면(truthy) `data-props-count`를 넘는 입력을 막는다. 없으면
+  입력은 허용하고 초과 시 `.textarea-count-num`에 `.over` 클래스만 붙인다. 숫자 자체는 쓰이지 않으므로
+  가이드처럼 `data-props-count`와 같은 값을 넣는다.
+- `data-props-multibyte="true"`: 글자 수 대신 `etUI.utils.countCharacters` 기준(바이트)으로 센다
+  (`Input.js:164-165`).
+- `data-props-clear="true"`: 지우기 동작 활성화(`Input.js`가 `textarea` 뒤에 지우기 버튼을 삽입한다)
 
 ## 클래스 구조
 

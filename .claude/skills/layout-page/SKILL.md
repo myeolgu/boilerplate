@@ -16,13 +16,13 @@ description: 신규 정적 HTML 페이지 작성 시 sample.html 기준 구조, 
 
 ## 기준 템플릿
 
-새 페이지는 `src/pages/sample/sample.html`의 구조를 기준으로 작성한다.
+새 페이지는 `src/pages/sample/sample.html`의 구조를 기준으로 작성한다(아래는 `head`를 뺀 `body` 부분).
 
 ```html
 <body>
   <div id="wrap">
-    @@include('pathPagesInclude/_header.html', { "title": "test_title01" })
-    <div id="container">
+    @@include('pathPagesInclude/_header.html', { "title": "test_title01", "title02": "test_title02" })
+    <div class="" id="container">
       <div id="content" role="main">
         <div class="해당 페이지-wrap">
           <div class="content-inner">
@@ -65,4 +65,4 @@ description: 신규 정적 HTML 페이지 작성 시 sample.html 기준 구조, 
 ## 페이지 SCSS 범위
 
 - 해당 페이지 SCSS의 모든 선택자는 고유 최상위 클래스 내부에 작성한다. 자세한 규칙은 `style-scss` 스킬을 따른다.
-- **`content-inner`, `page-tit`, `page-tit-group`은 현재 프로젝트 전체에 실제 스타일이 정의돼 있지 않다**(확인 시점 기준 `_base.scss`를 포함해 어디에도 없음 — 폭 제한도, 가운데 정렬도, 타이포그래피도 없는 빈 골격이다). 이 템플릿을 그대로 가져다 쓰면 브라우저 기본값(왼쪽 정렬, 폭 제한 없음)으로 보인다. Figma에 폭 제한·정렬이 있으면 그 페이지의 최상위 wrap 클래스 안에서 `content-inner`/`page-tit`/`page-tit-group`을 직접 재정의해야 한다(`style-scss` 스킬의 "공통 골격 클래스도 페이지별로 재정의할 수 있다" 참고). 전역 파일이 이미 채워져 있으려니 가정하지 않는다.
+- **`content-inner`, `page-tit`, `page-tit-group`에는 페이지 골격용 전역 스타일이 없다**(확인 시점 기준 `_base.scss` 등 전역 파일에 없음 — 폭 제한도, 가운데 정렬도, 타이포그래피도 없는 빈 골격이다. `_hgroup.scss`도 빈 파일이다). 단, `components/_tab.scss`에는 탭 안 `.component-tab .tab-content .content-inner`에만 적용되는 스타일(flex 가운데 정렬, padding 40)이 있으니 탭 안에 `content-inner`를 넣으면 이 스타일을 받는다. 이 템플릿을 그대로 가져다 쓰면 브라우저 기본값(왼쪽 정렬, 폭 제한 없음)으로 보인다. Figma에 폭 제한·정렬이 있으면 그 페이지의 최상위 wrap 클래스 안에서 `content-inner`/`page-tit`/`page-tit-group`을 직접 재정의해야 한다(`style-scss` 스킬의 "공통 골격 클래스도 페이지별로 재정의할 수 있다" 참고). 전역 파일이 이미 채워져 있으려니 가정하지 않는다.

@@ -11,6 +11,7 @@ skills:
   - component-form
   - component-select
   - component-button
+  - component-icon
   - icon-asset-naming
 model: fable
 ---
@@ -22,7 +23,7 @@ React/TSX가 아니다.
 
 - 작업 원칙, 컴포넌트 사용 원칙, 검증 절차는 루트 `CLAUDE.md`를 따른다.
 - 세부 규칙은 스킬에 있다. 위에 프리로드된 스킬(페이지 구조, HTML 마크업, Figma 변환, SCSS, 입력·표·폼·
-  셀렉트·버튼, 아이콘 추가)을 기준으로 삼는다.
+  셀렉트·버튼, 아이콘 사용·추가)을 기준으로 삼는다.
 - 프리로드되지 않은 컴포넌트가 필요하면 구현 전에 `CLAUDE.md` "컴포넌트 사용 원칙"의 목록에서 해당
   `component-*` 스킬을 찾아 불러온다. 규칙을 기억에 의존해 짐작하지 않는다.
 

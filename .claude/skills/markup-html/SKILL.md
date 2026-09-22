@@ -17,6 +17,7 @@ description: HTML 마크업 공통 규칙(시맨틱 태그, h1~h6 헤딩 계층,
 
 - `h1`~`h6`은 계층적으로 사용하고 한 페이지에 `h1`은 하나만 둔다. 스타일링 목적으로 헤딩 태그를 쓰지 않는다.
 - `h1`은 공통 헤더(`_header.html`)의 로고가 이미 쓰고 있다. 따라서 `#content` 안 페이지 콘텐츠는 `h1`을 다시 쓰지 않고 `h2`부터 시작한다(`sample.html`의 `page-tit`이 `h2`인 것도 이 때문). 하위 헤딩도 이 기준으로 한 단계씩 내려서 계층을 맞춘다(`page-tit` h2 → 섹션 제목 h3 → 그 아래 h4 …).
+- `src/pages/main/main.html`은 콘텐츠 안에 `h1`을 두고 `<main id="content">`를 쓰는 예전 구조라 이 규칙과 `sample.html` 구조의 참고 대상이 아니다.
 
 ## 링크
 
@@ -28,4 +29,10 @@ description: HTML 마크업 공통 규칙(시맨틱 태그, h1~h6 헤딩 계층,
 
 ## void 요소
 
-- `br`, `img`, `input`, `hr` 같은 void 요소는 자체 닫힘으로 작성한다(`<br />`, `<input />`). 닫지 않은 형태(`<br>`)는 `npm run checkhtml`에서 오류로 처리된다.
+- `br`, `img`, `input`, `hr` 같은 void 요소는 자체 닫힘으로 작성한다(`<br />`, `<input />`). `npm run checkhtml`(W3C Nu 검증기)은 닫지 않은 형태(`<br>`)를 잡지 않으므로 직접 확인한다.
+
+## 폼 접근성
+
+- 보이는 폼 label은 고유하고 안정적인 `id`/`for`로 연결한다.
+- 하나의 라벨이 여러 컨트롤을 설명하면 `fieldset`/`legend`를 사용한다.
+- `aria-labelledby`는 `label`/`legend`로 설명할 수 없는 경우에만 사용한다.

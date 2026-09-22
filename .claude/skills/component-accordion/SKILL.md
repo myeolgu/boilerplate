@@ -13,31 +13,33 @@ description: 아코디언(component-accordion) 마크업 구조, 다중/단일 �
 
 ```html
 <div class="component-accordion">
-  <div class="accordion-item" data-state="close" data-init="false">
+  <div class="accordion-item">
     <button type="button" class="collapse-tit">Q. What is HTML?</button>
     <div class="collapse-content">
       <div>HTML stands for Hyper Text Markup Language.</div>
     </div>
   </div>
-  <div class="accordion-item" data-state="close" data-init="false">
+  <div class="accordion-item">
     <button type="button" class="collapse-tit">Q. What is CSS?</button>
     <div class="collapse-content">CSS stands for Cascading Style Sheets.</div>
   </div>
 </div>
 ```
 
-- `data-state="close"`: 초기 닫힌 상태. 열린 상태로 시작하려면 `"open"`으로 둔다.
-- `data-init="false"`: 초기화 여부(JS가 초기화 후 값을 갱신한다).
+- 아이템은 기본적으로 닫힌 상태다. 열린 상태로 시작할 아이템에만 `data-state="open"`을 둔다.
+- `data-init`은 JS가 초기화 후 스스로 붙이는 속성이라 마크업에 쓰지 않는다. 특히
+  `.component-accordion` 루트에 `data-init="false"`를 쓰면 `initUI()`가 값이 있다는 이유로 초기화를
+  건너뛴다(`init.js`).
 
 ## 단일 아이템만 활성화
 
 ```html
-<div class="component-accordion" data-props-type="single" data-props-index="0">
-  <div class="accordion-item" data-init="true" data-state="open">
+<div class="component-accordion" data-props-type="single">
+  <div class="accordion-item" data-state="open">
     <button type="button" class="collapse-tit">Q. What is HTML?</button>
     <div class="collapse-content">HTML stands for Hyper Text Markup Language.</div>
   </div>
-  <div class="accordion-item" data-init="false">
+  <div class="accordion-item">
     <button type="button" class="collapse-tit">Q. What is CSS?</button>
     <div class="collapse-content">CSS stands for Cascading Style Sheets.</div>
   </div>
@@ -45,8 +47,11 @@ description: 아코디언(component-accordion) 마크업 구조, 다중/단일 �
 ```
 
 - `data-props-type="single"`: 한 번에 하나의 아이템만 활성화
-- `data-props-index="0"`: 초기 활성화 아이템의 인덱스(0부터 시작)
-- `data-props-type`은 `multiple`(기본) | `single` | `separate`를 받는다(`Accordion.js`).
+- 처음에 열어 둘 아이템은 그 아이템의 `data-state="open"`으로 지정한다. 가이드 예시에는
+  `data-props-index="0"`이 있지만 실제 코드는 `props.index`를 읽지 않아 효과가 없으므로 쓰지 않는다.
+- `data-props-type`은 `multiple`(기본) | `single`을 쓴다(`Accordion.js`). 코드에 `separate` 분기가
+  있지만 동작은 `multiple`과 같다. 가이드 표에는 기본값이 `single`로 적혀 있지만 실제 코드 기본값은
+  `multiple`이다.
 
 ## 단독 접기/펼치기 패널
 
@@ -54,7 +59,7 @@ description: 아코디언(component-accordion) 마크업 구조, 다중/단일 �
 
 ```html
 <div class="component-accordion">
-  <div class="accordion-item" data-state="close" data-init="false">
+  <div class="accordion-item">
     <button type="button" class="collapse-tit">상세 조건 보기</button>
     <div class="collapse-content">패널 내용</div>
   </div>
@@ -72,7 +77,7 @@ description: 아코디언(component-accordion) 마크업 구조, 다중/단일 �
 
 - 기본 클래스: `.component-accordion`
 - `.accordion-item` > `.collapse-tit` + `.collapse-content`
-- `data-state`: `"open"` | `"close"`
+- `.accordion-item`의 `data-state`: `"open"` | `"close"`(JS가 열고 닫을 때 갱신한다)
 
 ## 사용 가이드
 
@@ -83,7 +88,7 @@ description: 아코디언(component-accordion) 마크업 구조, 다중/단일 �
 ```scss
 .component-accordion {
   .accordion-item {
-    &[data-state="open"] { }
+    &[data-state='open'] { }
   }
 
   .collapse-tit { }

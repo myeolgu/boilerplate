@@ -42,7 +42,8 @@
 ## 검증
 
 - HTML을 변경한 뒤에는 `npm run checkhtml`을 실행한다.
-- SCSS를 변경한 뒤에는 `npm run checkstyle`과 `npm run prettier`를 실행한다.
+- SCSS를 변경한 뒤에는 `npm run checkstyle`을 실행하고, `npx prettier --write <변경한 파일>`로 내가 바꾼 파일만 포맷한다. `npm run prettier`는 저장소 전체를 다시 포맷하므로 쓰지 않는다.
+- 두 lint 명령은 문제가 있어도 실패로 끝나지 않는다. `checkhtml`은 빌드된 `dist` HTML을 W3C 온라인 검사기로, `checkstyle`은 빌드된 `dist` CSS를 stylelint로 검사하고 결과를 출력만 한다. 종료 여부가 아니라 출력 내용을 읽고, 내가 바꾼 파일에 해당하는 오류·경고가 있는지 판단한다.
 - 컴포넌트 가이드 페이지(`src/guide/pages/components/*.html`)가 있는 요소는 그 예시와 마크업 구조가 일치하는지 비교해 확인한다.
 - `npm run dev`(gulp) 첫 실행 직후에는 `etUI.components`가 비어 있어 모든 인터랙션 컴포넌트가 초기화 실패할 수 있다(`src/assets/scripts/ui/{components,hooks,utils,templates}/index.cjs` 생성과 JS 번들 합치기 사이의 레이스 컨디션). 콘솔에 `Cannot read properties of undefined (reading 'Input')` 같은 에러가 보이면 dev 서버를 껐다 다시 켠다.
 - 실제 동작(클릭, 열림/닫힘 등) 확인이 필요하면 Playwright(MCP가 연결되어 있으면)로 dev 서버를 띄운 페이지를 열어 검증한다. 코드만 읽고 동작을 추측하지 않는다. Playwright가 만드는 `.playwright-mcp/`(스크린샷·스냅샷·콘솔 로그)는 검증에 다 쓰고 나면 삭제한다. git에는 잡히지 않지만(`.gitignore`) 로컬에 쌓아둘 필요가 없다.

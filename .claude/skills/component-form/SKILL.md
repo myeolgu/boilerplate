@@ -39,7 +39,7 @@ description: 폼(component-form) 마크업 구조, form-element/form-group 조�
   <div class="form-group">
     <div class="component-select">
       <select class="select-list" required>
-        <option value="" selected hidden>통신사</option>
+        <option value="" selected disabled hidden>통신사</option>
         <option value="value1">Option 1</option>
       </select>
     </div>
@@ -76,18 +76,31 @@ description: 폼(component-form) 마크업 구조, form-element/form-group 조�
 </div>
 ```
 
+- `.form-group` 안의 확인·인증·재전송 버튼은 가이드대로 `button.btn-confirm` + `.btn-txt`를 쓴다
+  (`_form.scss`의 `.form-element button[class*='btn-']`가 스타일을 준다). 그 외 버튼은 `component-button`
+  스킬(`.btn`)을 따른다.
+
 ## 여러 입력 조합(구분선 포함)
 
 여러 입력 필드를 나열할 때는 필드 사이에 `.bar`를 둔다.
 
 ```html
-<div class="form-group">
-  <div class="component-input">
-    <div class="input-field"><input type="text" placeholder="휴대폰 번호를 입력해주세요." /></div>
-  </div>
-  <div class="bar"></div>
-  <div class="component-input">
-    <div class="input-field"><input type="text" placeholder="휴대폰 번호를 입력해주세요." /></div>
+<div class="form-element">
+  <label for="temp_input_0003" class="input-label">
+    <span class="label-txt">휴대폰 번호</span>
+  </label>
+  <div class="form-group">
+    <div class="component-input">
+      <div class="input-field"><input type="text" id="temp_input_0003" placeholder="앞자리" /></div>
+    </div>
+    <div class="bar"></div>
+    <div class="component-input">
+      <div class="input-field"><input type="text" aria-label="휴대폰 번호 가운데 자리" placeholder="가운데 자리" /></div>
+    </div>
+    <div class="bar"></div>
+    <div class="component-input">
+      <div class="input-field"><input type="text" aria-label="휴대폰 번호 끝자리" placeholder="끝자리" /></div>
+    </div>
   </div>
 </div>
 ```
@@ -95,21 +108,36 @@ description: 폼(component-form) 마크업 구조, form-element/form-group 조�
 ## 특수 입력(주민등록번호 등 분할 입력)
 
 ```html
-<div class="form-group">
-  <div class="component-input">
-    <div class="input-field"><input type="text" placeholder="앞 6자리" /></div>
-  </div>
-  <div class="bar"></div>
-  <div class="resident-number">
-    <div class="component-input resident-input">
-      <div class="input-field"><input type="text" maxlength="1" /></div>
+<div class="form-element">
+  <label for="temp_input_0004" class="input-label">
+    <span class="label-txt">주민등록번호</span>
+  </label>
+  <div class="form-group">
+    <div class="component-input">
+      <div class="input-field"><input type="text" id="temp_input_0004" placeholder="앞 6자리" /></div>
     </div>
-    <ul class="hidden-list">
-      <li class="hiddeb-num"><span class="hide-txt">hidden-number</span></li>
-    </ul>
+    <div class="bar"></div>
+    <div class="resident-number">
+      <div class="component-input resident-input">
+        <div class="input-field"><input type="text" aria-label="주민등록번호 뒷자리 첫 숫자" maxlength="1" /></div>
+      </div>
+      <ul class="hidden-list">
+        <li><span class="hide-txt">hidden-number</span></li>
+        <li><span class="hide-txt">hidden-number</span></li>
+        <li><span class="hide-txt">hidden-number</span></li>
+        <li><span class="hide-txt">hidden-number</span></li>
+        <li><span class="hide-txt">hidden-number</span></li>
+        <li><span class="hide-txt">hidden-number</span></li>
+      </ul>
+    </div>
   </div>
 </div>
 ```
+
+- 위 조합 예시는 모두 `.component-form` 안에 둔다. `.bar`, `.resident-number`, `.type-time`,
+  `.btn-confirm` 스타일은 `.component-form .form-element` 하위에만 정의되어 있다(`_form.scss:168-273`).
+- `.hidden-list`의 점은 `li` 자체에 스타일이 적용된다. 가이드의 `li.hiddeb-num`은 오타이며 스타일에
+  쓰이지 않으므로 옮겨 쓰지 않는다.
 
 ## 클래스 구조
 

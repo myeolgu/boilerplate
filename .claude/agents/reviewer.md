@@ -19,14 +19,20 @@ HTML·SCSS 보일러플레이트이며 React/TSX가 아니다.
 
 ## 1. 먼저 실제 lint를 실행한다
 
-변경된 HTML·SCSS 파일이 있으면 `npm run checkhtml`과 `npm run checkstyle`을 실행하고 통과/실패
-여부와 실패 항목(파일·줄·규칙명)을 그대로 기록한다. 이 결과가 다음 항목들의 1차 근거다.
+변경된 HTML·SCSS 파일이 있으면 `npm run checkhtml`과 `npm run checkstyle`을 실행하고, 변경한
+파일에 해당하는 오류·경고(파일·줄·규칙명)를 그대로 기록한다. 이 결과가 다음 항목들의 1차 근거다.
 
-- **stylelint가 실제로 잡는 것**: hex 색상 6자리 미만(`color-hex-length`), `display: block` +
-  `vertical-align` 동시 사용, `display: inline` + `margin-top`/`margin-bottom` 동시 사용,
-  `position` 미지정 요소의 `top`/`left`/`right`/`bottom` 사용.
-- **html-validate가 실제로 잡는 것**: void 요소(`br`, `img`, `input`, `hr` 등) 비-자체닫힘
-  표기(`void-style`), 그 외 `html-validate:recommended` 기본 규칙.
+두 명령 모두 문제가 있어도 실패로 끝나지 않는다. 종료 여부로 통과를 판단하지 말고 출력을 읽는다.
+
+- **`checkstyle`(stylelint)**: SCSS가 아니라 빌드된 `dist/**/*.css`를 검사한다(`throwError: false`).
+  `stylelint-config-standard`·`recommended-scss` 기본 규칙(클래스 kebab-case 등)과 hex 색상 6자리
+  미만(`color-hex-length`), 커스텀 규칙 `display: block` + `vertical-align`, `display: inline` +
+  `margin-top`/`margin-bottom`, `position: static`을 **명시한** 블록의 `top`/`left`/`right`/`bottom`을
+  경고로 낸다. 저장소 전체에 기존 경고가 많으므로 변경한 파일에서 나온 것만 본다.
+- **`checkhtml`**: 빌드된 `dist/**/*.html`을 W3C 온라인 검사기(`w3c-html-validator`)로 검사한다
+  (`continueOnFail: true`, warning 이하 무시). 인터넷 연결이 필요하고, 요청 과다(429)면 결과가 없다.
+  HTML5 기준이라 void 요소 비-자체닫힘(`<br>`)은 잡지 않는다. `.htmlvalidate.json`(html-validate)은
+  어떤 npm 스크립트에서도 쓰이지 않는다.
 
 lint 명령이 이미 잡아준 문제는 아래 수동 항목으로 다시 설명하지 않는다.
 
@@ -34,9 +40,10 @@ lint 명령이 이미 잡아준 문제는 아래 수동 항목으로 다시 설�
 
 `.htmlvalidate.json`은 `no-dup-id`, `form-dup-name`, `unique-landmark`, `wcag/h63`(테이블 헤더
 scope)을 꺼두었고, `.stylelintrc`의 `plugin/no-invalid-class-prefix`/`no-invalid-class-suffix`/
-`color-no-hex`는 이름만 등록되어 있고 실제 규칙 정의(`gulp/config/stylelintRulesConfig.json`)가
-없어 작동하지 않는다. `rem()` 믹스인 사용, `gap` 금지, 중첩 깊이, 색상 변수 사용, 클래스 네이밍도
-lint 설정에 없다. 이 항목들은 자동 검증되지 않으므로 전부 직접 확인해야 한다.
+`color-no-hex`는 이름만 등록되어 있고 `gulp/config/stylelintRulesConfig.json`에 정의가 없어 작동하지
+않는다(`Unknown rule` 경고만 나온다). `rem()` 믹스인 사용, `gap` 금지, 중첩 깊이, 색상 변수 사용, void
+요소 자체 닫힘, 클래스 접두·접미 규칙도 lint가 잡지 않는다. 이 항목들은 자동 검증되지 않으므로 전부
+직접 확인해야 한다.
 
 검수 기준은 스킬이다. 아래 스킬의 규칙을 전부 기준으로 삼고, 이 문서에 규칙 내용을 따로 옮겨 적지 않는다.
 
@@ -57,7 +64,8 @@ lint 설정에 없다. 이 항목들은 자동 검증되지 않으므로 전부 
 
 ## 보고 형식
 
-- `npm run checkhtml`/`checkstyle` 실행 결과(통과/실패, 실패 시 요약)를 먼저 보고한다.
+- `npm run checkhtml`/`checkstyle` 실행 결과(변경한 파일에 해당하는 오류·경고 요약, `checkhtml`이
+  네트워크 문제로 결과가 없으면 그 사실)를 먼저 보고한다.
 - 이어서 수동 확인 결과를 심각도 순으로 나열한다. 문제가 없으면 명확히 "위반 사항 없음"이라고
   말한다.
 - 각 항목에 근거(lint 출력 또는 기준이 된 스킬과 그 섹션)를

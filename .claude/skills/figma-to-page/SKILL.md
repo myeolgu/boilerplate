@@ -48,7 +48,8 @@ https://www.figma.com/design/{fileKey}/{파일명}?node-id={id}&t={추적용해�
 - **컴포넌트 문서/디자인 주석**: Figma 쪽 힌트가 있으면 참고하되, 최종 마크업 구조는 이 프로젝트
   실제 가이드(`src/guide/pages/components/*.html`)를 기준으로 한다.
 - **디자인 토큰(색상)**: React/Tailwind 참고 코드의 CSS 변수나 hex 값을 그대로 쓰지 않고, `style-scss`
-  스킬의 "색상·폰트" 규칙대로 `_variables.scss` 변수로 옮긴다.
+  스킬의 "색상·폰트" 규칙대로 `_variables.scss` 변수로 옮긴다. 정확히 일치하는 변수가 없어 새 변수가
+  필요하면(폰트 믹스인·아이콘 믹스인도 마찬가지) 전역 파일 수정이므로 사용자 확인 후에만 추가한다.
 - **아이콘**: Figma가 내보낸 아이콘 에셋을 그대로 이미지 파일로 쓰지 않는다. 먼저
   `component-icon`/`icon-asset-naming` 스킬대로 같은 glyph의 `.ico-*` 클래스나 `_svg.scss`
   믹스인이 이미 있는지 확인하고, 있으면 재사용한다. 정말 새 아이콘이면 그 스킬의 절차(새 믹스인

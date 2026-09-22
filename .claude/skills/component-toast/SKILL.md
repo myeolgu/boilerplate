@@ -13,7 +13,7 @@ API: `src/assets/scripts/ui/hooks/useDialog.js`의 `etUI.dialog.toast*`. 스타�
 ## 준비: toast-wrap
 
 `component-dialog`와 달리 toast는 `.toast-wrap` 요소를 자동으로 만들어주지 않는다. 페이지에 미리
-빈 컨테이너를 둬야 한다.
+빈 컨테이너를 둬야 한다. 없으면 에러 없이 아무것도 표시되지 않는다.
 
 ```html
 <div class="toast-wrap"></div>
@@ -22,10 +22,13 @@ API: `src/assets/scripts/ui/hooks/useDialog.js`의 `etUI.dialog.toast*`. 스타�
 ## 기본 토스트
 
 ```html
-<button type="button" class="btn toast-trigger-btn type01">기본 toast</button>
+<!-- btn-save는 공통 스타일 클래스가 아니라 스크립트에서 트리거를 찾기 위한 페이지 전용 클래스 -->
+<button type="button" class="btn btn-save">
+  <span class="btn-txt">저장</span>
+</button>
 
 <script>
-  document.querySelector('.toast-trigger-btn.type01').addEventListener('click', () => {
+  document.querySelector('.btn-save').addEventListener('click', () => {
     etUI.dialog.toastBasic({
       message: 'confirm message',
     });
@@ -44,6 +47,8 @@ API: `src/assets/scripts/ui/hooks/useDialog.js`의 `etUI.dialog.toast*`. 스타�
 </script>
 ```
 
+- `closeText`는 기본값이 없어 생략하면 버튼에 "undefined"가 표시되므로 반드시 지정한다.
+
 ## 링크 버튼이 있는 토스트
 
 ```html
@@ -55,11 +60,14 @@ API: `src/assets/scripts/ui/hooks/useDialog.js`의 `etUI.dialog.toast*`. 스타�
 </script>
 ```
 
+- 링크 버튼 문구는 템플릿에 "링크"로 고정돼 있고 바꾸는 옵션이 없다.
+
 ## 클래스 구조 (JS가 자동 생성)
 
-- `.toast-wrap` > `.toast-container` > `.toast-content`(`.toast-txt`, 필요시 `.toast-close-btn`/
-  `.toast-link-btn`)
-- 트리거 버튼 스타일은 `.toast-trigger-btn`을 사용한다.
+- `.toast-wrap` > `.component-toast`(토스트마다 생성) > `.toast-container` > `.toast-content`
+  (`.toast-txt`, 필요시 `.toast-close-btn`/`.toast-link-btn`)
+- 가이드의 `.toast-trigger-btn`은 가이드 데모용 트리거 스타일이다. 실제 화면의 트리거 버튼은
+  `component-button`의 `.btn` + `.btn-txt` 구조를 쓴다.
 
 ## 참고: snackbar와의 관계
 

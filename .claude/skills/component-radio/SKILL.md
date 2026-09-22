@@ -12,7 +12,7 @@ description: 라디오 버튼 마크업 구조, 상태, 접근성 규칙을 안�
 ```html
 <div class="component-input">
   <label class="radio-inner">
-    <input type="radio" id="radio_id" name="radio_group_name" />
+    <input type="radio" id="radio_id" name="radio_group_name" aria-label="항목 이름" />
   </label>
 </div>
 ```
@@ -47,10 +47,13 @@ description: 라디오 버튼 마크업 구조, 상태, 접근성 규칙을 안�
 - 각 라디오에 고유한 `id`를 부여한다.
 - 같은 그룹의 라디오는 동일한 `name`을 공유한다.
 - `label`로 감싸 클릭 영역을 넓히고, 텍스트가 있으면 `.radio-txt`로 시각적 라벨을 제공한다.
-- 포커스 상태는 `:focus-visible { outline: -webkit-focus-ring-color auto 1px; }`로 표시한다.
+- 텍스트 없는 기본 라디오(위 "기본 구조")는 접근 가능한 이름이 없으므로 `input`에 `aria-label`을 준다.
+- 포커스 상태는 스타일에 이미 정의되어 있다: `input[type='radio']:focus-visible { outline: 1px solid
+  $line-000000; }`(`_radio.scss:53-55`). 가이드에는 `-webkit-focus-ring-color auto 1px`로 적혀 있지만
+  실제 코드는 이 값이다.
 
 ## 참고
 
 실제 프로젝트(`src/assets/styles/components/_radio.scss`)를 확인한 결과 기본 클래스는
-`.component-input`이 맞다. 체크박스와 같은 래퍼를 `Input.js`가 함께 처리한다(`component-checkbox`
-스킬 참고). `.component-radio`라는 클래스는 만들지 않는다.
+`.component-input`이 맞다. 체크박스와 같은 래퍼를 `Input.js`가 초기화하지만, 라디오 전용 동작은
+없고 `disabled`일 때 `.input-disabled`를 붙이는 정도다(`component-checkbox` 스킬 참고). `.component-radio`라는 클래스는 만들지 않는다.

@@ -7,6 +7,8 @@ description: 사용자가 "커밋 내용"을 요청했을 때 staged 변경사�
 
 사용자가 `커밋 내용`이라고 요청하면 staged changes만 분석해 커밋 메시지를 제안한다. 커밋, stage, unstage는 실행하지 않는다.
 
+이 "실행하지 않음"은 `커밋 내용` 요청에만 적용된다. 작업을 마친 뒤 직접 커밋하라는 별도 지시(사용자 지시나 메모리)가 있으면 그 지시를 따르되, 메시지 형식은 이 스킬을 따른다.
+
 ## 확인 범위
 
 1. `git diff --cached --name-status`와 `git diff --cached`를 확인한다.
@@ -18,7 +20,7 @@ description: 사용자가 "커밋 내용"을 요청했을 때 staged 변경사�
 `<type>(<scope>): <subject> [PMS/ISSUE#]`
 
 - `type`: 아래 표의 유형을 사용한다.
-- `scope`: 변경된 기능 모듈 또는 비즈니스 도메인명. 예: `auth`, `order`, `db`, `iot`.
+- `scope`: 변경된 기능 모듈 또는 비즈니스 도메인명. 예: `auth`, `order`, `db`, `iot`. 하나의 모듈·도메인으로 특정할 수 없는 변경(여러 영역에 걸친 문서·설정 등)은 `(<scope>)`를 생략한다(`docs: …`).
   - `pub`, `admin`, `frontend`, `ui`처럼 레이어·프로젝트·기술 범위를 나타내는 이름은 scope로 사용하지 않는다.
 - `subject`: 명령형, 마침표 없이, 50자 이내로 작성한다.
 - 커밋 메시지의 subject와 본문은 한글로 작성한다. `type`, `scope`, 이슈 식별자는 기존 형식을 유지한다.

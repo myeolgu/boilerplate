@@ -38,8 +38,8 @@ description: 탭(component-tab) 마크업 구조와 중첩 탭 패턴을 안내�
 
 ## 가로 스크롤 탭
 
-탭 개수가 많아 한 줄에 다 안 들어가면 `.tab-scroll`을 추가한다. 탭 클릭 시 해당 탭이 보이도록
-자동으로 좌우 스크롤된다.
+탭 개수가 많아 한 줄에 다 안 들어가면 `.tab-scroll`을 추가한다(`.tab-head`에 가로 스크롤을 켜는
+스타일 클래스). 탭 클릭 시 해당 탭이 보이도록 JS가 자동으로 좌우 스크롤한다.
 
 ```html
 <div class="component-tab tab-scroll">...</div>
@@ -55,16 +55,19 @@ description: 탭(component-tab) 마크업 구조와 중첩 탭 패턴을 안내�
 ```
 
 - `data-props-sticky="true"`: 탭 헤더가 스크롤 시 상단에 고정된다.
-- `data-props-sticky="{선택자}"`: 지정한 요소의 높이만큼 고정 위치를 보정한다.
+- `data-props-sticky="{선택자}"`: 초기화 시점에 지정한 요소의 `getBoundingClientRect().bottom` 값을
+  헤더의 `top`으로 쓴다. 기준 요소가 화면 맨 위(`top: 0`)에 붙어 있을 때 그 요소의 높이만큼 밀린다.
 - `.tab-scroll`과 함께 쓸 수 있다(헤더 고정 + 가로 스크롤).
 
-## 주요 props (JS로 전달, `Tab.js` 실제 옵션)
+## 실제 옵션·API (`Tab.js`)
 
-- `scroll`(boolean, 기본 `false`): 탭이 부모 영역을 넘어갈 때 클릭 시 자동 스크롤 여부
-- `sticky`(boolean, 기본 `false`) / `stickyWrapper`(element): 헤더 고정과 고정 기준 요소
-- `stickyEnter`/`stickyLeaveBack`(function): sticky 진입·이탈 콜백
-- `active`(string, 초기 활성 탭 선택자) / `onClick`(function): 탭 클릭 콜백
-- `change`(메서드): 탭을 코드로 전환할 때 호출
+- props는 `sticky`(`data-props-sticky`) 하나뿐이다. 클릭한 탭 쪽으로 좌우 스크롤하는 동작은 옵션
+  없이 항상 실행된다.
+- `data-active`는 prop이 아니라 state다. 값은 선택자가 아니라 활성화할 탭의 `data-tab-value`다.
+- 인스턴스(`el.ui`)의 공개 메서드는 `setOffsetLeft()`(활성 탭 위치로 헤더 스크롤), `update()`뿐이다.
+  탭을 코드로 바꾸는 메서드와 클릭 콜백은 없다.
+- 가이드 표에는 `scroll`, `stickyWrapper`, `stickyEnter`, `stickyLeaveBack`, `onClick`, `change`가
+  적혀 있지만 실제 코드에는 없으므로 쓰지 않는다(`el.ui.change()`는 TypeError가 난다).
 
 ## 클래스·속성 구조
 
