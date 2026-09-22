@@ -28,12 +28,12 @@ model: fable
   구조(`#content[role="main"]` 안, `<!-- ai가 코딩해줄 부분 -->` 아래, `.content-inner` 필수)를
   따른다. `head` 태그와 헤더·푸터 include는 임의로 수정하지 않는다.
 - 구현 전 `src/guide/pages/components`의 관련 컴포넌트 가이드를 먼저 확인한다. 프리로드된 스킬에
-  없는 컴포넌트가 필요하면(아코디언, 단독 접기/펼치기, 체크박스, 라디오, 탭, 아이콘, 페이지네이션,
+  없는 컴포넌트가 필요하면(아코디언·단독 접기/펼치기(둘 다 `component-accordion`), 체크박스, 라디오, 탭, 아이콘, 페이지네이션,
   모달, 스와이퍼, 텍스트영역, 날짜 선택, 툴팁, 알림/확인 팝업, 토스트, 목록, 스낵바 등) 구현 전에
   해당 `component-*` 스킬을 불러온다.
 - 체크박스·라디오·텍스트영역·파일첨부는 별도 컴포넌트가 아니라 전부 `.component-input`의 변형이다
   (`component-input`, `component-checkbox`, `component-radio`, `component-textarea` 스킬 참고).
-- 인터랙션이 있는 컴포넌트(입력, 모달, 접기/펼치기, 아코디언, 툴팁, 탭, 셀렉트, 스와이퍼, 날짜
+- 인터랙션이 있는 컴포넌트(입력, 모달, 아코디언, 툴팁, 탭, 셀렉트, 스와이퍼, 날짜
   선택 등)는 `initUI()`가 해당 `.component-*` 클래스를 스캔해 자동 초기화하는 실제 JS
   컴포넌트다(`src/assets/scripts/ui/components`). 클래스명과 `data-props-*` 속성을 임의로 바꾸면
   JS 초기화가 동작하지 않는다.

@@ -11,10 +11,6 @@ function initUI() {
       fn: etUI.components.Modal,
     },
     {
-      selector: '.component-collapse',
-      fn: etUI.components.Collapse,
-    },
-    {
       selector: '.component-accordion',
       fn: etUI.components.Accordion,
     },
