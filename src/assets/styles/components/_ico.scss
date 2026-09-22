@@ -49,15 +49,6 @@ $ico-sizes: 12, 14, 16, 18, 20, 24, 40, 56;
 .ico-calendar {
   @include ico-calendar;
 }
-.ico-pin {
-  @include ico-pin;
-}
-.ico-more {
-  @include ico-more;
-}
-.ico-new-window {
-  @include ico-new-window;
-}
 .ico-spinner {
   @include ico-spinner;
   animation: ico-spinner 0.6s linear infinite;

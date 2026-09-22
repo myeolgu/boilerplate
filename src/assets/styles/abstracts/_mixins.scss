@@ -132,11 +132,6 @@
   @include font-style($fontWeight, $lineHeight);
 }
 
-@mixin f24($fontWeight: null, $lineHeight: 1.5) {
-  @include rem(font-size, 24);
-  @include font-style($fontWeight, $lineHeight);
-}
-
 @mixin f40($fontWeight: null, $lineHeight: 1.5) {
   @include rem(font-size, 40);
   @include font-style($fontWeight, $lineHeight);

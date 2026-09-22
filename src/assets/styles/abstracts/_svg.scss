@@ -94,18 +94,6 @@ $default-icon-color: '%23000000' !default;
   $ico-spinner: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#{$color}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10' fill='none' stroke-opacity='0.5' /><circle cx='12' cy='12' r='10' fill='none' stroke-dasharray='20.94,41.88' stroke-width='2' /></svg>";
   background-image: url($ico-spinner);
 }
-@mixin ico-pin($color: $default-icon-color) {
-  $ico-pin: "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewBox='0 0 24 24'%3e%3cg transform='translate(4.9 4)'%3e%3cpath stroke='#{$color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M1.30078 14.168L4.72211 10.875'/%3e%3cpath fill='#{$color}' stroke='#{$color}' stroke-linejoin='round' stroke-width='2' d='M4.76833 5.93351C3.36964 5.16648 2.08283 5.13652 1 6.2194L4.17738 9.39677L5.93349 11.1529L9.12576 14.3452C10.2086 13.2623 10.1435 12.0697 9.41162 10.5768L12.3148 5.35199L14.3451 5.6433L9.70182 1.00003L9.99777 3.03496L4.76833 5.93351Z'/%3e%3c/g%3e%3c/svg%3e";
-  background-image: url($ico-pin);
-}
-@mixin ico-more($color: $default-icon-color) {
-  $ico-more: "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewBox='0 0 24 24'%3e%3cg fill='#{$color}' stroke='#{$color}' stroke-width='1' transform='translate(10.66 3.1)'%3e%3ccircle cx='1.337' cy='1.337' r='0.837'/%3e%3ccircle cx='1.337' cy='8.868' r='0.837'/%3e%3ccircle cx='1.337' cy='16.399' r='0.837'/%3e%3c/g%3e%3c/svg%3e";
-  background-image: url($ico-more);
-}
-@mixin ico-new-window($color: $default-icon-color) {
-  $ico-new-window: "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 16 16'%3e%3cg stroke='#{$color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.6' transform='translate(1.98 1.98)'%3e%3cpath d='M11.2375 6.82163V10.4346C11.2375 10.6475 11.1529 10.8518 11.0023 11.0023C10.8518 11.1529 10.6475 11.2375 10.4346 11.2375H1.60288C1.38994 11.2375 1.18573 11.1529 1.03516 11.0023C0.88459 10.8518 0.8 10.6475 0.8 10.4346V1.60288C0.8 1.38994 0.88459 1.18573 1.03516 1.03516C1.18573 0.88459 1.38994 0.8 1.60288 0.8H5.21587'/%3e%3cpath d='M8.42695 0.8H11.237V3.6101'/%3e%3cpath d='M11.2375 0.8L6.01875 6.01875'/%3e%3c/g%3e%3c/svg%3e";
-  background-image: url($ico-new-window);
-}
 @mixin ico-bg($filename, $width: $default-icon-width, $height: $default-icon-height) {
   @include icon-size($width, $height);
   background-image: url('../images/icon/#{$filename}');
