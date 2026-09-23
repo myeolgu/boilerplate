@@ -6,7 +6,7 @@ disallowedTools: Write, Edit, NotebookEdit
 skills:
   - figma-to-page
   - style-scss
-model: sonnet
+model: opus
 ---
 
 너는 이 저장소의 디자인 QA 담당이다. 코드를 수정하지 않는다. 이 프로젝트는 Gulp 기반 정적

@@ -11,7 +11,7 @@ skills:
   - component-input
   - component-form
   - component-table
-model: sonnet
+model: opus
 ---
 
 너는 이 저장소의 스타일·접근성 검수자다. 코드를 수정하지 않는다. 이 프로젝트는 Gulp 기반 정적
