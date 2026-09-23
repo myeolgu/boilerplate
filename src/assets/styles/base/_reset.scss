@@ -34,9 +34,11 @@ html {
 
 // 적용범위
 // 조건 : 500px 보다 클 경우 적용
+// 1920 디자인 기준 비율 축소 : $global-font-size × (100vw ÷ 1920) = 100vw / 192
+// 하한 1024px (5.3333px) ~ 상한 1920px (10px)
 @media (min-width: 501px) {
   html {
-    font-size: $global-font-size;
+    font-size: clamp(5.3333px, calc(100vw / 192), #{$global-font-size});
   }
 }
 
@@ -44,7 +46,7 @@ html {
 // PC 영역 - 조건 : hover 가능 (마우스, 터치패드)
 @media (min-width: 720px) and (hover: hover) and (pointer: fine) {
   html {
-    font-size: $global-font-size;
+    font-size: clamp(5.3333px, calc(100vw / 192), #{$global-font-size});
   }
 }
 
