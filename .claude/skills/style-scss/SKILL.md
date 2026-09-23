@@ -152,6 +152,21 @@ description: SCSS 작성 규칙(상위 클래스 중심 중첩, kebab-case, rem(
 - **정확히 일치하는 변수가 없으면 가장 비슷한 기존 변수로 근사하지 않는다.** `$font-333333`(#333333)과 디자인의 `#3c3c3b`는 다른 색이다 — 이런 경우 기존 변수를 억지로 끌어쓰지 않고, **`_variables.scss`에 그 hex 그대로 새 변수를 추가**한 뒤(`$font-3c3c3b: #3c3c3b;`, 용도에 맞는 접두어로) 그 변수를 쓴다. 변수 추가는 전역 파일 수정이므로 사용자 확인 후에 한다. 페이지 SCSS에 원본 hex를 직접 쓰지 않는다.
   - `color: $font-333333;`(디자인 값 `#3c3c3b`일 때) x / `color: #3c3c3b;`(변수 미생성) x / `color: $font-3c3c3b;`(`_variables.scss`에 추가 후) o
 - **Figma 등 디자인에 명시된 색을 프로젝트 기본값에 그냥 맡겨두지 않는다.** `component-table`의 `th` 배경(`lightgray`)·테두리(`gray`)나 `_reset.scss`의 `body` 기본 글자색(`$global-font-color`, `#000000`)처럼 컴포넌트/베이스에 박혀 있는 플레이스홀더 색은, 디자인이 다른 색을 요구하면 반드시 페이지 SCSS에서 명시적으로 재정의한다. "색을 안 건드렸으니 알아서 맞겠지"로 넘기지 않는다.
+
+### 컴포넌트 기본값은 플레이스홀더다 — 폼 컨트롤 재정의 체크리스트
+
+아래 컴포넌트들은 색·크기가 **디자인 값이 아니라 임시값**으로 박혀 있다. 화면에 이 요소가 있으면 디자인 값으로 재정의했는지 항목별로 확인한다(확인하지 않으면 검정 테두리·파란 체크처럼 눈에 띄는 불일치가 그대로 남는다).
+
+| 요소 | 기본값(플레이스홀더) | 확인할 속성 |
+| --- | --- | --- |
+| 체크박스 `input[type='checkbox']`(`_checkbox.scss`) | 20×20, `border: 1px solid black`, 체크 시 `background-color: blue`, 비활성 `gray` | 크기·`border-radius`·테두리색·체크 배경·비활성 배경·체크 표시 `background-size` |
+| 라디오 `input[type='radio']`(`_radio.scss`) | 20×20, `border: 1px solid black`, 선택 시 `blue` | 크기·테두리색·선택 배경·안쪽 점 크기(`background-size`) |
+| 스위치 `.switch-item`/`.switch-handle`(`_checkbox.scss`) | 60×30, `border: 1px solid gray`, 핸들 `background-color: black` | 트랙 크기·`border-radius`·트랙 배경(켜짐/꺼짐)·핸들 색·핸들 위치(`left`/`right` 계산값) |
+| 페이지네이션 `.pagination-item`(`_pagination.scss`) | 40×40, `border-radius: 4`, `background-color: lightgray`, 화살표 아이콘 `black`·`background-size: 18` | 아이템 크기·모양(원형이면 `border-radius`)·현재 페이지 배경·숫자 크기/굵기·화살표 색·아이콘 크기·아이템 간격 |
+| 표 `th`/`td`(`_table.scss`) | `th` 배경 `lightgray`, 테두리 `gray`, 글자색 상속 | 헤더 배경·모서리·글자색·행 높이·구분선 색 |
+
+- 체크·점 표시는 배경 이미지(`ico-check`/`ico-circle`)라 **크기를 `background-size`로 맞춘다**. 믹스인 SVG의 글리프 비율(`ico-check`는 viewBox 16 중 12폭, `ico-circle`은 viewBox 24 중 지름 12)을 기준으로 환산하고, 환산 근거를 주석으로 남긴다.
+- 컴포넌트 상태 선택자(`input:checked + .item .txt` 등)는 원래 4~5단이라 페이지 wrap을 더하면 5단을 넘길 수 있다. 이건 베이스 구조에서 온 불가피한 깊이이므로 "중첩 깊이" 규칙 위반으로 보지 않는다.
 - Hex 색상은 항상 6자리로 쓴다.
   - `#666` x / `#666666` o
   - `#fff` x / `#ffffff` o
@@ -195,6 +210,26 @@ description: SCSS 작성 규칙(상위 클래스 중심 중첩, kebab-case, rem(
 - `display: inline`인 요소에는 `margin-top`/`margin-bottom`을 함께 쓰지 않는다(`no-margin-with-inline`).
 - 위 규칙들은 `npm run checkstyle`이 빌드된 `dist/**/*.css`를 검사해 보고만 하고 명령은 실패하지 않는다. 종료 결과가 아니라 출력 내용을 읽어 판단한다.
 - 반응형 분기는 `@include mobile { ... }`(`max-width: $global-tablet-width`, 1023px)을 쓴다.
+
+## 화면 전체가 1920 기준으로 비례 축소된다
+
+`_reset.scss`는 루트 폰트 크기를 뷰포트 폭에 비례시킨다.
+
+```scss
+@media (min-width: 501px) {
+  html {
+    // 1920 디자인 기준 비율 축소 : $global-font-size × (100vw ÷ 1920) = 100vw / 192
+    font-size: clamp(5.3333px, calc(100vw / 192), 10px);
+  }
+}
+```
+
+즉 **1920에서 1rem = 10px**이고, 폭이 줄면 모든 `rem` 값이 같은 비율로 함께 줄어든다(1440 → 7.5px = 0.75배, 1280 → 6.67px = 0.667배). `rem()` 믹스인을 쓴 값은 전부 여기에 따라간다.
+
+- **Figma 수치 대조는 1920에서만 절대값으로 한다.** 1440·1280에서 "Figma의 64px이 그대로 64px인지" 재면 안 된다 — 그 폭에서는 48px·42.7px이 정답이다.
+- **다른 폭에서는 비례가 유지되는지와 넘침 여부만 본다.** 예: 1440에서 검색 패널 높이 = 308 × 0.75 = 231, 행 높이 = 64 × 0.75 = 48. 어긋나면 그 요소가 `rem()`을 안 쓴 것이다(px 직접 지정, `calc()` 안 px 혼용 등).
+- 측정할 때 `getComputedStyle(document.documentElement).fontSize`를 먼저 찍어 현재 배율을 확인하고, 기대값을 `Figma값 × (루트폰트 ÷ 10)`으로 계산해 비교한다.
+- 1px 테두리처럼 `rem()`을 쓰지 않은 값은 축소되지 않으므로, 좁은 폭에서 상대적으로 굵어 보이는 것은 정상이다.
 
 ## 유틸리티 클래스 (사용 전 확인 필요)
 
