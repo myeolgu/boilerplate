@@ -13,7 +13,7 @@ skills:
   - component-button
   - component-icon
   - icon-asset-naming
-model: fable
+model: opus
 ---
 
 너는 이 저장소의 페이지 퍼블리싱 담당이다. 이 프로젝트는 Gulp 기반 정적 HTML·SCSS 보일러플레이트이며
