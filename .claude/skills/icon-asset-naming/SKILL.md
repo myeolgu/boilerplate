@@ -18,15 +18,25 @@ description: 이 프로젝트의 아이콘은 SVG 파일이 아니라 _svg.scss�
 
 `_svg.scss`는 전역 파일이므로 새 믹스인·클래스 추가는 **사용자에게 먼저 확인한 뒤에만** 한다.
 
-1. SVG를 24×24 기준으로 준비하고, 색상이 들어가는 속성(`stroke`/`fill`)을 `#{$color}`로
-   치환한 문자열을 만든다.
-2. 기존 `ico-x`와 같은 인코딩 방식으로 data-URI를 만든다.
+1. **Figma 아이콘 레이어(박스) 단위로 내보낸 SVG를 그대로 쓴다.** 받는 방법은 아래
+   "Figma에서 아이콘 SVG 받기"를 따른다.
+   - 캔버스(`width`·`height`·`viewBox`)는 Figma 아이콘 레이어 박스 크기다(18×18 레이어면
+     `width='18' height='18' viewBox='0 0 18 18'`). 24×24로 맞추거나 크기를 바꾸지 않는다.
+   - path 좌표, `fill`·`stroke` 색, 선 굵기, 아이콘 안의 글자 path까지 **아무것도 고치지 않는다.**
+   - `get_design_context`의 개별 에셋(`/api/mcp/asset/…`)은 도형 하나를 경계에 맞춰 자른 SVG라
+     크기가 소수점으로 나온다(예: 18×18 뱃지의 육각형만 15.5885×17.6906, 글자 "N"은 빠짐). 이
+     에셋을 캔버스로 쓰거나 여러 에셋을 조립해 아이콘을 만들지 않는다.
+2. 기존 `ico-x`와 같은 인코딩 방식으로 data-URI를 만든다. **인코딩 외의 변경은 하지 않는다.**
    - `<` → `%3c`, `>` → `%3e`(소문자)
    - 속성 값은 작은따옴표(`'`)로 감싼다(바깥 SCSS 문자열이 큰따옴표).
    - `xmlns='http://www.w3.org/2000/svg'`는 인코딩하지 않고 그대로 둔다.
-   - 고정 색을 넣어야 하면 `#`을 `%23`으로 쓴다. 색 인자는 `#{$color}`로 받는다.
-3. `_svg.scss`에 같은 패턴으로 새 믹스인을 추가한다. `$color`에는 항상 기본값
-   `$default-icon-color`를 준다(기본값이 없는 `ico-nav-*`는 따르지 않는다).
+   - 색은 SVG에 적힌 Figma 색 그대로 두고 `#`만 `%23`으로 쓴다(예: `fill='%23EB4054'`,
+     `fill='white'`는 그대로).
+   - 색을 `#{$color}`로 바꿔 인자로 받는 건 **같은 아이콘을 Figma에서 여러 색으로 쓸 때만** 한다.
+     이때도 `$color` 기본값은 Figma 색으로 두고, 색이 여러 개인 SVG(뱃지 배경 + 글자 등)는 바꿀
+     색만 인자로 뺀다.
+3. `_svg.scss`에 같은 패턴으로 새 믹스인을 추가한다. 색 인자가 없는 아이콘은 `@mixin ico-새이름`처럼
+   인자 없이 정의한다(기존 믹스인의 `$default-icon-color` 기본값은 색 인자가 있는 경우에만 해당한다).
 
    ```scss
    @mixin ico-새이름($color: $default-icon-color) {
@@ -48,6 +58,19 @@ description: 이 프로젝트의 아이콘은 SVG 파일이 아니라 _svg.scss�
 
 5. 믹스인 이름은 `ico-` 접두어의 kebab-case로 짓는다. 예: `ico-close`, `ico-arrow-down`,
    `ico-nav-first`.
+
+## Figma에서 아이콘 SVG 받기
+
+사용자가 SVG를 직접 주지 않아도 직접 받는다. Figma의 "Copy as SVG"와 같은 결과를 MCP로 받는 방법이다.
+
+1. `get_metadata`로 아이콘 **레이어 노드**(예: 18×18 Frame/Instance/Group)의 id를 찾는다. 안쪽의
+   Vector·Polygon·Text 노드가 아니라 아이콘 박스 크기를 가진 바깥 노드다.
+2. `download_assets`를 그 노드 id와 `defaultFormat: "svg"`로 호출하고, 응답의 **`export`**(노드 전체
+   렌더)를 받는다. `svgAssets`는 도형 단위 에셋이라 `get_design_context` 에셋과 같은 문제가 있으므로
+   쓰지 않는다.
+3. 받은 SVG의 `width`·`height`·`viewBox`가 `get_metadata`의 노드 width·height와 같은지 확인한다.
+   다르면 잘못된 노드를 받은 것이다.
+4. 이 방법으로 받지 못하면 추측으로 SVG를 조립하지 말고 사용자에게 알린다.
 
 ## `npm run svg`는 쓰지 않는다
 

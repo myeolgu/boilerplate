@@ -46,10 +46,21 @@ description: 아이콘은 SVG 파일이 아니라 _svg.scss의 인라인 data-UR
   선택자로 붙는데, 이 선택자는 `class` 값이 `ico-`로 **시작**할 때만 적용된다(`.ico`가 앞에 오는
   신규 컨벤션에는 이 선택자가 걸리지 않아 `_base.scss`에 `.ico` 전용 규칙을 별도로 두었다).
 
-## 색상 바꾸기 (SCSS에서)
+## 페이지 SCSS에서 아이콘을 다시 그리지 않는다
 
-마크업에서 색을 바꾸는 게 아니라, 그 아이콘을 쓰는 SCSS 쪽에서 믹스인을 다시 호출해 색을
-지정한다. 마크업의 클래스 자체는 그대로 둔다.
+- 페이지 SCSS(`src/assets/styles/pages/_*.scss`)에서는 `ico-*` 믹스인을 `@include`하지 않는다.
+  아이콘은 `<i class="ico ico-{이름}" data-size>` 마크업으로 붙이고, 페이지 SCSS는 아이콘의
+  배치(margin·정렬)만 다룬다. `span` 등에 배경으로 아이콘을 직접 그리지 않는다.
+- 아이콘 색은 SVG에 들어 있는 Figma 색이다(`icon-asset-naming` 참고). 페이지 SCSS에서 믹스인을
+  다시 불러 색을 덮어쓰지 않는다.
+- SVG에 들어 있는 글자·색을 마크업이나 SCSS로 다시 얹지 않는다(예: 뱃지의 "N"을 `span`으로
+  따로 올리지 않는다). 의미 전달이 필요하면 아래 "접근성 가이드"대로 `hide-txt`만 둔다.
+
+## 색상 바꾸기 (컴포넌트 SCSS 안에서만)
+
+버튼 hover·disabled처럼 **컴포넌트의 상태에 따라 색이 바뀌는 경우에만** 쓴다. 해당 컴포넌트
+SCSS(`src/assets/styles/components/`)에서 믹스인을 다시 호출해 색을 지정하고, 마크업의 클래스
+자체는 그대로 둔다. 페이지 SCSS에서는 쓰지 않는다(위 절 참고).
 
 ```scss
 .some-button {

@@ -50,6 +50,9 @@ https://www.figma.com/design/{fileKey}/{파일명}?node-id={id}&t={추적용해�
    미선택 `stroke=#E4E7ED stroke-width=1.2`, 토글 `44×24 rx=12 fill=#C4CACF`). 받아서 hex·radius·
    stroke를 그대로 읽어 수치표에 넣는다.
    - **스크린샷 픽셀을 눈으로 재서 색을 추정하지 않는다.** 에셋 SVG가 원본이다.
+   - **아이콘은 이 에셋 URL로 받지 않는다.** 이 에셋은 도형 하나를 경계에 맞춰 자른 SVG라 아이콘
+     박스 크기·글자가 빠진다. 아이콘은 레이어 노드 단위로 `download_assets`(`defaultFormat: "svg"`)의
+     `export`를 받는다(`icon-asset-naming` 스킬의 "Figma에서 아이콘 SVG 받기").
    - Figma MCP는 호출 한도(Starter plan)가 있어 작업 중간에 막힐 수 있다. 한도에 걸리면 재조회가
      불가능하므로 **필요한 에셋은 초반에 한꺼번에 받아 둔다.** 받은 값은 대화에 수치표로 남겨,
      이후 검수 에이전트가 Figma를 다시 부르지 않고도 대조할 수 있게 한다.
