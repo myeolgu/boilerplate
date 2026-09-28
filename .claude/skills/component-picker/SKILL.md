@@ -12,8 +12,7 @@ description: 날짜 선택(component-datepicker) 마크업 구조를 안내한�
 팝업은 vendor CSS(`src/assets/styles/vendors/_datepicker.min.css`, `vendors/_index.scss`에서
 `@forward`)로 스타일이 적용된다.
 
-이전에 "calendar"라는 이름으로 다루려던 컴포넌트가 바로 이것이다. 요청에 "달력", "캘린더",
-"날짜 선택", "picker"가 나오면 전부 이 컴포넌트를 가리킨다.
+요청에 "달력", "캘린더", "날짜 선택", "picker"가 나오면 전부 이 컴포넌트를 가리킨다.
 
 ## 기본 구조
 

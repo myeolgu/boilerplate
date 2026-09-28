@@ -43,7 +43,7 @@
 - 역할: 구현 `pub-coder` / 컨벤션 검수 `reviewer` / 시각 검수 `design-qa`. 에이전트는 이전 대화 맥락이 없으므로 Figma fileKey·node, 확정 범위, 승인된 전역 변경 목록, Figma 수치 요약, 성공 기준, 페이지 경로를 프롬프트에 명시해서 넘긴다.
 - Figma 수치 요약은 Figma 속성 그대로 넘긴다(폭은 width로. "열 폭 − 20" 같은 파생 표현으로 바꾸지 않는다). 사용자가 승인하지 않은 Figma와의 차이(예: 한 카드만 다른 간격을 나머지와 통일)는 구현 지시에 넣지 않는다. **`get_metadata`의 x/y/width/height는 산문으로 요약하지 말고 노드별 표로 그대로 넘긴다** — 폭만 적으면 요소 사이 간격이 통째로 사라진다(`figma-to-page` 스킬의 "구현 에이전트에 넘길 자료" 참고).
 - **구현 에이전트에게 넘기기 전 자가 실측을 요구한다.** 구현이 끝나면 Playwright로 주요 요소를 재서 넘겨받은 좌표표와 대조하고, 어긋난 값을 스스로 고친 뒤 보고하게 한다. 이걸 건너뛰면 `design-qa`가 기본적인 좌표 불일치부터 잡느라 검수 라운드가 한 번 더 늘어난다.
-- 스킬: 1단계에서 뽑은 UI 요소 목록으로 필요한 스킬을 정한다(아래 "규칙은 스킬에 있다" 표와 "컴포넌트 사용 원칙" 목록). **호출 전 필수 스킬이 있는 도구는 그 스킬을 먼저 읽는다** — 예: `get_design_context` 전 Figma의 `figma-design-to-code`(방법은 `figma-to-page` 스킬).
+- 스킬: 1단계에서 뽑은 UI 요소 목록으로 필요한 스킬을 정한다(아래 "규칙은 스킬에 있다" 표와, 요소별 `component-*` 스킬). **호출 전 필수 스킬이 있는 도구는 그 스킬을 먼저 읽는다** — 예: `get_design_context` 전 Figma의 `figma-design-to-code`(방법은 `figma-to-page` 스킬).
 
 ### 4. 검증 게이트 설계
 
@@ -55,7 +55,7 @@
 | G1 빌드   | 구현 후          | `npm run build` 컴파일 에러 없음(`npm run dev`는 종료되지 않는 워처다 — 아래 "검증" 참고)                                               |
 | G2 lint   | G1 후            | 아래 "검증"의 `checkhtml`(429면 로컬 검사)·`checkstyle`에서 내 코드 범위 신규 경고 0                                                    |
 | G3 컨벤션 | G2 후            | `reviewer` 위반 0(클래스 누락·태그 선택자, 중첩 깊이, modifier 중첩, `rem()`, 색상 변수·하드코딩 hex, 폼 라벨 연결, 아이콘 컨벤션 포함) |
-| G4 시각   | G3 후            | `design-qa`로 아래 "검증"의 Figma 완료 기준 체크리스트 전 항목 측정값 통과                                                              |
+| G4 시각   | G3 후            | `design-qa`로 `figma-to-page` 스킬 "완료 기준"의 체크리스트 전 항목 측정값 통과                                                              |
 | G5 동작   | 인터랙션 있을 때 | Playwright로 클릭·상태 변화 확인                                                                                                        |
 
 게이트별 결과는 측정값·근거와 함께 남긴다. 통과 못 한 게이트는 "미통과", 돌리지 못한 게이트는 "미검증"으로 보고하고 완료라고 하지 않는다.
@@ -83,10 +83,6 @@
 ## 컴포넌트 사용 원칙
 
 - 모든 UI 요소는 새로 만들기 전에 `src/guide/pages/components`의 컴포넌트 가이드와 관련 `component-*` 스킬을 먼저 확인하고, 있으면 직접 마크업 대신 그 컴포넌트를 사용한다.
-  - 버튼 `component-button`, 입력 필드 `component-input`, 텍스트영역 `component-textarea`, 체크박스 `component-checkbox`, 라디오 `component-radio`, 셀렉트 `component-select`, 폼 레이아웃 `component-form`, 날짜 선택 `component-picker`
-  - 탭 `component-tabs`, 아코디언·단독 접기/펼치기 `component-accordion`, 모달 `component-modal`, 툴팁 `component-tooltip`, 스와이퍼·캐러셀·슬라이더 `component-swiper`
-  - 표 `component-table`, 목록 `component-list`, 페이지네이션 `component-pagination`
-  - 확인·경고 팝업("alert"으로 요청받아도) `component-dialog`, 하단 알림 `component-toast`(`component-snackbar`는 레거시이므로 새 화면에 쓰기 전에 그 스킬을 확인한다)
 - 인터랙션이 있는 컴포넌트는 `initUI()`가 `.component-*` 클래스를 스캔해 자동 초기화하는 실제 JS 컴포넌트(`src/assets/scripts/ui/components`)와 연결되어 있으므로 클래스와 `data-props-*` 속성을 임의로 바꾸지 않는다.
 - 같은 기능의 UI는 항상 같은 컴포넌트로 구현해 일관된 사용자 경험을 유지한다.
 - 컴포넌트를 확장할 때는 기존 구조와 클래스를 유지하면서 필요한 부분만 수정한다.
@@ -105,17 +101,5 @@
 - `npm run dev`(gulp) 첫 실행 직후에는 `etUI.components`가 비어 있어 모든 인터랙션 컴포넌트가 초기화 실패할 수 있다(`src/assets/scripts/ui/{components,hooks,utils,templates}/index.cjs` 생성과 JS 번들 합치기 사이의 레이스 컨디션). 콘솔에 `Cannot read properties of undefined (reading 'Input')` 같은 에러가 보이면 dev 서버를 껐다 다시 켠다.
 - 실제 동작(클릭, 열림/닫힘 등) 확인이 필요하면 Playwright(MCP가 연결되어 있으면)로 dev 서버를 띄운 페이지를 열어 검증한다. 코드만 읽고 동작을 추측하지 않는다. Playwright가 만드는 `.playwright-mcp/`(스크린샷·스냅샷·콘솔 로그)는 검증에 다 쓰고 나면 삭제한다. git에는 잡히지 않지만(`.gitignore`) 로컬에 쌓아둘 필요가 없다.
 - Figma 기반으로 구현한 화면은 코드 컨벤션 검수(`reviewer`)와 별개로 반드시 `design-qa` 에이전트로 Figma와 스크린샷을 비교한다. `reviewer`는 lint·컨벤션만 보고 시각적 일치 여부는 보지 않으므로, `reviewer`가 "문제 없음"이라고 해도 그건 코드 컨벤션 기준일 뿐 Figma와의 시각적 일치를 보장하지 않는다.
-- Figma 기반 화면의 완료 기준:
-  - 1920·1440·1280 폭(Figma가 다른 폭이면 그 폭 포함)에서 각각 확인한다. 한 폭만 보고 완료로 보지 않는다. **단 이 프로젝트는 `_reset.scss`가 화면 전체를 1920 기준으로 비례 축소하므로(1440 = 0.75배, 1280 = 0.667배), Figma 값과의 절대값 대조는 1920에서만 하고 나머지 폭에서는 비례 유지·넘침 여부만 본다**(`style-scss` 스킬의 "화면 전체가 1920 기준으로 비례 축소된다" 참고). 다른 폭에서 Figma 절대값을 그대로 기대하면 전부 불일치로 잘못 판정된다.
-  - 눈으로 보는 데서 끝내지 않는다. Playwright `browser_evaluate`로 `getBoundingClientRect()`(x·y·width·height)와 `getComputedStyle()`(padding·font·border·color 등)을 재서, Figma 수치(`get_metadata`의 x·y·width·height, `get_design_context`의 값)와 숫자 대 숫자로 대조한다.
-  - 체크리스트:
-    - 가로: 열 개수, 요소 폭, 좌우 간격, 정렬(행마다 시작점이 같은지)
-    - 세로: 요소 높이, 세로 간격(섹션 사이·행 사이·제목과 본문 사이·라벨과 입력칸 사이)
-    - 안쪽 여백: padding(상하좌우)
-    - 글자: 폰트 크기·굵기·행간·색
-    - 모양: 모서리 둥글기, 테두리 두께·색, 배경색
-    - 아이콘 크기, 가로 스크롤 발생 여부
-  - "비슷해 보임"은 통과로 보지 않는다. 체크리스트 항목마다 측정값과 Figma 값을 나란히 적어 통과 여부를 보고한다. 일부러 Figma와 다르게 한 항목(예: 내용 길이에 따라 늘어나는 높이)은 "의도적 차이"로 따로 적고 사용자 확인을 받는다.
-  - `design-qa`에 넘기는 "의도적 차이"·제외 목록에는 사용자가 승인한 항목만 적고, 범위를 구체적으로 적는다("좁은 폭의 메모 넘침 전체"처럼 넓게 잡으면 줄이 반쯤 비치는 결함까지 제외된다).
-  - 측정값이 맞아도 통과가 아니다. 코드가 Figma 값을 그대로 쓰는지(파생 값이나 우회 표현이 아닌지)도 확인한다. 한 폭에서만 우연히 같아지는 표현(예: `margin-right: 2rem`으로 만든 672)은 실패로 본다.
+- Figma 기반 화면의 완료 기준(검증 폭, 측정 방법, 체크리스트, 의도적 차이 처리)은 `figma-to-page` 스킬의 "완료 기준"에 있다. Figma 화면을 구현·검수할 때는 그 스킬을 먼저 불러온다.
 - `design-qa`(또는 다른 검수)에서 "다른 원인 때문에 파생된 문제라 제외"라고 정리한 항목은 영구 제외가 아니라 그 원인이 해결될 때까지만 제외한 것이다. 원인이 되는 이슈(예: 공통 골격 `content-inner` 미비)를 고친 뒤에는, 그 이유로 제외했던 파생 항목들(예: 정렬 오차)을 반드시 다시 확인한다. 원인을 고쳤다고 파생 항목이 저절로 고쳐지는 게 아니므로, 제외 목록을 만든 사람이 직접 그 목록을 다시 열어봐야 한다.

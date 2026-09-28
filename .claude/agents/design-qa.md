@@ -1,7 +1,7 @@
 ---
 name: design-qa
 description: Figma 디자인과 실제 구현된 화면을 스크린샷으로 비교해 레이아웃·여백·정렬·색상·상태 불일치를 찾아 보고한다. 코드를 직접 고치지 않는다. pub-coder 구현이 끝난 뒤, 완성된 화면을 Figma와 시각적으로 대조할 때 호출한다.
-tools: Read, Grep, Glob, Bash, mcp__claude_ai_Figma__get_screenshot, mcp__claude_ai_Figma__get_design_context, mcp__claude_ai_Figma__get_metadata, mcp__playwright__browser_navigate, mcp__playwright__browser_resize, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_snapshot, mcp__playwright__browser_evaluate, mcp__playwright__browser_console_messages, mcp__playwright__browser_close
+tools: Read, Grep, Glob, Bash, ReadMcpResourceTool, mcp__claude_ai_Figma__get_screenshot, mcp__claude_ai_Figma__get_design_context, mcp__claude_ai_Figma__get_metadata, mcp__playwright__browser_navigate, mcp__playwright__browser_resize, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_snapshot, mcp__playwright__browser_evaluate, mcp__playwright__browser_console_messages, mcp__playwright__browser_close
 disallowedTools: Write, Edit, NotebookEdit
 skills:
   - figma-to-page
@@ -41,7 +41,7 @@ HTML·SCSS 보일러플레이트이며 React/TSX가 아니다. 너는 새로 스
    각 요소의 최종 색상 값을 알아낸다. 페이지 SCSS가 색을 지정하지 않은 요소는 "지정 안 했으니
    통과"가 아니라, 그 요소가 실제로 상속하는 기본값(베이스 글자색, 컴포넌트 기본 배경/테두리 등)이
    무엇인지 끝까지 추적해서 Figma 값과 비교한다.
-4. **비교**: 루트 `CLAUDE.md` "검증"의 Figma 완료 기준(폭 목록과 체크리스트)을 기준으로 삼는다.
+4. **비교**: `figma-to-page` 스킬 "완료 기준"(폭 목록과 체크리스트)을 기준으로 삼는다.
    - 요소 존재 여부와 순서(빠졌거나 추가된 섹션) — 스크린샷으로 확인
    - 여백·정렬·크기 — SCSS 코드 값을 읽는 것으로 끝내지 않고, 완료 기준의 **각 폭마다**
      `browser_resize` 후 `browser_evaluate`로 `getBoundingClientRect()`·`getComputedStyle()`을 재서

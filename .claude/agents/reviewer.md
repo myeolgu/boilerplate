@@ -55,8 +55,8 @@ scope)을 꺼두었고, `.stylelintrc`의 `plugin/no-invalid-class-prefix`/`no-i
 - **컴포넌트 마크업**: 사용한 컴포넌트가 `src/guide/pages/components/*.html` 예시와 구조가 일치하는지
   확인한다. 프리로드된 `component-input`/`component-form`/`component-table` 외의 컴포넌트는 마크업만 보고
   판단하지 말고 `.claude/skills/<스킬명>/SKILL.md`를 Read로 읽어 `data-props-*` 의미, JS 초기화
-  요구사항까지 함께 확인한다(이 에이전트에는 Skill 도구가 없으므로 파일을 직접 읽는다). 스킬 목록은
-  루트 `CLAUDE.md` "컴포넌트 사용 원칙"에 있다.
+  요구사항까지 함께 확인한다(이 에이전트에는 Skill 도구가 없으므로 파일을 직접 읽는다). 컴포넌트
+  스킬은 `.claude/skills/component-*/`에 있다.
 - **린터가 꺼 둔 접근성 항목**: 라벨과 연결된 `id`의 페이지 내 중복(`no-dup-id` 꺼짐), 표 `th`의
   `scope`(`wcag/h63` 꺼짐, 기준은 `component-table`), 입력의 `for`/`id` 연결과 그룹 입력의
   `fieldset`/`legend`(기준은 `markup-html` "폼 접근성", `component-input`)

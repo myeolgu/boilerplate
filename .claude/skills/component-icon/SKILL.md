@@ -31,8 +31,9 @@ description: 아이콘은 SVG 파일이 아니라 _svg.scss의 인라인 data-UR
 
 `button`/`input`/`pagination` 등 기존 컴포넌트 가이드(`src/guide/pages/components/*.html`)와
 그 SCSS는 아직 옛 방식을 쓴다. 이런 기존 마크업을 그대로 복사해 쓸 때는 옛 방식을 따르고, 임의로
-`.ico`/`data-size`로 바꿔치기하지 않는다(그 컴포넌트의 SCSS가 `.ico-normal` 크기 클래스를
-전제하므로 섞으면 깨진다). 새로 마크업하는 화면·컴포넌트에는 위 "마크업(신규 컨벤션)"을 쓴다.
+`.ico`/`data-size`로 바꿔치기하지 않는다(그 컴포넌트의 SCSS가 `[class^='ico-']` 선택자로 아이콘을
+잡는다 — 예: `_btn.scss`의 `.btn [class^='ico-']` 15×15. `.ico`가 앞에 오면 이 규칙이 빠진다).
+새로 마크업하는 화면·컴포넌트에는 위 "마크업(신규 컨벤션)"을 쓴다.
 
 ```html
 <!-- 레거시: 기존 button/input/pagination 등이 아직 이 형태 -->
@@ -66,9 +67,9 @@ description: 아이콘은 SVG 파일이 아니라 _svg.scss의 인라인 data-UR
 - `ico-check`(체크박스 체크 표시, `_checkbox.scss`), `ico-circle`(라디오 선택 표시, `_radio.scss`),
   `ico-login-id`/`ico-login-pw`(로그인 아이콘, `_input.scss`), `ico-nav-first`/`ico-nav-prev`/
   `ico-nav-next`/`ico-nav-last`(페이지네이션 이동 버튼, `_pagination.scss`)
-- `ico-password-show`/`ico-password-hide`(비밀번호 토글)는 `_input.scss`가 컴포넌트 전용 클래스
-  `.ico-password-state`에 붙여 쓴다. 마크업은 `component-input` 스킬의
-  `<i class="ico-password-state ico-normal" aria-hidden="true"></i>`를 그대로 쓴다.
+- `ico-password-show`/`ico-password-hide`(비밀번호 토글)는 `_input.scss`가 `.ico-password-state`에
+  붙여 쓴다. 이 아이콘은 `data-props-toggle-password="true"`일 때 `Input.js`가 삽입하므로
+  (`inputTmpl.js`) 직접 마크업하지 않는다(`component-input` 스킬 참고).
 - `ico-nav-*` 4종은 `$color`에 기본값이 없다. 인자 없이 `@include ico-nav-first;`로 부르면
   컴파일 에러가 나므로 항상 색을 넘긴다(예: `@include ico-nav-first(black);`).
 

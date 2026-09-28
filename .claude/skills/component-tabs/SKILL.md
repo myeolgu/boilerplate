@@ -128,8 +128,3 @@ description: 탭(component-tab) 마크업 구조와 중첩 탭 패턴을 안내�
   }
 }
 ```
-
-## 검증됨
-
-`aria-selected`/`.show` 토글 방식은 실제 dev 서버에서 Playwright로 클릭해 확인했다(코드 추측이
-아니다).

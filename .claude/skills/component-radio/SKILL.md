@@ -54,6 +54,5 @@ description: 라디오 버튼 마크업 구조, 상태, 접근성 규칙을 안�
 
 ## 참고
 
-실제 프로젝트(`src/assets/styles/components/_radio.scss`)를 확인한 결과 기본 클래스는
-`.component-input`이 맞다. 체크박스와 같은 래퍼를 `Input.js`가 초기화하지만, 라디오 전용 동작은
+기본 클래스는 `.component-input`이다(`src/assets/styles/components/_radio.scss`). 체크박스와 같은 래퍼를 `Input.js`가 초기화하지만, 라디오 전용 동작은
 없고 `disabled`일 때 `.input-disabled`를 붙이는 정도다(`component-checkbox` 스킬 참고). `.component-radio`라는 클래스는 만들지 않는다.
